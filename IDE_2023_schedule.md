@@ -9,7 +9,8 @@ home: https://bioinformaticsdotca.github.io/IDE_2023
 ---
 
 | | **Tuesday, April 18** | | **Wednesday, April 19** | | **Thursday, April 20** | | **Friday, April 21** |
-| :---: | :---: | :---: | :---: | :---: | :---: |	 :---: | :---: |												
+| :---: | :---: | :---: | :---: | :---: | :---: |	 :---: | :---: |			
+| Time (Eastern) | Module | Time (Eastern) | Module | Time (Eastern) | Module | Time (Eastern) | Module |
 | 09:45 | Virtual Arrivals | 09:45 | Virtual Arrivals | 09:45 | Virtual Arrivals | 09:45 | Virtual Arrivals | 
 | 10:00 | Virtual Welcome (Michelle Brazas) | 10:00 | <font color="purple">Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants (Jared Simpson)</font> | 10:00 | <font color="purple">Module 6: Antimicrobial Resistant Gene (AMR) Analysis (Andrew McArthur)</font> | 10:00 | <font color="purple">Module 8: Emerging Pathogen Detection and Identification (Aaron Petkau)</font> |
 | 10:30 | <font color="purple">Module 1: Introduction to Genomic Epidemiology (William Hsiao)</font> | 11:00 | <font color="green">Break (30 min)</font> | 11:00 | <font color="green">Break (30 min)</font> | 11:00 | <font color="green">Break (30 min)</font> |
