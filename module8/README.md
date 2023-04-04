@@ -70,10 +70,10 @@ Next we will activate the [conda](https://docs.conda.io/en/latest/) environment,
 
 **Commands**
 ```bash
-conda activate cbw-emerging-pathogen
+conda activate module8-emerging-pathogen
 ```
 
-You should see the command-prompt (where you type commands) switch to include `(cbw-emerging-pathogen)` at the beginning, showing you are inside this environment. You should also be able to run one of the commands like `kraken2 --version` and see output:
+You should see the command-prompt (where you type commands) switch to include `(module8-emerging-pathogen)` at the beginning, showing you are inside this environment. You should also be able to run one of the commands like `kraken2 --version` and see output:
 
 **Output after running `kraken2 --version`**
 ```
@@ -119,7 +119,7 @@ We will proceed through the following steps to attempt to diagnose the situation
 
 Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic seqencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the DNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
 
-The reads were generated from paired-end sequencing, which means that a particular fragment (of cDNA) was sequenced twice--once from either end (see [here](https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) for some additional details). These pairs of cDNA sequence reads are stored as separate files (named `emerging-pathogen-reads_1.fastq.gz` and `emerging-pathogen-reads_2.fastq.gz`). You can see each file by running `ls`:
+The reads were generated from paired-end sequencing, which means that a particular fragment (of cDNA) was sequenced twice--once from either end (see the [Illumina Paired vs. Single-End Reads](https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) for some additional details). These pairs of cDNA sequence reads are stored as separate files (named `emerging-pathogen-reads_1.fastq.gz` and `emerging-pathogen-reads_2.fastq.gz`). You can see each file by running `ls`:
 
 **Commands**
 ```bash
@@ -186,7 +186,7 @@ JSON report: fastp.json
 HTML report: fastp.html
 
 fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz --in2 ../data/emerging-pathogen-reads_2.fastq.gz --out1 cleaned_1.fastq --out2 cleaned_2.fastq
-fastp v0.22.0, time used: 34 seconds
+fastp v0.23.2, time used: 22 seconds
 ```
 
 ### Examine output
@@ -237,6 +237,8 @@ As the command is running you should see the following output on your screen:
 
 **Output**
 ```
+Kmer Analysis Toolkit (KAT) V2.4.2
+
 Running KAT in filter sequence mode
 -----------------------------------
 
@@ -246,12 +248,12 @@ Filtering sequences ...
 Processed 100000 pairs
 Processed 200000 pairs
 [...]
-Finished filtering.  Time taken: 122.3s
+Finished filtering.  Time taken: 130.5s
 
 Found 1127908 / 1306231 to keep
 
 KAT filter seq completed.
-Total runtime: 163.0s
+Total runtime: 182.8s
 ```
 
 If the command was successful, your current directory should contain two new files:
@@ -369,151 +371,151 @@ ktImportTaxonomy krona_input.txt -o krona_report.html
 
 	Let’s look at what Krona generated. Return to your web browser and go to <http://IP-ADDRESS/module8_workspace/analysis/> to see the new files added in the `module8_workspace/analysis` directory. Click on **final_web_report.html**. *Note: if this is not working, what you should see is shown in the image [krona-all.png][]*.
 
-	### Step 5: Questions
+### Step 5: Questions
 
-	1. What does the distribution of taxa found in the reads look like? Is there any pathogen here that could be consistent with a cause for the patients symptoms?
-	2. This data was derived from RNA (instead of DNA) and some viruses are RNA-based. Take a look into the **Viruses** category in Krona (by expanding this category). Is there anything here that could be consistent with the patient's symptoms? *Note: if you cannot expand the **Viruses** category what you should see is shown in this image [krona-viruses.png][].*.
-	3. Given the results of Krona, can you form a hypothesis as to the cause of the patient's symptoms?
+1. What does the distribution of taxa found in the reads look like? Is there any pathogen here that could be consistent with a cause for the patients symptoms?
+2. This data was derived from RNA (instead of DNA) and some viruses are RNA-based. Take a look into the **Viruses** category in Krona (by expanding this category). Is there anything here that could be consistent with the patient's symptoms? *Note: if you cannot expand the **Viruses** category what you should see is shown in this image [krona-viruses.png][].*.
+3. Given the results of Krona, can you form a hypothesis as to the cause of the patient's symptoms?
 
-	---
+---
 
-	## Step 6: Metatranscriptomic assembly
+## Step 6: Metatranscriptomic assembly
 
-	In order to investigate the data further we will assemble the metatranscriptome using the software [MEGAHIT][]. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:
+In order to investigate the data further we will assemble the metatranscriptome using the software [MEGAHIT][]. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:
 
-	**Commands**
-	```bash
-	# Time: 6 minutes
-	megahit -t 4 -1 filtered.in.R1.fastq -2 filtered.in.R2.fastq -o megahit_out
-	```
+**Commands**
+```bash
+# Time: 6 minutes
+megahit -t 4 -1 filtered.in.R1.fastq -2 filtered.in.R2.fastq -o megahit_out
+```
 
-	If everything is working you should expect to see the following as output:
+If everything is working you should expect to see the following as output:
 
-	**Output**
-	```
-	2021-09-30 11:53:35 - MEGAHIT v1.2.9
-	2021-09-30 11:53:35 - Using megahit_core with POPCNT and BMI2 support
-	2021-09-30 11:53:35 - Convert reads to binary library
-	2021-09-30 11:53:36 - b'INFO  sequence/io/sequence_lib.cpp  :   75 - Lib 0 (/media/cbwdata/workspace/module8_workspace/analysis/filtered.in.R1.fastq,/media/cbwdata/workspace/module8_workspace/analysis/filtered.in.R2.fastq): pe, 2255816 reads, 151 max length'
-	2021-09-30 11:53:36 - b'INFO  utils/utils.h                 :  152 - Real: 1.9096\tuser: 1.8361\tsys: 0.3320\tmaxrss: 166624'
-	2021-09-30 11:53:36 - k-max reset to: 141
-	2021-09-30 11:53:36 - Start assembly. Number of CPU threads 4
+**Output**
+```
+2021-09-30 11:53:35 - MEGAHIT v1.2.9
+2021-09-30 11:53:35 - Using megahit_core with POPCNT and BMI2 support
+2021-09-30 11:53:35 - Convert reads to binary library
+2021-09-30 11:53:36 - b'INFO  sequence/io/sequence_lib.cpp  :   75 - Lib 0 (/media/cbwdata/workspace/module8_workspace/analysis/filtered.in.R1.fastq,/media/cbwdata/workspace/module8_workspace/analysis/filtered.in.R2.fastq): pe, 2255816 reads, 151 max length'
+2021-09-30 11:53:36 - b'INFO  utils/utils.h                 :  152 - Real: 1.9096\tuser: 1.8361\tsys: 0.3320\tmaxrss: 166624'
+2021-09-30 11:53:36 - k-max reset to: 141
+2021-09-30 11:53:36 - Start assembly. Number of CPU threads 4
 
-	[...]
+[...]
 
-	2021-09-30 11:58:01 - Assemble contigs from SdBG for k = 141
-	2021-09-30 11:58:02 - Merging to output final contigs
-	2021-09-30 11:58:02 - 3112 contigs, total 1536607 bp, min 203 bp, max 29867 bp, avg 493 bp, N50 463 bp
-	2021-09-30 11:58:02 - ALL DONE. Time elapsed: 267.449160 seconds
-	```
+2021-09-30 11:58:01 - Assemble contigs from SdBG for k = 141
+2021-09-30 11:58:02 - Merging to output final contigs
+2021-09-30 11:58:02 - 3112 contigs, total 1536607 bp, min 203 bp, max 29867 bp, avg 493 bp, N50 463 bp
+2021-09-30 11:58:02 - ALL DONE. Time elapsed: 267.449160 seconds
+```
 
-	Once everything is completed, you will have a directory `megahit_out/` with the output. Let's take a look at this now:
+Once everything is completed, you will have a directory `megahit_out/` with the output. Let's take a look at this now:
 
-	**Commands**
-	```bash
-	ls megahit_out/
-	```
+**Commands**
+```bash
+ls megahit_out/
+```
 
-	**Output**
-	```
-	checkpoints.txt  done  final.contigs.fa  intermediate_contigs  log  options.json
-	```
+**Output**
+```
+checkpoints.txt  done  final.contigs.fa  intermediate_contigs  log  options.json
+```
 
-	It's specifically the **final.contigs.fa** file that contains our metatranscriptome assembly. This will contain the largest *contiguous* sequences MEGAHIT was able to construct from the sequence reads. We can look at the contents with the command `head` (`head` prints the first 10 lines of a file):
+It's specifically the **final.contigs.fa** file that contains our metatranscriptome assembly. This will contain the largest *contiguous* sequences MEGAHIT was able to construct from the sequence reads. We can look at the contents with the command `head` (`head` prints the first 10 lines of a file):
 
-	**Commands**
-	```bash
-	head megahit_out/final.contigs.fa
-	```
+**Commands**
+```bash
+head megahit_out/final.contigs.fa
+```
 
-	**Output**
-	```
-	>k141_0 flag=1 multi=3.0000 len=312
-	ATACTGATCTTAGAAAGCTTAGATTTCATCTTTTCAATTGGTGTATCGAATTTAGATACAAATTTAGCTAAGGATTTAGACATTTCAGCTTTATCTACAGTAGAGTATACTTTAATATCTTGAAGTACACCAGTTACTTTAGACTTAATCAAAATTTTACCCAAATCATTAACTAGATCTTTAGAATCAGAATTCTTTTCTACCATTTTAGCGATGATATCTGTTGCATCTTGATCTTCAAATGAAGATCTATATGACATGATAGTTTGACCTTCTTGTAGTTGAGATCCAACTTCTAAACATTCGATGTCT
-	>k141_1570 flag=1 multi=2.0000 len=328
-	GAGCATCGCGCAGAAGTATCTGTACTCCCTTTACTCCACGCAAGTCTTTCTCATACTCACGCTCGACACCCATCTTACCGATATAATCTCCCGGCTGATAGTACTCGTCTTCCTCAATATCACCCTGACTCACCTCTGCAACATCCCCAAGGACATGTGCAGCGATAGCTCGTTGATACTGACGAACACTACGTTTCTGAATATAAAAGCCTGGAAAACGATAGAGTTTCTCTTGGAAGGCGCTAAAGTCTTTATCACTCAATTGGCTCAAGAATAGTTGCTGCGTAAAGCGAGAGTAACCCGGATTCTTACTCCTATCCTTGATCCC
-	[...]
-	```
+**Output**
+```
+>k141_0 flag=1 multi=3.0000 len=312
+ATACTGATCTTAGAAAGCTTAGATTTCATCTTTTCAATTGGTGTATCGAATTTAGATACAAATTTAGCTAAGGATTTAGACATTTCAGCTTTATCTACAGTAGAGTATACTTTAATATCTTGAAGTACACCAGTTACTTTAGACTTAATCAAAATTTTACCCAAATCATTAACTAGATCTTTAGAATCAGAATTCTTTTCTACCATTTTAGCGATGATATCTGTTGCATCTTGATCTTCAAATGAAGATCTATATGACATGATAGTTTGACCTTCTTGTAGTTGAGATCCAACTTCTAAACATTCGATGTCT
+>k141_1570 flag=1 multi=2.0000 len=328
+GAGCATCGCGCAGAAGTATCTGTACTCCCTTTACTCCACGCAAGTCTTTCTCATACTCACGCTCGACACCCATCTTACCGATATAATCTCCCGGCTGATAGTACTCGTCTTCCTCAATATCACCCTGACTCACCTCTGCAACATCCCCAAGGACATGTGCAGCGATAGCTCGTTGATACTGACGAACACTACGTTTCTGAATATAAAAGCCTGGAAAACGATAGAGTTTCTCTTGGAAGGCGCTAAAGTCTTTATCACTCAATTGGCTCAAGAATAGTTGCTGCGTAAAGCGAGAGTAACCCGGATTCTTACTCCTATCCTTGATCCC
+[...]
+```
 
-	It can be a bit difficult to get an overall idea of what is in this file, so in the next step we will use the software [Quast][] to summarize the assembly information.
+It can be a bit difficult to get an overall idea of what is in this file, so in the next step we will use the software [Quast][] to summarize the assembly information.
 
-	---
+---
 
-	## Step 7: Evaluate assembly with Quast
+## Step 7: Evaluate assembly with Quast
 
-	[Quast][] can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:
+[Quast][] can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:
 
-	**Commands**
-	```bash
-	# Time: 2 seconds
-	quast -t 4 megahit_out/final.contigs.fa
-	```
+**Commands**
+```bash
+# Time: 2 seconds
+quast -t 4 megahit_out/final.contigs.fa
+```
 
-	You should expect to see the following as output:
+You should expect to see the following as output:
 
-	**Output**
-	```
-	/home/ubuntu/.conda/envs/cbw-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
+**Output**
+```
+/home/ubuntu/.conda/envs/module8-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
 
-	Version: 5.0.2
+Version: 5.0.2
 
-	System information:
-	  OS: Linux-5.11.0-1017-aws-x86_64-with-debian-bullseye-sid (linux_64)
-	  Python version: 3.7.10
-	  CPUs number: 4
+System information:
+  OS: Linux-5.11.0-1017-aws-x86_64-with-debian-bullseye-sid (linux_64)
+  Python version: 3.7.10
+  CPUs number: 4
 
-	Started: 2021-09-30 14:54:58
+Started: 2021-09-30 14:54:58
 
-	[...]
+[...]
 
-	Finished: 2021-09-30 14:55:00
-	Elapsed time: 0:00:01.768326
-	NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
+Finished: 2021-09-30 14:55:00
+Elapsed time: 0:00:01.768326
+NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
 
-	Thank you for using QUAST!
-	```
+Thank you for using QUAST!
+```
 
-	Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
+Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
 
-	<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
 
-	This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
+This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
 
-	### Step 7: Questions
+### Step 7: Questions
 
-	1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
-	2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What is the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
-	3. Is there another type of source for this RNA fragment that could explain it's length? Possibly a [Virus](https://en.wikipedia.org/wiki/Coronavirus#Genome)?
-	4. Also try looking at the QUAST report (<http://IP_ADDRESS/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
+1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
+2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What is the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
+3. Is there another type of source for this RNA fragment that could explain it's length? Possibly a [Virus](https://en.wikipedia.org/wiki/Coronavirus#Genome)?
+4. Also try looking at the QUAST report (<http://IP_ADDRESS/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
 
-	---
+---
 
-	## Step 8: Use BLAST to look for existing organisms
+## Step 8: Use BLAST to look for existing organisms
 
-	In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
+In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
 
-	**Commands**
-	```
-	# Time: seconds
-	seqkit sort --by-length --reverse megahit_out/final.contigs.fa | seqkit head -n 50 > contigs-50.fa
-	blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -html -out blast_results.html
-	```
+**Commands**
+```
+# Time: seconds
+seqkit sort --by-length --reverse megahit_out/final.contigs.fa | seqkit head -n 50 > contigs-50.fa
+blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -html -out blast_results.html
+```
 
-	As output you should see something like (`blastn` won't print any output):
+As output you should see something like (`blastn` won't print any output):
 
-	**Output**
-	```
-	[INFO] read sequences ...
-	[INFO] 3112 sequences loaded
-	[INFO] sorting ...
-	[INFO] output ...
-	```
+**Output**
+```
+[INFO] read sequences ...
+[INFO] 3112 sequences loaded
+[INFO] sorting ...
+[INFO] output ...
+```
 
-	Here, we first use [seqkit][] to sort all contigs by length (`seqkit sort --by-length ...`) and we then extract only the top **50** longest contigs (`seqkit head -n 50`) and write these to a file **contigs-50.fa** (`> contigs-50.fa`).
+Here, we first use [seqkit][] to sort all contigs by length (`seqkit sort --by-length ...`) and we then extract only the top **50** longest contigs (`seqkit head -n 50`) and write these to a file **contigs-50.fa** (`> contigs-50.fa`).
 
-	*Note that the pipe `|` character will take the output of one command (`seqkit sort --by-length ...`, which sorts sequences in the file by length) and forward it into the input of another command (`seqkit head -n 50`, which takes only the first 50 sequences from the file). The greater-than symbol `>` takes the output of one command `seqkit head ...` and writes it to a file (named `contigs-50.fa`).*
+*Note that the pipe `|` character will take the output of one command (`seqkit sort --by-length ...`, which sorts sequences in the file by length) and forward it into the input of another command (`seqkit head -n 50`, which takes only the first 50 sequences from the file). The greater-than symbol `>` takes the output of one command `seqkit head ...` and writes it to a file (named `contigs-50.fa`).*
 
-	The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The (`-html -out blast_results.html`) tells BLAST to write it's results as an HTML file.
+The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The (`-html -out blast_results.html`) tells BLAST to write it's results as an HTML file.
 
 To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
@@ -539,11 +541,13 @@ To view these results, please browse to <http://IP-ADDRESS/module8_workspace/ana
 <a name="final"></a>
 # 5. Final words
 
-Congratulations, you've finished this lab. As a final check on your results, you can use [NCBI's online tool](https://blast.ncbi.nlm.nih.gov/Blast.cgi) to perform a BLAST on our top 50 contigs to see what matches to the 
+Congratulations, you've finished this lab. As a final check on your results, you can use [NCBI's online tool](https://blast.ncbi.nlm.nih.gov/Blast.cgi) to perform a BLAST on our top 50 contigs to see what matches to the contigs.
 
 The source of the data and patient background information can be found at <https://doi.org/10.1038/s41586-020-2008-3> (**clicking this link will reveal what the illness is**). The only modification made to the original metatranscriptomic reads was to reduce them to 10% of the orginal file size.
 
-Also, while we used **megahit** to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the [SPAdes](https://cab.spbu.ru/software/spades/) suite of tools (such as [metaviralspades](https://doi.org/10.1093/bioinformatics/btaa490) or [rnaspades](https://doi.org/10.1093/gigascience/giz100)) may be useful to look into for this sort of data analysis.
+While we used **megahit** to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the [SPAdes](https://cab.spbu.ru/software/spades/) suite of tools (such as [metaviralspades](https://doi.org/10.1093/bioinformatics/btaa490) or [rnaspades](https://doi.org/10.1093/gigascience/giz100)) may be useful to look into for this sort of data analysis.
+
+If you wish to see how the data (and databases) were generated for this example, please refer to the [CourseData/IDE_data/module8/data-generation.md](CourseData/IDE_data/module8/data-generation.md) file.
 
 As a final note, NCBI also performs taxonomic analysis using their own software and you can actually view these using Krona directly from NCBI. Please click [here](https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR10971381) and go to the *Analysis* tab for NCBI's taxonomic analysis of this sequence data (**clicking this link will reveal what the illness is**).
 
