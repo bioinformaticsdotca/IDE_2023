@@ -1,0 +1,13 @@
+name: module8
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - fastp
+  - multiqc
+  - kat
+  - kraken2
+  - megahit
+  - quast
+  - blast
