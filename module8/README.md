@@ -210,7 +210,7 @@ fastp v0.23.2, time used: 22 seconds
 You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
 
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
 
 This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please anser the following questions.
 
@@ -231,7 +231,7 @@ Command documentation is available [here](http://kat.readthedocs.io/en/latest/us
 
 KAT works by breaking down each read into small fragements of length *k*, k-mers, and compares them to a k-mer database of the human reference genome. Subsequently, the complete read is either assigned into a matched or unmatched (filtered) file if 10% of the k-mers in the read have been found in the human database.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/kat.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/kat.png?raw=true" alt="p2" width="750" />
 
 Let's run KAT now.
 
@@ -375,17 +375,17 @@ Instead of reading a text-based files like above, we can visualize this informat
 1. Download the `kraken_report.txt` to your local machine from <http://IP-ADDRESS/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
 2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
 
-   ![pavian-upload.png][]
+   <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-upload.png?raw=true" alt="p2" width="750" />
 
 3. Select **Generate HTML report ...** to generate the Pavian report.
 
-   ![pavian-generate-report.png][]
+   <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-generate-report.png?raw=true" alt="p2" width="750" />
 
 4. Open the generated report HTML file in your web browser.
 
 If all the steps are completed successfully then the report you should see should look like the following:
 
-![pavian-report.png][]
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-report.png?raw=true" alt="p2" width="750" />
 
 If something did not work, you can alternatively view a pre-computed report at <http://IP-ADDRESS/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
 
@@ -498,7 +498,7 @@ Thank you for using QUAST!
 
 Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
 
 This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
 
@@ -542,7 +542,7 @@ The next command will run [BLAST][] on these top 50 longest contigs using a pre-
 To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
 
 
 ### Step 8: Questions
