@@ -347,7 +347,7 @@ Let's also take a look at `kraken_out.txt`. This file contains the kraken2 resul
 
 **Commands**
 ```bash
-column -s$'\t' -nt kraken_out.txt | less -S
+column -s$'\t' -t kraken_out.txt | less -S
 ```
 
 **Output**
