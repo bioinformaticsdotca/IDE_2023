@@ -210,7 +210,7 @@ fastp v0.23.2, time used: 22 seconds
 You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
 
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
 
 This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please anser the following questions.
 
@@ -231,7 +231,7 @@ Command documentation is available [here](http://kat.readthedocs.io/en/latest/us
 
 KAT works by breaking down each read into small fragements of length *k*, k-mers, and compares them to a k-mer database of the human reference genome. Subsequently, the complete read is either assigned into a matched or unmatched (filtered) file if 10% of the k-mers in the read have been found in the human database.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/kat.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/kat.png?raw=true" alt="p2" width="750" />
 
 Let's run KAT now.
 
@@ -294,7 +294,7 @@ Lets run the following command in our current directory to classify our reads ag
 **Commands**
 ```bash
 # Time: 1 minute
-kraken2 --db ~/CourseData/IDE_data/module8/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified.fastq filtered.in.R1.fastq filtered.in.R2.fastq
+kraken2 --db ~/CourseData/IDE_data/module8/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified#.fastq filtered.in.R1.fastq filtered.in.R2.fastq
 ```
 
 This should produce output similar to below:
@@ -347,7 +347,7 @@ Let's also take a look at `kraken_out.txt`. This file contains the kraken2 resul
 
 **Commands**
 ```bash
-column -s$'\t' -nt kraken_out.txt | less -S
+column -s$'\t' -t kraken_out.txt | less -S
 ```
 
 **Output**
@@ -372,17 +372,22 @@ More information on interpreting this file can be found at <https://github.com/D
 
 Instead of reading a text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
-1. Download the `kraken_report.txt` to your local machine.
+1. Download the `kraken_report.txt` to your local machine from <http://IP-ADDRESS/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
 2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
 
-   ![pavian-upload.png][]
+   <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-upload.png?raw=true" alt="p2" width="750" />
+
 3. Select **Generate HTML report ...** to generate the Pavian report.
-   ![pavian-generate-report.png][]
+
+   <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-generate-report.png?raw=true" alt="p2" width="750" />
+
 4. Open the generated report HTML file in your web browser.
 
 If all the steps are completed successfully then the report you should see should look like the following:
 
-![pavian-report.png][]
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-report.png?raw=true" alt="p2" width="750" />
+
+If something did not work, you can alternatively view a pre-computed report at <http://IP-ADDRESS/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
 
 ### Step 5: Questions
 
@@ -471,21 +476,21 @@ You should expect to see the following as output:
 
 **Output**
 ```
-/home/ubuntu/.conda/envs/module8-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
+/usr/local/conda/envs/module8-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
 
-Version: 5.0.2
+Version: 5.2.0
 
 System information:
-  OS: Linux-5.11.0-1017-aws-x86_64-with-debian-bullseye-sid (linux_64)
-  Python version: 3.7.10
+  OS: Linux-5.19.0-1022-aws-x86_64-with-glibc2.35 (linux_64)
+  Python version: 3.9.16
   CPUs number: 4
 
-Started: 2021-09-30 14:54:58
+Started: 2023-04-05 11:56:09
 
 [...]
 
-Finished: 2021-09-30 14:55:00
-Elapsed time: 0:00:01.768326
+Finished: 2023-04-05 11:56:12
+Elapsed time: 0:00:02.443741
 NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
 
 Thank you for using QUAST!
@@ -493,7 +498,7 @@ Thank you for using QUAST!
 
 Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
 
 This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
 
@@ -512,8 +517,8 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
 
 **Commands**
-```
-# Time: seconds
+```bash
+# Time: 1 second
 seqkit sort --by-length --reverse megahit_out/final.contigs.fa | seqkit head -n 50 > contigs-50.fa
 blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -html -out blast_results.html
 ```
@@ -537,7 +542,7 @@ The next command will run [BLAST][] on these top 50 longest contigs using a pre-
 To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
 
 
 ### Step 8: Questions
