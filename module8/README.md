@@ -32,10 +32,12 @@ This tutorial aims to introduce a variety of software and concepts related to de
 * [multiqc][]
 * [KAT][]
 * [Kraken2][]
-* [Krona][]
+* [Pavian][]
 * [MEGAHIT][]
 * [Quast][]
 * [NCBI blast][]
+
+The workshop machines already have this software installed within a conda environment, but to perform this analysis later on, you can make use of the conda environment located at [environment.yml](environment.yml) to install the necessary software.
 
 <a name="setup"></a>
 # 3. Exercise setup
@@ -351,31 +353,28 @@ We will use this information in the next step to build our visualization.
 
 ---
 
-## Step 5: Generate an interactive html-based report using Krona
+## Step 5: Generate an interactive html-based report using Pavian
 
-Instead of reading a text-based files like above, we can visualize this information using [Krona][], which will construct a multi-layered pie chart from our data. To generate a Krona figure, we first must make a file, `krona_input.txt`, containing a list of read IDs and the taxonomic IDs these reads were assigned to. Luckily, this information is all available in the `kraken_out.txt` file above, we just have to cut the unneeded columns out of this file (using the command `cut`). Once we do this we can then run `ktImportTaxonomy` to create the figure.
+Instead of reading a text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
-To do this, please run the following commands.
+1. Download the `kraken_report.txt` to your local machine.
+2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
 
-**Commands**
-```bash
-# Time: 1 second
-cut -f2,3 kraken_out.txt > krona_input.txt
+   ![pavian-upload.png][]
+3. Select **Generate HTML report ...** to generate the Pavian report.
+   ![pavian-generate-report.png][]
+4. Open the generated report HTML file in your web browser.
 
-# Time: 30 seconds
-ktImportTaxonomy krona_input.txt -o krona_report.html
-```
+If all the steps are completed successfully then the report you should see should look like the following:
 
-* The command `cut -f2,3 kraken_out.txt > krona_input.txt` will cut columns **2** and **3** (the read ID and NCBI Taxonomy ID) from the file `kraken_out.txt` and write the values into `krona_input.txt`.
-* The command `ktImportTaxonomy krona_input.txt -o krona_report.html` is part of the [Krona][] software and builds a multi-level pie-chart from the reads and taxonomy assignments (it uses a local version of the NCBI Taxonomy Database installed on your machines to map numbers like `29465` to the human-readable name like `Veillonella`).
-
-	Let’s look at what Krona generated. Return to your web browser and go to <http://IP-ADDRESS/module8_workspace/analysis/> to see the new files added in the `module8_workspace/analysis` directory. Click on **final_web_report.html**. *Note: if this is not working, what you should see is shown in the image [krona-all.png][]*.
+![pavian-report.png][]
 
 ### Step 5: Questions
 
-1. What does the distribution of taxa found in the reads look like? Is there any pathogen here that could be consistent with a cause for the patients symptoms?
-2. This data was derived from RNA (instead of DNA) and some viruses are RNA-based. Take a look into the **Viruses** category in Krona (by expanding this category). Is there anything here that could be consistent with the patient's symptoms? *Note: if you cannot expand the **Viruses** category what you should see is shown in this image [krona-viruses.png][].*.
-3. Given the results of Krona, can you form a hypothesis as to the cause of the patient's symptoms?
+1. What are the percentages of **Unclassified**, **Microbial**, **Bacterial**, **Viral**, **Fungal**, and **Protozoan** reads in this dataset?
+2. Scroll down to the **Classification results** section of the report and flip through the **Bacteria**, **Viruses**, and **Eukaryotes** tabs. What is the top organism in each of these three categories and how many reads?
+3. This data was derived from RNA (instead of DNA) and some viruses are RNA-based. If we focus in on the **Viruses** category, is there anything here that could be consistent with the patient's symptoms?
+4. Given the results of Pavian, can you form a hypothesis as to the cause of the patient's symptoms?
 
 ---
 
@@ -564,6 +563,10 @@ As a final note, NCBI also performs taxonomic analysis using their own software 
 [kat-overview]: images/kat.png
 [krona-all.png]: images/krona-all.png
 [krona-viruses.png]: images/krona-viruses.png
+[pavian-upload.png]: images/pavian-upload.png
+[pavian-generate-report.png]: images/pavian-generate-report.png
+[pavian-report.png]: images/pavian-report.png
+[Pavian]: https://fbreitwieser.shinyapps.io/pavian/
 [quast-contigs.png]: images/quast-contigs.png
 [Quast]: http://quast.sourceforge.net/quast
 [blast-report.png]: images/blast-report.png
