@@ -16,6 +16,16 @@ modified: April 4, 2023
 2. [Software](#software)    
 3. [Setup](#setup)
 4. [Exercise](#exercise)
+    1. [Patient Background](#exercise-background)
+    2. [Overview](#exercise-overview)
+    3. [Step 1: Examine the reads](#exercise-examine-reads)
+    4. [Step 2: Clean and examine quality of the reads](#exercise-quality-reads)
+    5. [Step 3: Host read filtering](#exercise-host-filtering)
+    6. [Step 4: Classify reads using Kraken2 database](#exercise-classify-kraken)
+    7. [Step 5: Generate an interactive html-based report using Pavian](#exercise-pavian)
+    8. [Step 6: Metatranscriptomic assembly](#exercise-metatranscriptomic-assembly)
+    9. [Step 7: Evaluate assembly with Quast](#exercise-evaluate-assembly)
+    10. [Step 8: Using BLAST to look for existing organisms](#exercise-blast)
 5. [Final words](#final)
 
 <a name="intro"></a>
@@ -97,6 +107,7 @@ This should print a number like XX.XX.XX.XX. Once you have your address, try goi
 <a name="exercise"></a>
 # 4. Exercise
 
+<a name="exercise-background"></a>
 ## 4.1. Patient Background:
 
 A 41-year-old man was admitted to a hospital 6 days after the onset of disease. He reported fever, chest tightness, unproductive cough, pain and weakness. Preliminary investigations excluded the presence of influenza virus, *Chlamydia pneumoniae*, *Mycoplasma pneumoniae*, and other common respiratory pathogens. After 3 days of treatment the patient was admitted to the intensive care unit, and 6 days following admission the patient was transferred to another hospital.
@@ -105,6 +116,7 @@ To further investigate the cause of illness, a sample of bronchoalveolar lavage 
 
 *Note: The patient information and data was derived from a real study (shown at the end of the lab).* 
 
+<a name="exercise-overview"></a>
 ## 4.2. Overview
 
 We will proceed through the following steps to attempt to diagnose the situation.
@@ -117,6 +129,7 @@ We will proceed through the following steps to attempt to diagnose the situation
 
 ---
 
+<a name="exercise-examine-reads"></a>
 ## Step 1: Examine the reads
 
 Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic seqencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the DNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
@@ -162,6 +175,7 @@ FFFFFFFAFFFFFFAFFFFFF6FFFFFFFFF/FFFFFFFFFFFF/FFFFFFFFFFFFFFFFFAFFFFFFFFFFFAFFFFF
 
 These reads are in the [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format), which stores a single read as a block of 4 lines: **identifier**, **sequence**, **+ (separator)**, **quality scores**. In this file, we can see a lot of lines with `NNN...` for the sequence letters, which means that these portions of the read are not determined. We will remove some of these undetermined (and uninformative) reads in the next step.
 
+<a name="exercise-quality-reads"></a>
 ## Step 2: Clean and examine quality of the reads
 
 As we saw from looking at the data, reads that come directly off of a sequencer may be of variable quality which might impact the downstream analysis. We will use the software [fastp][] to both clean and trim reads (removing poor-quality reads or sequencing adapters) as well as examine the quality of the reads. To do this please run the following (the expected time of this command is shown as `# Time: 30 seconds`).
@@ -196,7 +210,7 @@ fastp v0.23.2, time used: 22 seconds
 You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
 
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
 
 This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please anser the following questions.
 
@@ -208,6 +222,7 @@ This should show an overview of the quality of the reads before and after filter
 
 ---
 
+<a name="exercise-host-filtering"></a>
 ## Step 3: Host read filtering
 
 The next step is to remove any host reads (in this case Human reads) from our dataset as we are not focused on examining host reads. There are several different tools that can be used to filter out host reads such as Kraken2, BLAST, KAT and others. In this demonstration, we have selected to run KAT followed by Kraken2, but you could likely accomplish something similar directly in Kraken2.
@@ -216,7 +231,7 @@ Command documentation is available [here](http://kat.readthedocs.io/en/latest/us
 
 KAT works by breaking down each read into small fragements of length *k*, k-mers, and compares them to a k-mer database of the human reference genome. Subsequently, the complete read is either assigned into a matched or unmatched (filtered) file if 10% of the k-mers in the read have been found in the human database.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module8/images/kat.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/kat.png?raw=true" alt="p2" width="750" />
 
 Let's run KAT now.
 
@@ -267,6 +282,7 @@ These are the set of reads minus any reads that matched the human genome. The me
 
 ---
 
+<a name="exercise-classify-kraken"></a>
 ## Step 4: Classify reads using Kraken2 database
 
 Now that we have most, if not all, host reads filtered out, it’s time to classify the remaining reads to identify the likely taxonomic category they belong to.
@@ -278,7 +294,7 @@ Lets run the following command in our current directory to classify our reads ag
 **Commands**
 ```bash
 # Time: 1 minute
-kraken2 --db ~/CourseData/IDE_data/module8/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified#.fastq filtered.in.R1.fastq filtered.in.R2.fastq
+kraken2 --db ~/CourseData/IDE_data/module8/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified.fastq filtered.in.R1.fastq filtered.in.R2.fastq
 ```
 
 This should produce output similar to below:
@@ -327,7 +343,7 @@ More details about how to read this report can be found at <https://github.com/D
 
 ### Examine `kraken_out.txt`
 
-Before we visualize the data, let's take a look at `kraken_out.txt` since we will use this as input for visualization. This file contains the kraken2 results, but divided up into a classification for every read.
+Let's also take a look at `kraken_out.txt`. This file contains the kraken2 results, but divided up into a classification for every read.
 
 **Commands**
 ```bash
@@ -349,10 +365,9 @@ This shows us a taxonomic classification for every read (one read per line). For
 
 More information on interpreting this file can be found at <https://github.com/DerrickWood/kraken2/wiki/Manual#standard-kraken-output-format>.
 
-We will use this information in the next step to build our visualization.
-
 ---
 
+<a name="exercise-pavian"></a>
 ## Step 5: Generate an interactive html-based report using Pavian
 
 Instead of reading a text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
@@ -378,6 +393,7 @@ If all the steps are completed successfully then the report you should see shoul
 
 ---
 
+<a name="exercise-metatranscriptomic-assembly"></a>
 ## Step 6: Metatranscriptomic assembly
 
 In order to investigate the data further we will assemble the metatranscriptome using the software [MEGAHIT][]. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:
@@ -440,6 +456,7 @@ It can be a bit difficult to get an overall idea of what is in this file, so in 
 
 ---
 
+<a name="exercise-evaluate-assembly"></a>
 ## Step 7: Evaluate assembly with Quast
 
 [Quast][] can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:
@@ -476,7 +493,7 @@ Thank you for using QUAST!
 
 Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
 
 This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
 
@@ -489,6 +506,7 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 
 ---
 
+<a name="exercise-blast"></a>
 ## Step 8: Use BLAST to look for existing organisms
 
 In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
@@ -519,7 +537,7 @@ The next command will run [BLAST][] on these top 50 longest contigs using a pre-
 To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
 
 
 ### Step 8: Questions
