@@ -294,7 +294,7 @@ Lets run the following command in our current directory to classify our reads ag
 **Commands**
 ```bash
 # Time: 1 minute
-kraken2 --db ~/CourseData/IDE_data/module8/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified.fastq filtered.in.R1.fastq filtered.in.R2.fastq
+kraken2 --db ~/CourseData/IDE_data/module8/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified#.fastq filtered.in.R1.fastq filtered.in.R2.fastq
 ```
 
 This should produce output similar to below:
