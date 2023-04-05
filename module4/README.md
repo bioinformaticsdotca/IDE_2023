@@ -78,11 +78,12 @@ Next, we need to switch to the version of SIGNAL that we will use for this works
 git checkout single-conda
 ```
 
-Finally, we need to activate the conda environment containing the software SIGNAL requires, and create a symlink to the reference files SIGNAL needs:
+Finally, we need to activate the conda environment containing the software SIGNAL requires, and create a symlink to the reference files SIGNAL needs. You can also review the SIGNAL help screen to see our options:
 
 ```
 conda activate signalcovtools
 ln -s ~/CourseData/IDE_data/module4/data/
+python signalexe.py -h
 ```
 
 In order to run SIGNAL, we first need to prepare two files: a configuration file, where all of our assembly parameters will be assigned, and a sample table, which will list the indivdual samples and the location of corresponding R1 and R2 FASTQs. Remember that our sequencing data is located one directory level up (i.e., `../cbw_demo_run/`). Generating the required files can all be done using the following command:
@@ -95,13 +96,7 @@ If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_samp
 
 ## Reference-based assembly using SIGNAL
 
-Prior to executing SIGNAL, ensure that the current conda environment active (found in brackets beside your username) says **"(signalcovtools)"** and not **"(base)"**. If in the event you see the latter, run:
-
-```
-conda activate signalcovtools
-```
-
-Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following (`--data` can be used to specify the location of the data dependencies that SIGNAL uses):
+Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
 
 ```
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
