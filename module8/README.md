@@ -379,7 +379,7 @@ Instead of reading a text-based files like above, we can visualize this informat
 
 3. Select **Generate HTML report ...** to generate the Pavian report.
 
-   <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-generate-report.png?raw=true" alt="p2" width="750" />
+   <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-generate-report.png?raw=true" alt="p2" width="300" />
 
 4. Open the generated report HTML file in your web browser.
 
