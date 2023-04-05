@@ -2,10 +2,10 @@
 layout: tutorial_page
 title: CBW Infectious Disease Epidemiology 2023
 header1: Workshop Pages for Students
-header2: Informatics for High-throughput Sequencing Data Analysis 2019 Module 6 Lab
+header2: CBW Infectious Disease Epidemiology 2023 Module 4 Lab
 home: https://bioinformaticsdotca.github.io/
-description: CBW IDE 2023 Module 3 - Virus Sequencing
-author: Jared Simpson
+description: CBW IDE 2023 Module 4 - Virus Sequencing
+author: Jared Simpson and Jalees Nasir
 modified: March 21, 2023
 ---
 
