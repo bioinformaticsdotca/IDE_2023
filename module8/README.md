@@ -372,17 +372,22 @@ More information on interpreting this file can be found at <https://github.com/D
 
 Instead of reading a text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
-1. Download the `kraken_report.txt` to your local machine.
+1. Download the `kraken_report.txt` to your local machine from <http://IP-ADDRESS/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
 2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
 
    ![pavian-upload.png][]
+
 3. Select **Generate HTML report ...** to generate the Pavian report.
+
    ![pavian-generate-report.png][]
+
 4. Open the generated report HTML file in your web browser.
 
 If all the steps are completed successfully then the report you should see should look like the following:
 
 ![pavian-report.png][]
+
+If something did not work, you can alternatively view a pre-computed report at <http://IP-ADDRESS/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
 
 ### Step 5: Questions
 
@@ -471,21 +476,21 @@ You should expect to see the following as output:
 
 **Output**
 ```
-/home/ubuntu/.conda/envs/module8-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
+/usr/local/conda/envs/module8-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
 
-Version: 5.0.2
+Version: 5.2.0
 
 System information:
-  OS: Linux-5.11.0-1017-aws-x86_64-with-debian-bullseye-sid (linux_64)
-  Python version: 3.7.10
+  OS: Linux-5.19.0-1022-aws-x86_64-with-glibc2.35 (linux_64)
+  Python version: 3.9.16
   CPUs number: 4
 
-Started: 2021-09-30 14:54:58
+Started: 2023-04-05 11:56:09
 
 [...]
 
-Finished: 2021-09-30 14:55:00
-Elapsed time: 0:00:01.768326
+Finished: 2023-04-05 11:56:12
+Elapsed time: 0:00:02.443741
 NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
 
 Thank you for using QUAST!
@@ -512,8 +517,8 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
 
 **Commands**
-```
-# Time: seconds
+```bash
+# Time: 1 second
 seqkit sort --by-length --reverse megahit_out/final.contigs.fa | seqkit head -n 50 > contigs-50.fa
 blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -html -out blast_results.html
 ```
