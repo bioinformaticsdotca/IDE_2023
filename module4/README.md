@@ -24,7 +24,7 @@ In this lab we will perform reference-based analysis of Severe Acute Respiratory
 
 ## Data Sets
 
-In this lab we will use subset of data from the COVID-19 Genomics UK COnsortium (COG-UK) to demonstrate analysis of SARS-CoV-2. This data set consists of short-read sequencing reads collected as part of the COVID-19 Pandemic response and will be a mix of different variants of concern (VOCs) up to the end of summer 2021. This would include predominantly Alpha (also known as PANGO lineage B.1.1.7; first designated December 2020) and Delta (also known as PANGO lineage B.1.617.2; first designated in May 2021) variants. We have provided publicly available Illumina short-reads and you will run SARS-CoV-2 Illumina GeNome Assembly Line (`SIGNAL`) with additional quality control and assessment using `ncov-tools`. Prior to the workshop the instructors downsampled the sequencing data from ~10,000x coverage to ~200x coverage to reduce the time it takes to run the analysis; however, running the pipelines use the exact same set of commands and the results you will obtain are comparable to assembling using the full dataset.
+In this lab we will use subset of data from the COVID-19 Genomics UK Consortium (COG-UK) to demonstrate analysis of SARS-CoV-2. This data set consists of short-read sequencing reads collected as part of the COVID-19 Pandemic response and will be a mix of different variants of concern (VOCs) up to the end of summer 2021. This would include predominantly Alpha (also known as PANGO lineage B.1.1.7; first designated December 2020) and Delta (also known as PANGO lineage B.1.617.2; first designated in May 2021) variants. We have provided publicly available Illumina short-reads and you will run SARS-CoV-2 Illumina GeNome Assembly Line (`SIGNAL`) with additional quality control and assessment using `ncov-tools`. Prior to the workshop the instructors downsampled the sequencing data from ~10,000x coverage to ~200x coverage to reduce the time it takes to run the analysis; however, running the pipelines use the exact same set of commands and the results you will obtain are comparable to assembling using the full dataset.
 
 In the following instructions the commands you should run are shown in code blocks like so:
 
@@ -43,7 +43,7 @@ mkdir -p workspace/module4
 cd workspace/module4
 ```
 
-From within your `module4` directory, you can create a symlink which is a shortcut in this directory to where the raw sequencing data is stored:
+From within your `module4` directory, you can create a symlink which is a shortcut to where the raw sequencing data is stored:
 
 ```
 ln -s ~/CourseData/IDE_data/module4/cbw_demo_run/
@@ -55,17 +55,17 @@ You can view the contents of this directory using `ls`:
 ls cbw_demo_run
 ```
 
-You should see 35 pairs of files. Each pair of files is the data for a single sample. The first half of the Illumina paired-end reads is stored in files ending in `_R1.fastq.gz` and the second half in `_R2.fastq.gz`. The samples are identified with _accession_ numbers like `ERR5338522`, a unique identifier of a sample that has been sent to a public database. You can view the contents of one of the data files by decompressing it and piping it to `head`:
+You should see 35 pairs of files. Each pair of files is the raw sequencing data for a single sample. The first half of the Illumina paired-end reads is stored in files ending in `_R1.fastq.gz` and the second half in `_R2.fastq.gz`. The samples are identified with _accession_ numbers like `ERR5338522`, a unique identifier of a sample that has been deposited in a public database. You can view the contents of one of the data files by decompressing it and piping it to `head`:
 
 ```
 zcat cbw_demo_run/ERR5338522_R1.fastq.gz | head
 ```
 
-Ask yourself what the different lines in a FASTQ file mean. If you can't figure it out ask and instructor or on slack!
+*Question*: what do the different lines in a FASTQ file mean? If you can't figure it out ask an instructor or on slack!
 
 ## Running SIGNAL
 
-The analysis of SARS-CoV-2 sequencing data is complex and uses a number of different tools that are run sequentially in a _pipeline_. The pipeline we will use to analyze this data is called `SIGNAL`. First, we need to clone a copy of SIGNAL from github and then entire the directory this command creates:
+The analysis of SARS-CoV-2 sequencing data is complex and uses a number of different tools that are run sequentially in a _pipeline_. The pipeline we will use to analyze this data is called `SIGNAL`. First, we need to clone a copy of SIGNAL from github and then enter the directory this command creates:
 
 ```
 git clone --recursive https://github.com/jaleezyy/covid-19-signal
@@ -101,20 +101,18 @@ Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 s
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
 ```
 
-We can now start assessing the quality of our assembly. We typically measure the quality of an assembly using a few factors:
+This will take around 30-45 minutes to run, so is a good time for a short break.
 
-- Depth of coverage: The more reads collaborating the base call across the SARS-CoV-2 genome, the more confidence we have in identifying the variant should the base call differ from the reference genmome.
-- Completeness: Most of the genome should be assembled with a large proportion of reads having covered the span of the SARS-CoV-2 genome
-- Accuracy: The assembly should have few failing QC metrics including those for insertions/deletions. Given iVar and Freebayes tools are used for reference assembly and variant calling, we can observe differences between the two methods
+## Quality control and assessment
 
-## Additional quality control and assessments using ncov-tools
-
-Similarly to how our configuatrion file was used as input, we can similarly run `ncov-tools` through SIGNAL. Run the following:
+Now that SIGNAL is complete, we will run an additional step to generate some quality control results:
 
 ```
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 ncov_tools
 ```
 
-## Interpretation of the data
+### Coverage analysis
 
-TBD
+We can now start exploring the results. First we will look at the depth of coverage to make sure that each viral genome was covered by enough sequencing reads to call an accurate consensus sequence. Open your web browser and navigate to `http://main.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/` where xx is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the `ncov-tools-results/plots/` subdirectory you will find a file called `cbw_demo_run_results_dir_depth_by_position.pdf`. Open this file. This file contains plots of the coverage depth for each of the 35 samples we analyzed. Explore the results and try to understand what the coverage patterns mean. What does the sharp drop in coverage for sample `ERR6035561` mean? What about the uneven coverage in sample `ERR5508530`?
+
+
