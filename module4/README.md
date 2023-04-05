@@ -95,6 +95,12 @@ If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_samp
 
 ## Reference-based assembly using SIGNAL
 
+Prior to executing SIGNAL, ensure that the current conda environment active (found in brackets beside your username) says **"(signalcovtools)"** and not **"(base)"**. If in the event you see the latter, run:
+
+```
+conda activate signalcovtools
+```
+
 Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following (`--data` can be used to specify the location of the data dependencies that SIGNAL uses):
 
 ```
