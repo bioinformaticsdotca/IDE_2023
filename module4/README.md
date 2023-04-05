@@ -116,7 +116,7 @@ python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 ncov_tools
 
 We can now start exploring the results. First we will look at the depth of coverage to make sure that each viral genome was covered by enough sequencing reads to call an accurate consensus sequence. 
 
-Open your web browser and navigate to `http://xx/module4/covid-19-signal/cbw_demo_run_results_dir/` where **xx** is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the `ncov-tools-results/plots/` subdirectory you will find a file called `cbw_demo_run_results_dir_depth_by_position.pdf`. Open this file. 
+Open your web browser and navigate to `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/` where **xx** is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the `ncov-tools-results/plots/` subdirectory you will find a file called `cbw_demo_run_results_dir_depth_by_position.pdf`. Open this file. 
 
 This file contains plots of the coverage depth for each of the 35 samples we analyzed. 
 
