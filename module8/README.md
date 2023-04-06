@@ -18,14 +18,16 @@ modified: April 4, 2023
 4. [Exercise](#exercise)
     1. [Patient Background](#exercise-background)
     2. [Overview](#exercise-overview)
-    3. [Step 1: Examine the reads](#exercise-examine-reads)
-    4. [Step 2: Clean and examine quality of the reads](#exercise-quality-reads)
-    5. [Step 3: Host read filtering](#exercise-host-filtering)
-    6. [Step 4: Classify reads using Kraken2 database](#exercise-classify-kraken)
-    7. [Step 5: Generate an interactive html-based report using Pavian](#exercise-pavian)
-    8. [Step 6: Metatranscriptomic assembly](#exercise-metatranscriptomic-assembly)
-    9. [Step 7: Evaluate assembly with Quast](#exercise-evaluate-assembly)
-    10. [Step 8: Using BLAST to look for existing organisms](#exercise-blast)
+    3. [Assembly-free approach](#assembly-free)
+        1. [Step 1: Examine the reads](#exercise-examine-reads)
+        2. [Step 2: Clean and examine quality of the reads](#exercise-quality-reads)
+        3. [Step 3: Host read filtering](#exercise-host-filtering)
+        4. [Step 4: Classify reads using Kraken2 database](#exercise-classify-kraken)
+        5. [Step 5: Generate an interactive html-based report using Pavian](#exercise-pavian)
+    4. [Assembly-based approach](#assembly-based)
+        1. [Step 6: Metatranscriptomic assembly](#exercise-metatranscriptomic-assembly)
+        2. [Step 7: Evaluate assembly with Quast](#exercise-evaluate-assembly)
+        3. [Step 8: Using BLAST to look for existing organisms](#exercise-blast)
 5. [Final words](#final)
 
 <a name="intro"></a>
@@ -93,16 +95,9 @@ Kraken version 2.1.2
 Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)
 ```
 
-## 3.3. Find your IP address
+## 3.3. Verify your workshop machine URL
 
-If you do not have your IP address on-hand, please follow the below steps to find it again:
-
-**Commands**
-```bash
-curl http://checkip.amazonaws.com
-```
-
-This should print a number like XX.XX.XX.XX. Once you have your address, try going to <http://IP-ADDRESS> and clicking the link for **module8_workspace**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab.
+This exercise will produce output files intended to be viewed in a web browser. These should be accessible by going to <http://xx.uhn-hpc.ca> in your web browser where **xx** is your particular number (like 01, 02, etc). If you are able to view a list of files and directories, try clicking the link for **module8_workspace**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab.
 
 <a name="exercise"></a>
 # 4. Exercise
@@ -129,8 +124,13 @@ We will proceed through the following steps to attempt to diagnose the situation
 
 ---
 
+<a name="assembly-free"></a>
+## Assembly-free approach
+
+The first set of steps follows through an assembly-free approach where we will perform taxonomic classification of the reads without constructing a metagenomics assembly.
+
 <a name="exercise-examine-reads"></a>
-## Step 1: Examine the reads
+### Step 1: Examine the reads
 
 Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic seqencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the DNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
 
@@ -176,7 +176,7 @@ FFFFFFFAFFFFFFAFFFFFF6FFFFFFFFF/FFFFFFFFFFFF/FFFFFFFFFFFFFFFFFAFFFFFFFFFFFAFFFFF
 These reads are in the [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format), which stores a single read as a block of 4 lines: **identifier**, **sequence**, **+ (separator)**, **quality scores**. In this file, we can see a lot of lines with `NNN...` for the sequence letters, which means that these portions of the read are not determined. We will remove some of these undetermined (and uninformative) reads in the next step.
 
 <a name="exercise-quality-reads"></a>
-## Step 2: Clean and examine quality of the reads
+### Step 2: Clean and examine quality of the reads
 
 As we saw from looking at the data, reads that come directly off of a sequencer may be of variable quality which might impact the downstream analysis. We will use the software [fastp][] to both clean and trim reads (removing poor-quality reads or sequencing adapters) as well as examine the quality of the reads. To do this please run the following (the expected time of this command is shown as `# Time: 30 seconds`).
 
@@ -205,7 +205,7 @@ fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz -
 fastp v0.23.2, time used: 22 seconds
 ```
 
-### Examine output
+#### Examine output
 
 You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
 
@@ -214,7 +214,7 @@ You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analy
 
 This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please anser the following questions.
 
-### Step 2: Questions
+#### Step 2: Questions
 
 1. Looking at the **Filtering result** section, how many reads **passed filters**? How many were removed due to **low quality**? How many were removed due to **too many**?
 2. Looking at the **Adapters** section, were there many adapters that needed to be trimmed in this data?
@@ -223,9 +223,9 @@ This should show an overview of the quality of the reads before and after filter
 ---
 
 <a name="exercise-host-filtering"></a>
-## Step 3: Host read filtering
+### Step 3: Host read filtering
 
-The next step is to remove any host reads (in this case Human reads) from our dataset as we are not focused on examining host reads. There are several different tools that can be used to filter out host reads such as Kraken2, BLAST, KAT and others. In this demonstration, we have selected to run KAT followed by Kraken2, but you could likely accomplish something similar directly in Kraken2.
+The next step is to remove any host reads (in this case Human reads) from our dataset as we are not focused on examining host reads. There are several different tools that can be used to filter out host reads such as Bowtie2 or KAT. In this demonstration, we have selected to run KAT followed by Kraken2, but you could likely accomplish something similar by using Bowtie2 followed by Kraken2.
 
 Command documentation is available [here](http://kat.readthedocs.io/en/latest/using.html#sequence-filtering)
 
@@ -283,7 +283,7 @@ These are the set of reads minus any reads that matched the human genome. The me
 ---
 
 <a name="exercise-classify-kraken"></a>
-## Step 4: Classify reads using Kraken2 database
+### Step 4: Classify reads using Kraken2 database
 
 Now that we have most, if not all, host reads filtered out, it’s time to classify the remaining reads to identify the likely taxonomic category they belong to.
 
@@ -307,7 +307,7 @@ Loading database information... done.
   247309 sequences unclassified (21.93%)
 ```
 
-### Examine `kraken_report.txt`
+#### Examine `kraken_report.txt`
 
 Let's examine the text-based report of Kraken2:
 
@@ -341,7 +341,7 @@ This will show the top taxonomic ranks (right-most column) as well as the percen
 
 More details about how to read this report can be found at <https://github.com/DerrickWood/kraken2/wiki/Manual#sample-report-output-format>. In the next step we will represent this data visually as a multi-layered pie chart.
 
-### Examine `kraken_out.txt`
+#### Examine `kraken_out.txt`
 
 Let's also take a look at `kraken_out.txt`. This file contains the kraken2 results, but divided up into a classification for every read.
 
@@ -368,7 +368,7 @@ More information on interpreting this file can be found at <https://github.com/D
 ---
 
 <a name="exercise-pavian"></a>
-## Step 5: Generate an interactive html-based report using Pavian
+### Step 5: Generate an interactive html-based report using Pavian
 
 Instead of reading a text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
@@ -389,7 +389,7 @@ If all the steps are completed successfully then the report you should see shoul
 
 If something did not work, you can alternatively view a pre-computed report at <http://IP-ADDRESS/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
 
-### Step 5: Questions
+#### Step 5: Questions
 
 1. What are the percentages of **Unclassified**, **Microbial**, **Bacterial**, **Viral**, **Fungal**, and **Protozoan** reads in this dataset?
 2. Scroll down to the **Classification results** section of the report and flip through the **Bacteria**, **Viruses**, and **Eukaryotes** tabs. What is the top organism in each of these three categories and how many reads?
@@ -398,8 +398,11 @@ If something did not work, you can alternatively view a pre-computed report at <
 
 ---
 
+<a name="assembly-based"></a>
+## Assembly-based approach
+
 <a name="exercise-metatranscriptomic-assembly"></a>
-## Step 6: Metatranscriptomic assembly
+### Step 6: Metatranscriptomic assembly
 
 In order to investigate the data further we will assemble the metatranscriptome using the software [MEGAHIT][]. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:
 
@@ -462,7 +465,7 @@ It can be a bit difficult to get an overall idea of what is in this file, so in 
 ---
 
 <a name="exercise-evaluate-assembly"></a>
-## Step 7: Evaluate assembly with Quast
+### Step 7: Evaluate assembly with Quast
 
 [Quast][] can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:
 
@@ -502,7 +505,7 @@ Quast writes it's output to a directory `quast_results/`, which includes HTML an
 
 This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
 
-### Step 7: Questions
+#### Step 7: Questions
 
 1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
 2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What is the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
@@ -512,7 +515,7 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 ---
 
 <a name="exercise-blast"></a>
-## Step 8: Use BLAST to look for existing organisms
+### Step 8: Use BLAST to look for existing organisms
 
 In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
 
@@ -545,7 +548,7 @@ To view these results, please browse to <http://IP-ADDRESS/module8_workspace/ana
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
 
 
-### Step 8: Questions
+#### Step 8: Questions
 
 1. What is the closest match for the longest contig you find in your data? What is the percent identify for this match (the value Z in `Identities = X/Y (Z%)`). Recall that if a pathogen is an emerging/novel pathogen then you may not get a perfect match to any existing organisms.
 2. Using the BLAST report alongside all other information we've gathered, what can you say about what pathogen may be causing the patient's symptoms?
