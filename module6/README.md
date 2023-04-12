@@ -1,566 +1,373 @@
----
-layout: tutorial_page
-permalink: /IDE_2021_Module6_lab
-title: IDE Module 6 Lab
-header1: Emerging Pathogen Detection and Identification using Metagenomic Samples
-header2: Infectious Disease Genomic Epidemiology
-image: /site_images/CBW_Metagenome_icon.jpg
-home: https://bioinformaticsdotca.github.io/IDE_2021
-description: Emerging Pathogen Detection and Identification using Metagenomic Samples
-author: Aaron Petkau and Gary Van Domselaar
-modified: October 2nd, 2021
----
-
-# Table of contents
+## Table of contents
 1. [Introduction](#intro)
-2. [Software](#software)    
-3. [Setup](#setup)
-4. [Exercise](#exercise)
-5. [Final words](#final)
+1. [CARD Website and Antibiotic Resistance Ontology](#cardweb)
+3. [RGI for Genome Analysis](#rgigenome)
+4. [RGI at the Command Line](#rgicommand)
+5. [RGI for Merged Metagenomics Reads](#rgimerged)
+6. [Metagenomic Sequencing Reads and the KMA Algorithm](#bwt)
+7. [Pathogen of Origin Prediction](#pathogen)
 
 <a name="intro"></a>
-# 1. Introduction
+## Introduction
 
-* [Introduction Slides][]
+This module gives an introduction to prediction of antimicrobial resistome and phenotype based on comparison of genomic or metagenomic DNA sequencing data to reference sequence information. While there is a large diversity of reference databases and software, this tutorial is focused on the Comprehensive Antibiotic Resistance Database ([CARD](http://card.mcmaster.ca)) for genomic AMR prediction.
 
-This tutorial aims to introduce a variety of software and concepts related to detecting emerging pathogens from a complex host sample. The provided data and methods are derived from real-world data, but have been modified to either illustrate a specific learning objective or to reduce the complexity of the problem. Contamination and a lack of large and accurate databases render detection of microbial pathogens difficult. As a disclaimer, all results produced from the tools described in this tutorial and others must also be verified with supplementary bioinformatics or wet-laboratory techniques.
+There are several databases (see [here](https://www.nature.com/articles/s41576-019-0108-4/tables/2) for a list) which try and organise information about AMR as well as helping with interpretation of resistome results.
+Many of these are either specialised on a specific type of resistance gene (e.g., [beta-lactamases](http://bldb.eu/)), organism (e.g., [_Mycobacterium tuberculosis_](https://github.com/jodyphelan/tbdb)), or are an automated amalgamation of other databases (e.g., [MEGARes](https://megares.meglab.org/)). 
+There are also many tools for detecting AMR genes each with their own strengths and weaknesses (see [this paper](https://www.frontiersin.org/articles/10.3389/fpubh.2019.00242/full) for a non-comprehensive list of tools!).
 
-<a name="software"></a>
-# 2. List of software for tutorial
+The "Big 3" databases that are comprehensive (involving many organisms, genes, and types of resistance), regularly updated, have their own gene identification tool(s), and are carefully maintained and curated are: 
 
-* [fastp][]
-* [multiqc][]
-* [KAT][]
-* [Kraken2][]
-* [Krona][]
-* [MEGAHIT][]
-* [Quast][]
-* [NCBI blast][]
+1. Comprehensive Antibiotic Resistance Database ([CARD](https://card.mcmaster.ca)) with the Resistance Gene Identifier ([RGI](https://github.com/arpcard/rgi)).
+2. National Center for Biotechnology Information's National Database of Antibiotic Resistant Organisms ([NDARO](https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/)) with [AMRFinderPlus](https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/).
+3. [ResFinder](https://cge.cbs.dtu.dk/services/ResFinder/) database with its associated [ResFinder](https://bitbucket.org/genomicepidemiology/resfinder/src/master/) tool.
 
-<a name="setup"></a>
-# 3. Exercise setup
+In this practical we are going to focus on CARD and the associated RGI tool because:
+* The [Antibiotic Resistance Ontology](https://github.com/arpcard/aro) it is built upon is a great way to organize information about AMR.
+* CARD is the most heavily used database internationally, with over 5000 citations.
+* We are biased. CARD is Canadian and pretty much all the CBW faculty collaborate or are part of the group that develops CARD! See [Alcock *et al.* 2023. CARD 2023: expanded curation, support for machine learning, and resistome prediction at the Comprehensive Antibiotic Resistance Database. *Nucleic Acids Research*, 51, D690-D699](https://pubmed.ncbi.nlm.nih.gov/36263822/).
 
-## 3.1. Copy data files
+<a name="cardweb"></a>
+## CARD Website and Antibiotic Resistance Ontology
 
-To begin, we will copy over the exercises to `~/workspace`. This let's use view the resulting output files in a web browser.
+The relationship between AMR genotype and AMR phenotype is complicated and no tools for complete prediction of phenotype from genotype exist. Instead, analyses focus on prediction or catalog of the AMR resistome – the collection of AMR genes and mutants in the sequenced sample. While BLAST and other sequence similarity tools can be used to catalog the resistance determinants in a sample via comparison to a reference sequence database, interpretation and phenotypic prediction are often the largest challenge. To start the tutorial, we will use the Comprehensive Antibiotic Resistance Database ([CARD](http://card.mcmaster.ca)) website to examine the diversity of resistance mechanisms, how they influence bioinformatics analysis approaches, and how CARD’s Antibiotic Resistance Ontology (ARO) can provide an organizing principle for interpretation of bioinformatics results.
 
-**Commands**
+CARD’s website provides the ability to: 
+
+* Browse the Antibiotic Resistance Ontology (ARO) and associated knowledgebase.
+* Browse the underlying AMR detection models, reference sequences, and SNP matrices.
+* Download the ARO, reference sequence data, and indices in a number of formats for custom analyses.
+* Perform integrated genome analysis using the Resistance Gene Identifier (RGI).
+
+In this part of the tutorial, your instructor will walk you through the following use of the CARD website to familiarize yourself with its resources:
+
+1. What are the mechanisms of resistance described in the Antibiotic Resistance Ontology?
+2. Examine the NDM-1 beta-lactamase protein, it’s mechanism of action, conferred antibiotic resistance, it’s prevalence, and it’s detection model. 
+3. Examine the AAC(6')-Iaa aminoglycoside acetyltransferase, it’s mechanism of action, conferred antibiotic resistance, it’s prevalence, and it’s detection model. 
+4. Examine the fluoroquinolone resistant gyrB for *M. tuberculosis*, it’s mechanism of action, conferred antibiotic resistance, and it’s detection model. 
+5. Examine the MexAB-OprM efflux complex with MexR mutations, it’s mechanism of action, conferred antibiotic resistance, it’s prevalence, and it’s detection model(s). 
+
+<details>
+  <summary>Answers:</summary>
+    
+1. 
+	+ antibiotic target alteration
+	+ antibiotic target replacement
+	+ antibiotic target protection
+	+ antibiotic inactivation
+	+ antibiotic efflux
+	+ reduced permeability to antibiotic
+	+ resistance by absence
+	+ modification to cell morphology
+	+ resistance by host-dependent nutrient acquisition   
+2. NDM-1: antibiotic inactivation; beta-lactams (penam, cephamycin, carbapenem, cephalosporin); over 40 pathogens (lots of ESKAPE pathogens) - note strong association with plasmids; protein homolog model
+3. AAC(6')-Iaa: antibiotic inactivation; aminogylcosides; _Salmonella enterica_; protein homolog model
+4. gyrB: antibiotic target alteration; fluoroquinolones; _Mycobacterium_; protein variant model
+5. MexAB-OprM with MexR mutations: antibiotic efflux; broad range of drug classes; looking at MexA sub-unit: _Pseudomonas_; efflux meta-model
+                
+</details>
+ 
+<a name="#rgigenome"></a>
+## RGI for Genome Analysis
+
+As illustrated by the exercise above, the diversity of antimicrobial resistance mechanisms requires a diversity of detection algorithms and a diversity of detection limits. CARD’s Resistance Gene Identifier (RGI) currently integrates four CARD detection models: [Protein Homolog Model, Protein Variant Model, rRNA Variant Model, and Protein Overexpression Model](https://github.com/arpcard/rgi#analyzing-genomes-genome-assemblies-metagenomic-contigs-or-proteomes-a-k-a-rgi-main). Unlike naïve analyses, CARD detection models use curated cut-offs, currently based on BLAST/DIAMOND bitscore cut-offs. Many other available tools are based on BLASTN or BLASTP without defined cut-offs and avoid resistance by mutation entirely. 
+
+In this part of the tutorial, your instructor will walk you through the following use of CARD’s Resistome Gene Identifier with default settings “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage":
+
+* Resistome prediction for the multidrug resistant *Acinetobacter baumannii* MDR-TJ, complete genome (NC_017847).
+* Resistome prediction for the plasmid isolated from *Escherichia coli* strain MRSN388634 plasmid (KX276657).
+* Explain the difference in fluoroquinolone resistance MIC between two clinical strains of *Pseudomonas aeruginosa* that appear clonal based on identical MLST (Pseudomonas1.fasta, Pseudomonas2.fasta - these files can be found in this GitHub repo). Hint, look at SNPs.
+
+<details>
+  <summary>Answers:</summary>
+
+The first two examples list the predicted resistome of the analyzed genome and plasmid, while the third example illustrates that Pseudomonas2.fasta contains an extra T83I mutation in gyrA conferring resistance to fluoroquinolones, above that provided by background efflux.
+                
+</details>
+ 
+<a name="rgicommand"></a>
+## RGI at the Command Line
+
+RGI is a command line tool as well, so we’ll do a demo analysis of 112 clinical multi-drug resistant *E. coli* from Hamilton area hospitals, sequenced on MiSeq and assembled using SPAdes (an older genome assembler). We’ll additionally try RGI’s heat map tool to compare genomes.
+
+Login into your course account’s working directory and make a module5 directory:
+
 ```bash
-cp -r ~/CourseData/IDE_data/module6/module6_workspace/ ~/workspace/
-cd ~/workspace/module6_workspace/analysis
+mkdir module5
+cd module5
 ```
 
-When you are finished with these steps you should be inside the directory `/home/ubuntu/workspace/module6_workspace/analysis`. You can verify this by running the command `pwd`.
+Take a peak at the list of E. coli samples:
 
-**Output after running `pwd`**
-```
-/home/ubuntu/workspace/module6_workspace/analysis
-```
-
-You should also have a directory like `data/` one directory up from here. To check this, you can run `ls ../`:
-
-**Output after running `ls ../`**
-```
-analysis  data  precomputed-analysis
-```
-
-## 3.2. Activate environment
-
-Next we will activate the [conda](https://docs.conda.io/en/latest/) environment, which will have all the tools needed by this tutorial pre-installed. To do this please run the following:
-
-**Commands**
 ```bash
-conda activate cbw-emerging-pathogen
+ls /home/ubuntu/CourseData/IDE_data/module5/ecoli
 ```
 
-You should see the command-prompt (where you type commands) switch to include `(cbw-emerging-pathogen)` at the beginning, showing you are inside this environment. You should also be able to run one of the commands like `kraken2 --version` and see output:
+RGI has already been installed using Conda, list all the available software in Conda, activate RGI, and then review the RGI help screen:
 
-**Output after running `kraken2 --version`**
-```
-Kraken version 2.1.2
-Copyright 2013-2021, Derrick Wood (dwood@cs.jhu.edu)
-```
-
-## 3.3. Find your IP address
-
-If you do not have your IP address on-hand, please follow the below steps to find it again:
-
-**Commands**
 ```bash
-curl http://checkip.amazonaws.com
+conda env list
+conda activate rgi
+rgi -h
 ```
 
-This should print a number like XX.XX.XX.XX. Once you have your address, try going to <http://IP-ADDRESS> and clicking the link for **module6_workspace**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab.
+First we need to acquire the latest AMR reference data from the CARD website:
 
-<a name="exercise"></a>
-# 4. Exercise
-
-## 4.1. Patient Background:
-
-A 41-year-old man was admitted to a hospital 6 days after the onset of disease. He reported fever, chest tightness, unproductive cough, pain and weakness. Preliminary investigations excluded the presence of influenza virus, *Chlamydia pneumoniae*, *Mycoplasma pneumoniae*, and other common respiratory pathogens. After 3 days of treatment the patient was admitted to the intensive care unit, and 6 days following admission the patient was transferred to another hospital.
-
-To further investigate the cause of illness, a sample of bronchoalveolar lavage fluid (BALF) was collected from the patient and metatranscriptomic sequencing was performed (that is, the RNA from the sample was sequenced). In this lab, you will examine the metatranscriptomic data using a number of bioinformatics methods and tools to attempt to identify the cause of the illness.
-
-*Note: The patient information and data was derived from a real study (shown at the end of the lab).* 
-
-## 4.2. Overview
-
-We will proceed through the following steps to attempt to diagnose the situation.
-
-* Trim and clean sequence reads using `fastp`
-* Filter host (human) reads with `kat`
-* Run Kraken2 with a bacterial and viral database to look at the taxonomic makeup of the reads.
-* Assemble the metatranscriptome with `megahit`
-* Examine assembly using `quast` and `blast`
-
----
-
-## Step 1: Examine the reads
-
-Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic seqencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the DNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
-
-The reads were generated from paired-end sequencing, which means that a particular fragment (of cDNA) was sequenced twice--once from either end (see [here](https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) for some additional details). These pairs of cDNA sequence reads are stored as separate files (named `emerging-pathogen-reads_1.fastq.gz` and `emerging-pathogen-reads_2.fastq.gz`). You can see each file by running `ls`:
-
-**Commands**
 ```bash
-ls ../data
+rgi load -h
+wget https://card.mcmaster.ca/latest/data
+tar -xvf data ./card.json
+less card.json
+rgi load --card_json ./card.json --local
+ls
 ```
 
-**Output**
-```
-emerging-pathogen-reads_1.fastq.gz  emerging-pathogen-reads_2.fastq.gz
-```
+We don’t have time to analyze all 112 samples, so let’s analyze 1 as an example (the course GitHub repo contains an EXCEL version of the resulting C0001.txt file). When analyzing FASTA files we use the **main** sub-command, here with default settings “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage":
 
-We can look at the contents of one of the files by running `less` (you can look at the other pair of reads too, but it will look very similar):
-
-**Commands**
 ```bash
-less ../data/emerging-pathogen-reads_1.fastq.gz
+rgi main –h
+rgi main -i /home/ubuntu/CourseData/IDE_data/module5/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
+ls
+less C0001.json
+less C0001.txt
+column -t -s $'\t' C0001.txt  | less -S
 ```
 
-**Output**
-```
-@SRR10971381.5 5 length=151
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-+
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-@SRR10971381.7 7 length=151
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-+
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-@SRR10971381.33 33 length=115
-NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-+
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-@SRR10971381.56 56 length=151
-CCCGTGTTCGATTGGCATTTCACCCCTATCCACAACTCATCCCAAAGCTTTTCAACGCTCACGAGTTCGGTCCTCCACACAATTTTACCTGTGCTTCAACCTGGCCATGGATAGATCACTACGGTTTCGGGTCTACTATTACTAACTGAAC
-+
-FFFFFFFAFFFFFFAFFFFFF6FFFFFFFFF/FFFFFFFFFFFF/FFFFFFFFFFFFFFFFFAFFFFFFFFFFFAFFFFF/FFAF/FAFFFFFFFFFAFFFF/FFFFFFFFFFF/F=FF/FFFFA6FAFFFFF//FFAFFFFFFAFFFFFF
-```
+<details>
+  <summary>Discussion Points:</summary>
 
-These reads are in the [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format), which stores a single read as a block of 4 lines: **identifier**, **sequence**, **+ (separator)**, **quality scores**. In this file, we can see a lot of lines with `NNN...` for the sequence letters, which means that these portions of the read are not determined. We will remove some of these undetermined (and uninformative) reads in the next step.
+Default RGI **main** analysis of C0001 lists 17 Perfect annotations and 52 Strict annotations. Yet, 44 annotations are efflux components common in *E. coli* that may or may not lead to clinical levels of AMR. Nonetheless, outside of efflux there are some antibiotic inactivation, target replacement, or target alteration genes known to be high risk (e.g., sul1, TEM-1, CTX-M-15, APH(6)-Id, and gyrA mutations). This is a MDR isolate of *E. coli*.
+                
+</details>
 
-## Step 2: Clean and examine quality of the reads
+What if these results did not explain our observed phenotype? We might want to explore the RGI Loose hits (the course GitHub repo contains an EXCEL version of the resulting C0001_IncludeLoose.txt file), shown here with settings “Perfect, Strict, and Loose hits”, "Include nudge", and "High quality/coverage":
 
-As we saw from looking at the data, reads that come directly off of a sequencer may be of variable quality which might impact the downstream analysis. We will use the software [fastp][] to both clean and trim reads (removing poor-quality reads or sequencing adapters) as well as examine the quality of the reads. To do this please run the following (the expected time of this command is shown as `# Time: 30 seconds`).
-
-**Commands**
 ```bash
-# Time: 30 seconds
-fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz --in2 ../data/emerging-pathogen-reads_2.fastq.gz --out1 cleaned_1.fastq --out2 cleaned_2.fastq
-``` 
-
-You should see the following as output:
-
-**Output**
-```
-Detecting adapter sequence for read1...
-No adapter detected for read1
-
-Detecting adapter sequence for read2...
-No adapter detected for read2
-[...]
-Insert size peak (evaluated by paired-end reads): 150
-
-JSON report: fastp.json
-HTML report: fastp.html
-
-fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz --in2 ../data/emerging-pathogen-reads_2.fastq.gz --out1 cleaned_1.fastq --out2 cleaned_2.fastq
-fastp v0.22.0, time used: 34 seconds
+rgi main –h
+rgi main -i /home/ubuntu/CourseData/IDE_data/module5/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
+ls
+column -t -s $'\t' C0001_IncludeLoose.txt  | less -S
 ```
 
-### Examine output
+<details>
+  <summary>Discussion Points:</summary>
 
-You should now be able to nagivate to <http://IP-ADDRESS/module6_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
+An additional 3 nudged Strict annotations (*Escherichia coli* PtsI with mutation conferring resistance to fosfomycin, EC-5 beta-lactamase, *Escherichia coli* EF-Tu mutants conferring resistance to pulvomycin) and 390 Loose annotations have been added to investigate for leads that could explain the observed phenotype. Note this scenario is unlikely for clinical isolates given CARD's reference data, but is possible for environmental isolates.
+                
+</details>
 
+We have pre-compiled results for all 112 samples under “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage", so let’s try RGI’s heat map tool (pre-compiled images can be downloaded from the course GitHub repo) (please ignore the FutureWarning):
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module6/images/fastp.png?raw=true" alt="p2" width="750" />
-
-This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please anser the following questions.
-
-### Step 2: Questions
-
-1. Looking at the **Filtering result** section, how many reads **passed filters**? How many were removed due to **low quality**? How many were removed due to **too many**?
-2. Looking at the **Adapters** section, were there many adapters that needed to be trimmed in this data?
-3. Compare the **quality** and **base contents** plots **Before filtering** and **After filtering**? How do they differ?
-
----
-
-## Step 3: Host read filtering
-
-The next step is to remove any host reads (in this case Human reads) from our dataset as we are not focused on examining host reads. There are several different tools that can be used to filter out host reads such as Kraken2, BLAST, KAT and others. In this demonstration, we have selected to run KAT followed by Kraken2, but you could likely accomplish something similar directly in Kraken2.
-
-Command documentation is available [here](http://kat.readthedocs.io/en/latest/using.html#sequence-filtering)
-
-KAT works by breaking down each read into small fragements of length *k*, k-mers, and compares them to a k-mer database of the human reference genome. Subsequently, the complete read is either assigned into a matched or unmatched (filtered) file if 10% of the k-mers in the read have been found in the human database.
-
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module6/images/kat.png?raw=true" alt="p2" width="750" />
-
-Let's run KAT now.
-
-**Commands**
 ```bash
-# Time: 3 minutes
-kat filter seq -t 4 -i -o filtered --seq cleaned_1.fastq --seq2 cleaned_2.fastq ~/CourseData/IDE_data/module6/db/kat_db/human_kmers.jf
+ls /home/ubuntu/CourseData/IDE_data/module5/ecoli_json
+rgi heatmap –h
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o genefamily_samples --category gene_family --cluster samples
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o drugclass_samples --category drug_class --cluster samples
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o cluster_both --cluster both
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o cluster_both_frequency --frequency --cluster both
+ls
 ```
 
-The arguments for this command are:
+<details>
+  <summary>Discussion Points:</summary>
 
-* `filter seq`: Specifies that we are running a specific subcommand to **filter sequences**.
-* `-t 4`: The number of threads to use (we have 4 CPU cores on these machines so we are using 4 threads).
-* `--seq --seq2` arguments to provide corresponding forward and reverse fastq reads (the cleaned reads from `fastp`)
-* `-i`: Inverts the filter, that is we wish to output sequences **not found** in the human kmer database to a file. 
-* `-o filtered` Provide prefix for all files generated by the command. In our case, we will have two output files **filtered.in.R1.fastq** and **filetered.in.R2.fastq**.
-* `~/CourseData/IDE_data/module6/db/kat_db/human_kmers.jf` the human k-mer database
+The last analysis is the most informative, showing that many of these isolates share the same complement of efflux variants, yet most isolates are unique in their resistome, with a subset sharing TEM-1, sul1, and other higher risk genes.
 
-As the command is running you should see the following output on your screen:
+</details>
 
-**Output**
-```
-Running KAT in filter sequence mode
------------------------------------
+<a name="rgimerged"></a>
+## RGI for Merged Metagenomic Reads
 
-Loading hashes into memory... done.  Time taken: 40.7s
+The standard RGI tool can be used to analyze metagenomics read data, but only for assembled or merged reads with Prodigal calling of partial open reading frames (ORFs). Here we will demonstrate analysis of merged reads. This is a computationally expensive approach, since each merged read set may contain a partial ORF, requiring RGI to perform massive amounts of BLAST/DIAMOND analyses. While computationally intensive (and thus generally not recommended), this does allow analysis of metagenomic sequences in protein space, including key substitutions, overcoming issues of high-stringency read mapping relative to nucleotide reference databases.
 
-Filtering sequences ...
-Processed 100000 pairs
-Processed 200000 pairs
-[...]
-Finished filtering.  Time taken: 122.3s
+Lanza et al. ([Microbiome 2018, 15:11](https://www.ncbi.nlm.nih.gov/pubmed/29335005)) used AMR gene bait capture to sample human gut microbiomes for AMR genes. Using the online RGI under “Perfect, Strict and Loose hits”, "Include nudge", and "Low quality/coverage" settings, analyze the first 500 merged metagenomic reads from their analysis (file ResCap_first_500.fasta). Take a close look at the predicted “sul2” and “sul4” hits in the results table. How good is the evidence for these AMR genes in this enriched metagenomics sample?
 
-Found 1127908 / 1306231 to keep
+<details>
+  <summary>Discussion Points:</summary>
 
-KAT filter seq completed.
-Total runtime: 163.0s
-```
+There are three merged reads with 100% identity to ~25% of the sul2 gene each, while the 9 merged reads annotated as the sul4 gene encode less than 50% identity to the reference sul2 protein, suggesting they are spurious annotations.
+                
+</details>
 
-If the command was successful, your current directory should contain two new files:
+<a name="bwt"></a>
+## Metagenomic Sequencing Reads and the KMA Algorithm
 
-* `filtered.in.R1.fastq`
-* `filtered.in.R2.fastq`
+The most common tools for metagenomic data annotation are based on high-stringency read mapping, such as the [KMA read aligner](https://bitbucket.org/genomicepidemiology/kma/src/master) due to its [documented better performance for redundant databases such as CARD](https://github.com/arpcard/rgi#analyzing-metagenomic-reads-a-k-a-rgi-bwt). Available methods almost exclusively focus on acquired resistance genes (e.g., sequences referenced in CARD's protein homolog models), not those involving resistance via mutation. However, CARD and other AMR reference databases utilize reference sequences from the published literature with clear experimental evidence of elevated minimum inhibitory concentration (MIC). This has implications for molecular surveillance as sequences in agricultural or environmental samples may differ in sequence from characterized & curated reference sequences, which are predominantly from clinical isolates, creating false negative results for metagenomic reads for these environments. As such, CARD's tools for read mapping can use either canonical CARD (reference sequences from the literature) or predicted AMR resistance alleles and sequence variants from bulk resistome analyses, i.e. [CARD Resistomes & Variants data set](https://card.mcmaster.ca/resistomes).
 
-These are the set of reads minus any reads that matched the human genome. The message `Found 1127908 / 1306231 to keep` tells us how many read-pairs were kept (the number in the `filtered.in.*.fastq` files) vs. the total number of read-pairs.
+To demonstrate read mapping using RGI **bwt**, we will analyze a ~160k paired read subset of the raw sequencing reads from Lanza et al.'s ([Microbiome 2018, 15:11](https://www.ncbi.nlm.nih.gov/pubmed/29335005)) use of AMR gene bait capture to sample human gut microbiomes.
 
----
+First we need to acquire the additional AMR reference data from the previous CARD website download:
 
-## Step 4: Classify reads using Kraken2 database
-
-Now that we have most, if not all, host reads filtered out, it’s time to classify the remaining reads to identify the likely taxonomic category they belong to.
-
-Database selection is one of the most crucial parts of running Kraken. One of the many factors that must be considered is the computational resources available. Our current AWS image for the course has only 16G of memory. A major disadvantage of Kraken2 is that it loads the entire database into memory. With the [standard viral, bacterial, and archael database](https://benlangmead.github.io/aws-indexes/k2) on the order of 50 GB we would be unable to run the full database on the course machine. To help mitigate this, Kraken2 allows reduced databases to be constructed, which will still give reasonable results. We have constructed our own smaller Kraken2 database using only bacterial, human, and viral data. We will be using this database.
-
-Lets run the following command in our current directory to classify our reads against the Kraken2 database.
-
-**Commands**
 ```bash
-# Time: 1 minute
-kraken2 --db ~/CourseData/IDE_data/module6/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified#.fastq filtered.in.R1.fastq filtered.in.R2.fastq
+rgi card_annotation -i ./card.json > card_annotation.log 2>&1
+rgi load --card_json ./card.json --card_annotation card_database_v3.2.6.fasta --local
+ls
 ```
 
-This should produce output similar to below:
+Let's take a look at the raw gut metagenomics data to remind ourselves of the FASTQ format:
 
-**Output**
-```
-Loading database information... done.
-1127908 sequences (315.54 Mbp) processed in 7.344s (9214.6 Kseq/m, 2577.83 Mbp/m).
-  880599 sequences classified (78.07%)
-  247309 sequences unclassified (21.93%)
-```
-
-### Examine `kraken_report.txt`
-
-Let's examine the text-based report of Kraken2:
-
-**Commands**
 ```bash
-less kraken_report.txt
+ls /home/ubuntu/CourseData/IDE_data/module5/gut_sample
+less /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R1.fastq
 ```
 
-This should produce output similar to the following:
+We can now map the metagenomic reads to the sequences in CARD's protein homolog models using the KMA algorithm:
 
-```
- 21.93  247309  247309  U       0       unclassified
- 78.07  880599  30      R       1       root
- 78.01  879899  124     R1      131567    cellular organisms
- 76.37  861411  19285   D       2           Bacteria
- 56.53  637572  2       D1      1783270       FCB group
- 56.53  637558  1571    D2      68336           Bacteroidetes/Chlorobi group
- 56.39  635982  1901    P       976               Bacteroidetes
- 55.10  621496  35      C       200643              Bacteroidia
- 55.09  621417  19584   O       171549                Bacteroidales
- 53.18  599872  2464    F       171552                  Prevotellaceae
- 52.96  597396  397538  G       838                       Prevotella
-  4.74  53473   53473   S       28137                       Prevotella veroralis
-[...]
-```
-
-This will show the top taxonomic ranks (right-most column) as well as the percent and number of reads that fall into these categories (left-most columns). For example:
-
-* The very first row `21.93  247309  247309  U       0       unclassified` shows us that **247309 (21.93%)** of the reads processed by Kraken2 are unclassified (remember we only used a database containing bacterial, viral, and human representatives).
-* The 4th line `76.37  861411  19285   D       2           Bacteria` tells us that **861411 (76.37%)** of our reads fall into the **Bacteria** domain (the `D` in the fourth column is the taxonomic rank, **`D`omain**). The number `19285` tells us that `19285` of the reads are assigned directly to the **Bacteria** domain but cannot be assigned to any lower taxonomic rank (they match with too many diverse types of bacteria).
-
-More details about how to read this report can be found at <https://github.com/DerrickWood/kraken2/wiki/Manual#sample-report-output-format>. In the next step we will represent this data visually as a multi-layered pie chart.
-
-### Examine `kraken_out.txt`
-
-Before we visualize the data, let's take a look at `kraken_out.txt` since we will use this as input for visualization. This file contains the kraken2 results, but divided up into a classification for every read.
-
-**Commands**
 ```bash
-column -s$'\t' -nt kraken_out.txt | less -S
+rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample.kma --local
+ls
 ```
 
-**Output**
-```
-C  SRR10971381.56        29465    151|151  0:40 909932:2 0:8 909932:2 0:20 29465:4 0:7 1783272:2 0:1 29465:5 0:1 29465:1 0:24 |:| 0:2 29465:5 0:25 29465:1 0:1 2946>
-C  SRR10971381.97        838      122|122  0:44 2:5 0:23 838:1 0:10 838:2 0:3 |:| 0:3 838:2 0:10 838:1 0:23 2:5 0:44
-C  SRR10971381.126       9606     109|109  0:2 9606:5 0:7 9606:1 0:12 9606:1 0:47 |:| 0:47 9606:1 0:12 9606:1 0:7 9606:5 0:2
-C  SRR10971381.135       838      151|151  0:95 838:3 0:19 |:| 0:15 838:1 0:12 838:5 0:6 838:3 0:75
-[...]
-```
+RGI **bwt** produces a LOT of output files, see the details at the [RGI GitHub repo](https://github.com/arpcard/rgi#rgi-bwt-tab-delimited-output-details). First, let's look at the summary statistics:
 
-This shows us a taxonomic classification for every read (one read per line). For example:
-
-* On the first line, `C  SRR10971381.56        29465` tells us that this read with identifier `SRR10971381.56` is classified `C` (matches to something in the Kraken2 database) and matches to the taxonomic category `29465`, which is the NCBI taxonomy identifer. In this case `29465` corresponds to [Veillonella](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=29465&lvl=3&lin=f&keep=1&srchmode=1&unlock).
-
-More information on interpreting this file can be found at <https://github.com/DerrickWood/kraken2/wiki/Manual#standard-kraken-output-format>.
-
-We will use this information in the next step to build our visualization.
-
----
-
-## Step 5: Generate an interactive html-based report using Krona
-
-Instead of reading a text-based files like above, we can visualize this information using [Krona][], which will construct a multi-layered pie chart from our data. To generate a Krona figure, we first must make a file, `krona_input.txt`, containing a list of read IDs and the taxonomic IDs these reads were assigned to. Luckily, this information is all available in the `kraken_out.txt` file above, we just have to cut the unneeded columns out of this file (using the command `cut`). Once we do this we can then run `ktImportTaxonomy` to create the figure.
-
-To do this, please run the following commands.
-
-**Commands**
 ```bash
-# Time: 1 second
-cut -f2,3 kraken_out.txt > krona_input.txt
-
-# Time: 30 seconds
-ktImportTaxonomy krona_input.txt -o krona_report.html
+cat gut_sample.kma.overall_mapping_stats.txt
+ls
 ```
 
-* The command `cut -f2,3 kraken_out.txt > krona_input.txt` will cut columns **2** and **3** (the read ID and NCBI Taxonomy ID) from the file `kraken_out.txt` and write the values into `krona_input.txt`.
-* The command `ktImportTaxonomy krona_input.txt -o krona_report.html` is part of the [Krona][] software and builds a multi-level pie-chart from the reads and taxonomy assignments (it uses a local version of the NCBI Taxonomy Database installed on your machines to map numbers like `29465` to the human-readable name like `Veillonella`).
+However, the file we are most interested in for now is `gut_sample.kma.gene_mapping_data.txt` and the course GitHub repo contains an EXCEL version for easy viewing, but let's look at it on the command line:
 
-Let’s look at what Krona generated. Return to your web browser and go to <http://IP-ADDRESS/module6_workspace/analysis/> to see the new files added in the `module6_workspace/analysis` directory. Click on **final_web_report.html**. *Note: if this is not working, what you should see is shown in the image [krona-all.png][]*.
-
-### Step 5: Questions
-
-1. What does the distribution of taxa found in the reads look like? Is there any pathogen here that could be consistent with a cause for the patients symptoms?
-2. This data was derived from RNA (instead of DNA) and some viruses are RNA-based. Take a look into the **Viruses** category in Krona (by expanding this category). Is there anything here that could be consistent with the patient's symptoms? *Note: if you cannot expand the **Viruses** category what you should see is shown in this image [krona-viruses.png][].*.
-3. Given the results of Krona, can you form a hypothesis as to the cause of the patient's symptoms?
-
----
-
-## Step 6: Metatranscriptomic assembly
-
-In order to investigate the data further we will assemble the metatranscriptome using the software [MEGAHIT][]. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:
-
-**Commands**
 ```bash
-# Time: 6 minutes
-megahit -t 4 -1 filtered.in.R1.fastq -2 filtered.in.R2.fastq -o megahit_out
+column -t -s $'\t' gut_sample.kma.gene_mapping_data.txt  | less -S
+cut -f 1 gut_sample.kma.gene_mapping_data.txt | sort -u | wc -l
+ls
 ```
 
-If everything is working you should expect to see the following as output:
+* Ignoring efflux, which AMR gene had the most mapped reads?
+* Ignoring efflux, which AMR gene had the highest % coverage?
+* How many AMR genes were found in total?
+* From these results and what you know about assembly, what do you think are the advantages/disadvantages of read-based methods?
 
-**Output**
-```
-2021-09-30 11:53:35 - MEGAHIT v1.2.9
-2021-09-30 11:53:35 - Using megahit_core with POPCNT and BMI2 support
-2021-09-30 11:53:35 - Convert reads to binary library
-2021-09-30 11:53:36 - b'INFO  sequence/io/sequence_lib.cpp  :   75 - Lib 0 (/media/cbwdata/workspace/module6_workspace/analysis/filtered.in.R1.fastq,/media/cbwdata/workspace/module6_workspace/analysis/filtered.in.R2.fastq): pe, 2255816 reads, 151 max length'
-2021-09-30 11:53:36 - b'INFO  utils/utils.h                 :  152 - Real: 1.9096\tuser: 1.8361\tsys: 0.3320\tmaxrss: 166624'
-2021-09-30 11:53:36 - k-max reset to: 141
-2021-09-30 11:53:36 - Start assembly. Number of CPU threads 4
+<details>
+  <summary>Answers:</summary>
 
-[...]
+Top 5 (non-efflux) for number of mapped reads:
+* tet(X) with 7205 reads
+* CblA-1 with 4160 reads
+* APH(3'')-Ib with 1084 reads
+* APH(6)-Id with 759 reads
+* EC-8 with 407 reads
 
-2021-09-30 11:58:01 - Assemble contigs from SdBG for k = 141
-2021-09-30 11:58:02 - Merging to output final contigs
-2021-09-30 11:58:02 - 3112 contigs, total 1536607 bp, min 203 bp, max 29867 bp, avg 493 bp, N50 463 bp
-2021-09-30 11:58:02 - ALL DONE. Time elapsed: 267.449160 seconds
-```
+Top 5 (non-efflux) for % length coverage (all had 100%):
+* tet(X)
+* CblA-1
+* APH(3'')-Ib
+* APH(6)-Id
+* APH(3')-IIIa
 
-Once everything is completed, you will have a directory `megahit_out/` with the output. Let's take a look at this now:
+90 AMR genes had sequencing reads mapped.
 
-**Commands**
+Read-based analyses advantages and disadvantages:
+* Higher sensitivity (we find as many AMR genes as possible)
+* Lower specificity (we are more likely to make mistakes when identifying AMR genes)
+* Incomplete data (we are likely to find fragments of genes instead of whole genes, this can lead to confusion between similar genes)
+* No genomic context (we don't know where a gene we detect comes from in the genome, is it associated with a plasmid?)
+
+</details>
+
+We can repeat the read mapping analysis, but include more sequence variants in the reference set by including the [CARD Resistomes & Variants data set](https://card.mcmaster.ca/resistomes). First we need to acquire the Resistomes & Variant data from the CARD website:
+
+> THE FOLLOWING STEPS TAKE TOO LONG, DO NOT PERFORM DURING DEMO SESSION, INSTEAD PLEASE VIEW PRE-COMPILED RESULTS. FEEL FREE TO TRY THESE STEPS OUTSIDE OF CLASS.
+
 ```bash
-ls megahit_out/
+wget -O wildcard_data.tar.bz2 https://card.mcmaster.ca/latest/variants
+mkdir -p wildcard
+tar -xjf wildcard_data.tar.bz2 -C wildcard
+gunzip wildcard/*.gz
+rgi wildcard_annotation -i wildcard --card_json ./card.json -v 4.0.0 > wildcard_annotation.log 2>&1
+rgi load --card_json ./card.json --wildcard_annotation wildcard_database_v4.0.0.fasta --wildcard_index ./wildcard/index-for-model-sequences.txt --card_annotation card_database_v3.2.6.fasta --local
 ```
 
-**Output**
-```
-checkpoints.txt  done  final.contigs.fa  intermediate_contigs  log  options.json
-```
+Map reads to canonical CARD (reference sequences from the literature) **plus** predicted AMR resistance alleles and sequence variants from bulk resistome analyses, i.e. [CARD Resistomes & Variants data set](https://card.mcmaster.ca/resistomes):
 
-It's specifically the **final.contigs.fa** file that contains our metatranscriptome assembly. This will contain the largest *contiguous* sequences MEGAHIT was able to construct from the sequence reads. We can look at the contents with the command `head` (`head` prints the first 10 lines of a file):
+> THE FOLLOWING STEPS TAKE TOO LONG, DO NOT PERFORM DURING DEMO SESSION, INSTEAD PLEASE VIEW PRE-COMPILED RESULTS. FEEL FREE TO TRY THESE STEPS OUTSIDE OF CLASS.
 
-**Commands**
 ```bash
-head megahit_out/final.contigs.fa
+rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample_wildcard.kma --local --include_wildcard
+ls
 ```
 
-**Output**
-```
->k141_0 flag=1 multi=3.0000 len=312
-ATACTGATCTTAGAAAGCTTAGATTTCATCTTTTCAATTGGTGTATCGAATTTAGATACAAATTTAGCTAAGGATTTAGACATTTCAGCTTTATCTACAGTAGAGTATACTTTAATATCTTGAAGTACACCAGTTACTTTAGACTTAATCAAAATTTTACCCAAATCATTAACTAGATCTTTAGAATCAGAATTCTTTTCTACCATTTTAGCGATGATATCTGTTGCATCTTGATCTTCAAATGAAGATCTATATGACATGATAGTTTGACCTTCTTGTAGTTGAGATCCAACTTCTAAACATTCGATGTCT
->k141_1570 flag=1 multi=2.0000 len=328
-GAGCATCGCGCAGAAGTATCTGTACTCCCTTTACTCCACGCAAGTCTTTCTCATACTCACGCTCGACACCCATCTTACCGATATAATCTCCCGGCTGATAGTACTCGTCTTCCTCAATATCACCCTGACTCACCTCTGCAACATCCCCAAGGACATGTGCAGCGATAGCTCGTTGATACTGACGAACACTACGTTTCTGAATATAAAAGCCTGGAAAACGATAGAGTTTCTCTTGGAAGGCGCTAAAGTCTTTATCACTCAATTGGCTCAAGAATAGTTGCTGCGTAAAGCGAGAGTAACCCGGATTCTTACTCCTATCCTTGATCCC
-[...]
-```
+The pre-compiled results can be viewed in the EXCEL version of `gut_sample_wildcard.kma.gene_mapping_data.txt` in the GitLab repo, but let's first compare statistics, where you'll see we aligned some additional reads:
 
-It can be a bit difficult to get an overall idea of what is in this file, so in the next step we will use the software [Quast][] to summarize the assembly information.
+> YOU CAN EXECUTE THESE COMMANDS AS WE HAVE PROVIDED PRE-COMPUTED RESULTS.
 
----
-
-## Step 7: Evaluate assembly with Quast
-
-[Quast][] can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:
-
-**Commands**
 ```bash
-# Time: 2 seconds
-quast -t 4 megahit_out/final.contigs.fa
+clear
+cat /home/ubuntu/CourseData/IDE_data/module5/kmaresults/gut_sample.kma.overall_mapping_stats.txt
+cat /home/ubuntu/CourseData/IDE_data/module5/kmaresults/gut_sample_wildcard.kma.overall_mapping_stats.txt
+cut -f 1 /home/ubuntu/CourseData/IDE_data/module5/kmaresults/gut_sample_wildcard.kma.gene_mapping_data.txt | sort -u | wc -l
+ls
 ```
 
-You should expect to see the following as output:
+Looking at the pre-compiled EXCEL spreadsheet, note that we have more information based on [CARD Resistomes & Variants data set](https://card.mcmaster.ca/resistomes), such as mappings to multiple alleles, flags for association with plasmids, and taxonomic distribution of the mapped alleles.
 
-**Output**
-```
-/home/ubuntu/.conda/envs/cbw-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
+* Ignoring efflux, which AMR gene had the most mapped reads?
+* How many AMR genes were found in total?
+* Which genes associated with plasmids have the most mapped reads?
 
-Version: 5.0.2
+<details>
+  <summary>Answers:</summary>
 
-System information:
-  OS: Linux-5.11.0-1017-aws-x86_64-with-debian-bullseye-sid (linux_64)
-  Python version: 3.7.10
-  CPUs number: 4
+Top 5 (non-efflux) for number of mapped reads gives the same list but with more data:
+* tet(X) with 7393 mapped reads (up from 7205)
+* CblA-1 with 4160 mapped reads (unchanged result)
+* APH(6)-Id with 1418 mapped reads (up from 759)
+* EC-8 with 520 mapped reads (up from 407)
+* APH(3'')-Ib with 388 mapped reads (up from 1084)
 
-Started: 2021-09-30 14:54:58
+115 AMR genes had sequencing reads mapped (up from 90).
 
-[...]
+Top 5 (plasmid associated) for number of mapped reads:
+* tet(X) with 7393 reads
+* acrD with 1881 Reads
+* APH(6)-Id with 1418 reads
+* sul2 with 961 reads
+* aad(6) with 99 reads
 
-Finished: 2021-09-30 14:55:00
-Elapsed time: 0:00:01.768326
-NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
+</details>
 
-Thank you for using QUAST!
-```
+<a name="pathogen"></a>
+## Pathogen of Origin Prediction
 
-Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module6_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
+If there is time in the tutorial, we will demonstrate how to predict pathogen-of-origin for the AMR gene reads in the gut metagenomics data using k-mers. Please note this algorithm is not yet published and is currently undergoing validation. It is also slow and has a high memory burden as algorithm optimization has yet to be performed.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module6/images/quast-contigs.png?raw=true" alt="p2" width="750" />
+First, the reference data needs to be formatted for k-mer analysis (see the details at the [RGI GitHub repo](https://github.com/arpcard/rgi#using-rgi-kmer-query-k-mer-taxonomic-classification)):
 
-This shows the length of each contig in the `megahit_out/final.contigs.fa` file, sorted by size.
+> DO NOT ATTEMPT THESE COMMANDS ON THE CLASS SERVERS, THEY REQUIRE MORE MEMORY
 
-### Step 7: Questions
-
-1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
-2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What is the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
-3. Is there another type of source for this RNA fragment that could explain it's length? Possibly a [Virus](https://en.wikipedia.org/wiki/Coronavirus#Genome)?
-4. Also try looking at the QUAST report (<http://IP_ADDRESS/module6_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
-
----
-
-## Step 8: Use BLAST to look for existing organisms
-
-In order to get a better handle on what the identity of the largest contigs could be, let's use [BLAST][] to compare to a database of existing viruses. Please run the following:
-
-**Commands**
-```
-# Time: seconds
-seqkit sort --by-length --reverse megahit_out/final.contigs.fa | seqkit head -n 50 > contigs-50.fa
-blastn -db ~/CourseData/IDE_data/module6/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -html -out blast_results.html
-```
-
-As output you should see something like (`blastn` won't print any output):
-
-**Output**
-```
-[INFO] read sequences ...
-[INFO] 3112 sequences loaded
-[INFO] sorting ...
-[INFO] output ...
+```bash
+rgi clean --local		
+wget https://card.mcmaster.ca/latest/data
+tar -xvf data ./card.json
+rgi load --card_json ./card.json --local
+rgi card_annotation -i ./card.json > card_annotation.log 2>&1		
+rgi load -i ./card.json --card_annotation card_database_v3.2.6.fasta --local
+wget -O wildcard_data.tar.bz2 https://card.mcmaster.ca/latest/variants
+mkdir -p wildcard
+tar -xjf wildcard_data.tar.bz2 -C wildcard
+gunzip wildcard/*.gz
+rgi load --card_json ./card.json --kmer_database ./wildcard/61_kmer_db.json --amr_kmers ./wildcard/all_amr_61mers.txt --kmer_size 61 --local --debug > kmer_load.61.log 2>&1
 ```
 
-Here, we first use [seqkit][] to sort all contigs by length (`seqkit sort --by-length ...`) and we then extract only the top **50** longest contigs (`seqkit head -n 50`) and write these to a file **contigs-50.fa** (`> contigs-50.fa`).
+Now we can predict pathogen-of-origin for our metagenomics analysis that included canonical CARD (reference sequences from the literature) **plus** predicted AMR resistance alleles and sequence variants from bulk resistome analyses, i.e. [CARD Resistomes & Variants data set](https://card.mcmaster.ca/resistomes):
 
-*Note that the pipe `|` character will take the output of one command (`seqkit sort --by-length ...`, which sorts sequences in the file by length) and forward it into the input of another command (`seqkit head -n 50`, which takes only the first 50 sequences from the file). The greater-than symbol `>` takes the output of one command `seqkit head ...` and writes it to a file (named `contigs-50.fa`).*
+> DO NOT ATTEMPT THESE COMMANDS ON THE CLASS SERVERS, THEY REQUIRE MORE MEMORY
 
-The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module6/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The (`-html -out blast_results.html`) tells BLAST to write it's results as an HTML file.
+```bash
+rgi kmer_query --bwt --kmer_size 61 --threads 4 --minimum 10 --input ./gut_sample_wildcard.kma.sorted.length_100.bam --output gut_sample_wildcard.pathogen --local
+```
 
-To view these results, please browse to <http://IP-ADDRESS/module6_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
+The pre-compiled results can be viewed in the EXCEL version of `gut_sample_wildcard.pathogen_61mer_analysis.gene.txt` in the GitLab repo, but let's look at some extracted results for the genes outlined above:
 
+| ARO term | Mapped reads with kmer DB hits | CARD*kmer Prediction |
+|-----|-----|-----|
+| tet(X) | 6951 | Escherichia coli (chromosome or plasmid): 1; Elizabethkingia anophelis (chromosome or plasmid): 1;  |
+| acrD | 1860 | Escherichia coli (chromosome): 102; Escherichia coli (chromosome or plasmid): 664;  |
+| APH(6)-Id | 1388 | Escherichia coli (chromosome or plasmid): 12; Salmonella enterica (chromosome or plasmid): 2; Vibrio parahaemolyticus (chromosome or plasmid): 1; Enterobacter hormaechei (chromosome or plasmid): 1; Acinetobacter baumannii (chromosome or plasmid): 1; Escherichia coli (plasmid): 3;  |
+| sul2 | 898 | Escherichia coli (chromosome or plasmid): 3; Bacillus anthracis (chromosome or plasmid): 2; Klebsiella pneumoniae (chromosome or plasmid): 1; Pseudomonas aeruginosa (chromosome or plasmid): 1; Salmonella enterica (chromosome or plasmid): 1;  |
+| EC-8 | 517 | Escherichia coli (chromosome): 127; Shigella boydii (chromosome): 1; Escherichia coli (chromosome or plasmid): 26;  |
+| APH(3'')-Ib | 387 | Escherichia coli (chromosome or plasmid): 3; Enterobacter hormaechei (chromosome or plasmid): 1;  |
+| aad(6) | 97 | none |
+| CblA-1 | 0 | none |
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module6/images/blast-report.png?raw=true" alt="p2" width="750" />
-
-
-### Step 8: Questions
-
-1. What is the closest match for the longest contig you find in your data? What is the percent identify for this match (the value Z in `Identities = X/Y (Z%)`). Recall that if a pathogen is an emerging/novel pathogen then you may not get a perfect match to any existing organisms.
-2. Using the BLAST report alongside all other information we've gathered, what can you say about what pathogen may be causing the patient's symptoms?
-3. It can be difficult to examine all the contigs/BLAST matches at once with the standard BLAST report (which shows the full alignment). We can modify the BLAST command to output a tab-separated file, with one BLAST HSP (a high-scoring segment pair) per line. To do this please run the following:
-
-   **Commands**
-   ```bash
-   blastn -db ~/CourseData/IDE_data/module6/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -outfmt '7 qseqid length slen pident sseqid stitle' -out blast_report.tsv
-   ```
-
-   This should construct a tabular BLAST report with the columns labeled like `query id, alignment length, subject length, % identity, subject id, subject title`. Taking a look at the file `blast_report.tsv`, what are all the different BLAST matches you can find (the different values for `subject title`)? How do they compare in terms of `% identity` and `alignment length` (in general, higher values for both of these should be better matches)?
-
----
-
-<a name="final"></a>
-# 5. Final words
-
-Congratulations, you've finished this lab. As a final check on your results, you can use [NCBI's online tool](https://blast.ncbi.nlm.nih.gov/Blast.cgi) to perform a BLAST on our top 50 contigs to see what matches to the 
-
-The source of the data and patient background information can be found at <https://doi.org/10.1038/s41586-020-2008-3> (**clicking this link will reveal what the illness is**). The only modification made to the original metatranscriptomic reads was to reduce them to 10% of the orginal file size.
-
-Also, while we used **megahit** to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the [SPAdes](https://cab.spbu.ru/software/spades/) suite of tools (such as [metaviralspades](https://doi.org/10.1093/bioinformatics/btaa490) or [rnaspades](https://doi.org/10.1093/gigascience/giz100)) may be useful to look into for this sort of data analysis.
-
-As a final note, NCBI also performs taxonomic analysis using their own software and you can actually view these using Krona directly from NCBI. Please click [here](https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR10971381) and go to the *Analysis* tab for NCBI's taxonomic analysis of this sequence data (**clicking this link will reveal what the illness is**).
-
-[fastp]: https://github.com/OpenGene/fastp
-[multiqc]: https://multiqc.info/
-[KAT]: https://kat.readthedocs.io/en/latest/
-[Kraken2]: https://ccb.jhu.edu/software/kraken2/
-[Krona]: https://github.com/marbl/Krona/wiki
-[MEGAHIT]: https://github.com/voutcn/megahit
-[NCBI blast]: https://blast.ncbi.nlm.nih.gov/Blast.cgi
-[BLAST]: https://blast.ncbi.nlm.nih.gov/Blast.cgi
-[seqkit]: https://bioinf.shenwei.me/seqkit/
-[fastp-report]: images/fastp.png
-[kat-overview]: images/kat.png
-[krona-all.png]: images/krona-all.png
-[krona-viruses.png]: images/krona-viruses.png
-[quast-contigs.png]: images/quast-contigs.png
-[Quast]: http://quast.sourceforge.net/quast
-[blast-report.png]: images/blast-report.png
-[Introduction Slides]: https://drive.google.com/file/d/1PdQbTW2Ax3KV0JisAxYaWsEajSCMfIO8/view?usp=sharing
+Note that those AMR genes associated with plasmids according to the [CARD Resistomes & Variants data set](https://card.mcmaster.ca/resistomes) cannot easily be assigned to a specific pathogen, while those like acrD and EC-8 that are predominantly known from chromosomes have a reliable pathogen-of-origin prediction.
