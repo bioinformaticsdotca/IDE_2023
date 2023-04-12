@@ -90,17 +90,17 @@ The first two examples list the predicted resistome of the analyzed genome and p
 
 RGI is a command line tool as well, so we’ll do a demo analysis of 112 clinical multi-drug resistant *E. coli* from Hamilton area hospitals, sequenced on MiSeq and assembled using SPAdes (an older genome assembler). We’ll additionally try RGI’s heat map tool to compare genomes.
 
-Login into your course account’s working directory and make a module5 directory:
+Login into your course account’s working directory and make a module6 directory:
 
 ```bash
-mkdir module5
-cd module5
+mkdir module6
+cd module6
 ```
 
 Take a peak at the list of E. coli samples:
 
 ```bash
-ls /home/ubuntu/CourseData/IDE_data/module5/ecoli
+ls /home/ubuntu/CourseData/IDE_data/module6/ecoli
 ```
 
 RGI has already been installed using Conda, list all the available software in Conda, activate RGI, and then review the RGI help screen:
@@ -126,7 +126,7 @@ We don’t have time to analyze all 112 samples, so let’s analyze 1 as an exam
 
 ```bash
 rgi main –h
-rgi main -i /home/ubuntu/CourseData/IDE_data/module5/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
+rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
 ls
 less C0001.json
 less C0001.txt
@@ -144,7 +144,7 @@ What if these results did not explain our observed phenotype? We might want to e
 
 ```bash
 rgi main –h
-rgi main -i /home/ubuntu/CourseData/IDE_data/module5/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
+rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
 ls
 column -t -s $'\t' C0001_IncludeLoose.txt  | less -S
 ```
