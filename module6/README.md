@@ -90,17 +90,17 @@ The first two examples list the predicted resistome of the analyzed genome and p
 
 RGI is a command line tool as well, so we’ll do a demo analysis of 112 clinical multi-drug resistant *E. coli* from Hamilton area hospitals, sequenced on MiSeq and assembled using SPAdes (an older genome assembler). We’ll additionally try RGI’s heat map tool to compare genomes.
 
-Login into your course account’s working directory and make a module5 directory:
+Login into your course account’s working directory and make a module6 directory:
 
 ```bash
-mkdir module5
-cd module5
+mkdir module6
+cd module6
 ```
 
 Take a peak at the list of E. coli samples:
 
 ```bash
-ls /home/ubuntu/CourseData/IDE_data/module5/ecoli
+ls /home/ubuntu/CourseData/IDE_data/module6/ecoli
 ```
 
 RGI has already been installed using Conda, list all the available software in Conda, activate RGI, and then review the RGI help screen:
@@ -126,7 +126,7 @@ We don’t have time to analyze all 112 samples, so let’s analyze 1 as an exam
 
 ```bash
 rgi main –h
-rgi main -i /home/ubuntu/CourseData/IDE_data/module5/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
+rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
 ls
 less C0001.json
 less C0001.txt
@@ -144,7 +144,7 @@ What if these results did not explain our observed phenotype? We might want to e
 
 ```bash
 rgi main –h
-rgi main -i /home/ubuntu/CourseData/IDE_data/module5/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
+rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
 ls
 column -t -s $'\t' C0001_IncludeLoose.txt  | less -S
 ```
@@ -159,12 +159,12 @@ An additional 3 nudged Strict annotations (*Escherichia coli* PtsI with mutation
 We have pre-compiled results for all 112 samples under “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage", so let’s try RGI’s heat map tool (pre-compiled images can be downloaded from the course GitHub repo) (please ignore the FutureWarning):
 
 ```bash
-ls /home/ubuntu/CourseData/IDE_data/module5/ecoli_json
+ls /home/ubuntu/CourseData/IDE_data/module6/ecoli_json
 rgi heatmap –h
-rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o genefamily_samples --category gene_family --cluster samples
-rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o drugclass_samples --category drug_class --cluster samples
-rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o cluster_both --cluster both
-rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module5/ecoli_json -o cluster_both_frequency --frequency --cluster both
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o genefamily_samples --category gene_family --cluster samples
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o drugclass_samples --category drug_class --cluster samples
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o cluster_both --cluster both
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o cluster_both_frequency --frequency --cluster both
 ls
 ```
 
@@ -207,14 +207,14 @@ ls
 Let's take a look at the raw gut metagenomics data to remind ourselves of the FASTQ format:
 
 ```bash
-ls /home/ubuntu/CourseData/IDE_data/module5/gut_sample
-less /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R1.fastq
+ls /home/ubuntu/CourseData/IDE_data/module6/gut_sample
+less /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R1.fastq
 ```
 
 We can now map the metagenomic reads to the sequences in CARD's protein homolog models using the KMA algorithm:
 
 ```bash
-rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample.kma --local
+rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample.kma --local
 ls
 ```
 
@@ -283,7 +283,7 @@ Map reads to canonical CARD (reference sequences from the literature) **plus** p
 > THE FOLLOWING STEPS TAKE TOO LONG, DO NOT PERFORM DURING DEMO SESSION, INSTEAD PLEASE VIEW PRE-COMPILED RESULTS. FEEL FREE TO TRY THESE STEPS OUTSIDE OF CLASS.
 
 ```bash
-rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module5/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample_wildcard.kma --local --include_wildcard
+rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample_wildcard.kma --local --include_wildcard
 ls
 ```
 
@@ -293,9 +293,9 @@ The pre-compiled results can be viewed in the EXCEL version of `gut_sample_wildc
 
 ```bash
 clear
-cat /home/ubuntu/CourseData/IDE_data/module5/kmaresults/gut_sample.kma.overall_mapping_stats.txt
-cat /home/ubuntu/CourseData/IDE_data/module5/kmaresults/gut_sample_wildcard.kma.overall_mapping_stats.txt
-cut -f 1 /home/ubuntu/CourseData/IDE_data/module5/kmaresults/gut_sample_wildcard.kma.gene_mapping_data.txt | sort -u | wc -l
+cat /home/ubuntu/CourseData/IDE_data/module6/kmaresults/gut_sample.kma.overall_mapping_stats.txt
+cat /home/ubuntu/CourseData/IDE_data/module6/kmaresults/gut_sample_wildcard.kma.overall_mapping_stats.txt
+cut -f 1 /home/ubuntu/CourseData/IDE_data/module6/kmaresults/gut_sample_wildcard.kma.gene_mapping_data.txt | sort -u | wc -l
 ls
 ```
 
