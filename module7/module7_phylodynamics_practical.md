@@ -1,0 +1,500 @@
+---
+layout: tutorial_page
+permalink: /IDE_2023_Mobule7_lab
+title: IDE Module 7 Lab
+header1: Phylodynamics of SARS-CoV-2
+header2: Infectious Disease Genomic Epidemiology
+image: /site_images/CBW_Metagenome_icon.jpg
+home: https://bioinformaticsdotca.github.io/IDE_2023
+description: Phylodynamics of SARS-CoV-2
+author: Finlay Maguire, Aaron Petkau
+modified: April 04, 2023
+---
+
+# Table of contents
+1. [Introduction](#intro)
+2. [Software](#software)    
+3. [Exercise setup](#setup)
+4. [Building a tree](#build-tree)
+5. [Visualizing the tree](#visualize-tree)
+6. [End of Lab](#end)
+7. [Bonus](#bonus)
+
+<a name="intro"></a>
+# 1. Introduction
+
+* [Introduction Slides][]
+
+In this tutorial we will be using phylogenetics and metadata to try and better understand the underlying evolutionary, ecological, and epidemiological processes of the SARS-CoV-2 pathogen. 
+This is a field of study and methodology known as phylodynamics.
+
+We will be focusing on 3 types of analysis using a dataset derived from the following study which found evidence of SARS-CoV-2 spilling over from human infections into wildlife, evolving within wildlife, and then infecting a human:
+
+> Pickering\*, B., Lung\*, O., Maguire\*, F., *et al.* Divergent SARS-CoV-2 variant emerges in white-tailed deer with deer-to-human transmission *Nat Microbiol* **7**, 2011-2024 (2022). https://doi.org/10.1038/s41564-022-01268-9
+
+
+These analyses are:
+
+- Inferring a molecular clock model to estimate when deer were infected with a specific SARS-CoV-2 lineage
+
+- Ancestral state reconstruction to identify where this took place
+
+- Testing for signatures of relaxed or intensified selection amongst the deer-associated lineage.
+
+Now the big caveat here is that a lot of these analyses (including some of the more classic epidemiological parameter estimation phylodynamics) are typically done using a Bayesian framework such as [BEAST](http://www.beast2.org/).  However, given these can be quite challenging logistically to run in the context of a practical.  
+To this end, we are instead going to focus on the more "quick and dirty" maximum likelihood approaches using mostly tools designed for the scale of data SARS-CoV-2 genomics brought.
+
+If you are interested in phylodynamics more deeply, I recommend checking out some of the semi-regularly held ["Taming the BEAST" workshops](https://taming-the-beast.org/workshops/Taming-the-BEAST-Online/) and the tutorials shared by the [BEAST Developers](http://www.beast2.org/tutorials/). Paul Lewis' [phyloseminar.org](http://phyloseminar.org/recorded.html) lectures on Bayesian phylogenetics ([part 1](https://www.youtube.com/watch?v=4PWlnNsfz90) and [part 2](https://www.youtube.com/watch?v=TLtOS--YwkU)) are also an excellent place to start.
+
+<a name="software"></a>
+# 2. List of software for tutorial
+
+* [Augur][]
+* [mafft][]
+* [iqtree][]
+* [treetime][]
+* [hyphy][]
+* [Auspice][]
+
+<a name="setup"></a>
+# 3. Exercise setup
+
+## 3.1. Copy data files
+
+To begin, we will copy over the necesssary files to `~/workspace`.
+
+**Commands**
+```bash
+cp -r ~/CourseData/IDE_data/module7/ ~/workspace
+cd ~/workspace/module7
+```
+
+When you are finished with these steps you should be inside the directory `/home/ubuntu/workspace/module7`. You can verify this by running the command `pwd`.
+
+**Output after running `pwd`**
+```
+/home/ubuntu/workspace/module7
+```
+
+You should also see a directory `data/` in the current directory which contains all the input data. You can verify this by running `ls data`:
+
+**Output after running `ls data`**
+```
+sequences.fasta	    metadata.tsv     reference_MN908947.3.fasta 
+```
+
+## 3.2. Activate environment
+
+Next we will activate the [conda](https://docs.conda.io/en/latest/) environment, which will have all the tools needed by this tutorial pre-installed. To do this please run the following:
+
+**Commands**
+```bash
+conda activate signalcovtools
+```
+
+You should see the command-prompt (where you type commands) switch to include `(augur)` at the beginning, showing you are inside this environment. You should also be able to run the `augur` command like `augur --version` and see output:
+
+**Output after running `augur --version`**
+```
+augur 21.1.0 
+```
+
+## 3.3. Find your IP address
+
+Similar to yesterday, we will want to find the IP address of your machine on AWS so we can access some files from your machine on the web browser. To find your IP address please run:
+
+**Commands**
+```bash
+curl http://checkip.amazonaws.com
+```
+
+This should print a number like XX.XX.XX.XX. Once you have your address, try going to <http://IP-ADDRESS> and clicking the link for **module7**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab (phylogenetic trees, etc). 
+
+<a name="build-tree"></a>
+
+# 4. Building the phylogenetic tree
+
+The overall goal of this lab is to make use of a set of SARS-CoV-2 genomes sequenced and analyzed in the above study and then use associated metadata and phylodynamic methods to gain insight into where and when the zoonoses most likely occurred.
+To do this, we will make use of the [Augur][] tool suite, which powers the [NextStrain](https://nextstrain.org/) website.
+Within augur, the key tool being used for actual phylodynamics is [TreeTime][] a likelihood based tool for inferring molecular clocks and ancestral traits.
+
+An overview of the basic usage of Augur is as follows (figure from the Augur documentation):
+
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/augur_analysis_sketch.png?raw=true" alt="p2" width="750" />
+
+These steps are as follows (we add in an additional **visualize** step to take a look at some of the output files produced by the Augur pipeline).
+
+* **align**: This step constructs a multiple sequence alignment from this subset of genomes.
+* **tree**: This step builds a phylogenetic tree, where branch lengths are measured in substitutions/site (a divergence tree).
+* **(Additional step) visualize**: We add this step into the overal Augur pipeline to visualize the constructed tree.
+* **refine**: This step constructs a time tree using our existing tree alongside collection dates of SARS-CoV-2 genomic samples (branch lengths are measured in time).
+* **traits**: This step uses treetime's mugration model to infer ancestral traits based on the tree. We will use this to infer ancestral host and geography.
+* **export**: This step exports the data to be used by [Auspice][], a version of the visualization system used by NextStrain that lets you examine your own phylogenetic tree and metadata.
+
+Once these steps are completed, we will spend some time comparing the phylogenetic tree and epidemiological metadata to the results published in the existing study.
+
+---
+
+## Step 1: Construct a multiple sequence alignment of the genomes (`augur align`)
+
+The first step is to construct a multiple sequence alignment of the genomes, which is required before building a phylogenetic tree. We will be using the command `augur align` to accomplish this task, but underneath this runs [mafft][] to construct the alignment.
+
+To construct the alignment, please run the following:
+
+**Commands**
+```bash
+# Time: 10 seconds
+augur align --nthreads 2 --sequences data/sequences.fasta --reference-sequence data/reference_MN908947.3.fasta --output alignment.fasta
+```
+
+You should expect to see the following:
+
+**Output**
+```
+using mafft to align via:
+        mafft --reorder --anysymbol --nomemsave --adjustdirection --thread 2 alignment.to_align.fasta 1> alignmnt.fasta 2> alignment.fasta.log
+
+        Katoh et al, Nucleic Acid Research, vol 30, issue 14
+        https://doi.org/10.1093%r%2Fgkf436
+
+12bp insertion at ref position 6377
+        TGCGTGCGTCGG: hCoV-19/mink/USA/MI-CDC-3886779-001/2020, hCoV-19/mink/USA/MI-CDC-3886954-001/2020, hCoV-19/mink/USA/MI-CDC-3886891-001/2020, hCoV-19/mink/USA/MI-CDC-3886516-001/2020, hCoV-19/Canada/ON-PHL-21-44225/2021, hCoV-19/deer/Canada/ON-WTD-04581-2582/2021, hCoV-19/deer/Canada/ON-WTD-04658-2372/2021, hCoV-19/deer/Canada/ON-WTD-wcov-04662-2575/2021
+Trimmed gaps in MN908947.3 from the alignment
+```
+
+The meaning of each parameter is as follows:
+
+* `--nthreads 2`: Use 2 threads for the alignment.
+* `--sequences data/sequences.fasta`: The input set of sequences in FASTA format.
+* `--output alignment.fasta`: The output alignment, in FASTA format.
+* `--reference-sequence data/reference_MN908947.3.fasta`: The reference genome (the Wuhan-Hu 1 genome). This will be included in our alignment and `augur align` will, once the alignment is constructed, remove any insertions with respect to this reference genome (useful when identifying and naming specific mutations later on in the augur pipeline).
+
+Once the alignment is complete, you should have a file `alignment.fasta` in your directory. This is a very similar format as the input file `sequences.fasta`, but the difference is that sequences have been aligned (possibly by inserting gaps `-`). This also means that all sequences in `alignment.fasta` should have the same length (whereas sequences in `sequences.fasta`, which is not aligned, may have different lengths).
+
+---
+
+## Step 3: Build a Maximum Liklihood phylogenetic tree (`augur tree`)
+
+The next step is to take the set of aligned genomes `alignment.fasta` and build a phylogenetic tree (a divergence tree). We will use `augur tree` for this, but underneath it runs [iqtree][], which uses the Maximim Likihood method to build a phylogenetic tree. To build a tree, please run the following:
+
+**Commands**
+```bash
+# Time: 15 seconds
+augur tree --nthreads 4 --alignment alignment.fasta --output tree.subs.nwk
+```
+
+You should expect to see the following as output:
+
+**Output**
+```
+Building a tree via:
+        iqtree2 -ntmax 4 -s alignment-delim.fasta -m GTR -ninit 2 -n 2 -me 0.05 -nt AUTO -redo > alignment-delim.iqtree.log
+        Nguyen et al: IQ-TREE: A fast and effective stochastic algorithm for estimating maximum likelihood phylogenies.
+        Mol. Biol. Evol., 32:268-274. https://doi.org/10.1093/molbev/msu300
+
+
+Building original tree took 11.159646034240723 seconds
+```
+
+This produces as output a `tree.subs.nwk` file, which is the actual phylogenetic tree (in Newick format). You can load this file in a variety of phylogenetic tree viewers (such as <http://phylo.io/>) but we will further refine this file to work with Auspice.
+
+Another output file is `alignment-delim.iqtree.log`, which contains additional information from [iqtree][]. You can take a look at this file to get an idea of what [iqtree][] was doing by using `tail` (prints the last few lines of a file).
+
+**Commands**
+```bash
+tail -n 20 alignment-delim.fasta.log
+```
+
+**Output**
+```
+Optimal log-likelihood: -42013.225
+Rate parameters:  A-C: 0.16166  A-G: 0.97768  A-T: 0.06332  C-G: 0.00010  C-T: 6.44146  G-T: 1.00000
+Base frequencies:  A: 0.299  C: 0.183  G: 0.197  T: 0.322
+Parameters optimization took 1 rounds (0.006 sec)
+BEST SCORE FOUND : -42013.225
+Total tree length: 0.006
+
+Total number of iterations: 2
+CPU time used for tree search: 0.083 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.043 sec (0h:0m:0s)
+Total CPU time used: 20.087 sec (0h:0m:20s)
+Total wall-clock time used: 11.073 sec (0h:0m:11s)
+
+Analysis results written to:
+  IQ-TREE report:                alignment-delim.fasta.iqtree
+  Maximum-likelihood tree:       alignment-delim.fasta.treefile
+  Likelihood distances:          alignment-delim.fasta.mldist
+  Screen log file:               alignment-delim.fasta.log
+```
+
+As iqtree uses a Maximum Liklihood approach, you will see that it will report the likeihood score of the optimal tree (reported as log-likehoods since likelihood values are very very small).
+
+*Note: For this lab we are not looking at branch support values for a tree, but for real-world analysis you may wish to look into including bootstrap support values or approximate likelihood ratio test values. This will give a measure of how well supported each branch in the tree is by the alignment (often as number from 0 for little support to 100 for maximal support). Please see the [IQTree documentation](http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation) for more details.*
+
+---
+
+## Step 4: Inferring timing of host change (`augur refine`)
+
+The tree output by [iqtree][] shows hypothetical evolutionary relationships between different SARS-CoV-2 genomes with branch lengths representing distances between different genomes (in units of **substitutions/site** or the predicted number of substitutions between genomes divided by the alignment length). However, other methods of measuring distance between genomes are possible. In particular we can incorporate the collection dates of the different SARS-CoV-2 genomes to infer a tree where branches are scaled according to the elapsed time and the dates of internal nodes are inferred. Such trees are called **time trees**.
+
+We will use [TreeTime][] to infer a **time tree** from our phylogenetic tree using collection dates of the SARS-CoV-2 genomes stored in the `filtered.tsv` metadata file. We will use the `augur refine` step to run TreeTime and perform some additional refinemint of the tree. To do this, please run the following:
+
+**Commands**
+```bash
+# Time: 5 minutes
+augur refine --alignment alignment.fasta --tree tree.subs.nwk --metadata data/metadata.tsv --timetree --divergence-units mutations --output-tree tree.time.nwk --output-node-data refine.node.json --keep-root
+```
+
+You should expect to see the following as output:
+
+**Output**
+```
+augur refine is using TreeTime version 0.8.4
+
+21.73   WARNING: Previous versions of TreeTime (<0.7.0) RECONSTRUCTED sequences of
+        tips at positions with AMBIGUOUS bases. This resulted in unexpected
+        behavior is some cases and is no longer done by default. If you want to
+        replace those ambiguous sites with their most likely state, rerun with
+        `reconstruct_tip_states=True` or `--reconstruct-tip-states`.
+[...]
+
+Inferred a time resolved phylogeny using TreeTime:
+        Sagulenko et al. TreeTime: Maximum-likelihood phylodynamic analysis
+        Virus Evolution, vol 4, https://academic.oup.com/ve/article/4/1/vex042/4794731
+
+updated tree written to tree.time.nwk
+node attributes written to refine.node.json
+```
+
+The parameters we used are:
+
+* `--alignment alignment.fasta`: The alignment used to build the tree. Used to re-scale the divergence units.
+* `--tree tree.subs.nwk`: The input tree build using **iqtree**.
+* `--metadata data/metadata.tsv`: The metadata which contains the SARS-CoV-2 genome names (in a column called `strain`) and the sample collection dates (in a column named `date`).
+* `--timetree`: Build a time tree.
+* `--divergence-units mutations`: Convert the branch lengths of **substitutions/site** (**mutations/site**) to **mutations** (not needed to build a time tree, this is just used for visualizing the tree later on).
+* `--output-tree tree.time.nwk`: The output Newick file containing the time tree.
+* `--output-node-data refine.node.json`: Augur will store additional information here which will let us convert between time trees and substitution trees.
+* `--keep-root`: Keep the reference genome as the root
+
+As output, the file `tree.time.nwk` will contain the time tree while the file `refine.node.json` contains additional information about the tree. The tree `tree.time.nwk` will also be rooted based on analysis performed by [TreeTime][].
+
+---
+
+## Step 5: Infer ancestral states for host and location
+
+We will now be using treetime's `mugration` model to reconstruct ancestral trait states. In other words, we are trying to use the tree and genome metadata to reconstruct the most likely host and location (the state/province stored as `division` in data/metadata.tsv) at each of the internal nodes in the tree.
+As with the other analyses, augur makes this process very convenient:
+
+**Commands**
+```bash
+# Time: 1 minute
+augur traits --tree tree.time.nwk --metadata data/metadata.tsv --columns host division --output-node-data trait.node.json
+```
+
+You should expect to see the following as output:
+**Output**
+```
+augur traits is using TreeTime version 0.9.4
+Assigned discrete traits to 21 out of 22 taxa.
+
+NOTE: previous versions (<0.7.0) of this command made a 'short-branch
+length assumption. TreeTime now optimizes the overall rate numerically
+and thus allows for long branches along which multiple changes
+accumulated. This is expected to affect estimates of the overall rate
+while leaving the relative rates mostly unchanged.
+Assigned discrete traits to 21 out of 22 taxa.
+
+[...]
+
+Inferred ancestral states of discrete character using TreeTime:
+        Sagulenko et al. TreeTime: Maximum-likelihood phylodynamic analysis
+        Virus Evolution, vol 4, https://academic.oup.com/ve/article/4/1/vex042/4794731
+
+results written to trait.node.json
+```
+
+The parameters we used are:
+* `--tree tree.time.nwk`: The time-calibrated tree we inferred in step 4
+* `--metadata data/metadata.tsv`: The metadata file with information about the genomes in the tree
+* `--columns host division`: The columns in the metadata file we want to infer ancestral states for, in this case host (what species the genome came from) and division (the province/state the genome came from).
+* `--output-node-data trait.node.json`: Augur stores the additional information related to the ancestral trait inference for later visualisation.
+
+---
+
+## Step 6: Package up data for Auspice Visualisation (`augur export`)
+
+We will be using [Auspice][] to visualize the tree alongside our metadata. To do this, we need to package up all of the data we have so far into a special file which can be used by Auspice. To do this, please run the following command:
+
+**Commands**
+```bash
+# Time: 1 second
+augur export v2 --tree tree.time.nwk --node-data refine.node.json trait.node.json --maintainers "CBW-IDE-2023" --title "Module 7 Practical" --output analysis-package.json --geo-resolutions division
+```
+
+You should expect to see the following as output:
+
+**Output**
+```
+Trait 'host' was guessed as being type 'categorical'. Use a 'config' file if you'd like to set this yourself.
+Trait 'division' was guessed as being type 'categorical'. Use a 'config' file if you'd like to set this yourself.
+Validating produced JSON
+Validating schema of 'analysis-package.json'...
+Validating that the JSON is internally consistent...
+Validation of 'analysis-package.json' succeeded.
+```
+
+The file `analysis-package.json` contains both the tree as well as the different branch length units (time and sustitutions), our inferred ancestral traits, as well as additional data.
+
+
+The parameters we used are:
+* `--tree tree.time.nwk`: The time-calibrated tree we inferred in step 4
+* `--node-data refine.node.json trait.node.json`: The 2 jsons created during the temporal and ancestral trait inference
+* `--title "Module 7 Practical"`: A title for the auspice page, you can make this anything you want.
+* `--maintainers "CBW-IDE-2023"`: A name for who is responsible for this analysis, useful for later, can make this anything you want.
+* `--geo-resolutions division`: Spatial resolution on which to plot the data. In this case we want province/state i.e., `division`
+* `--output analysis-package.json`: The key output file we want to generate
+---
+
+<a name="visualize-tree"></a>
+# 5. Visualizing the phylogenetic tree alongside epidemiological metadata
+
+Now that we've constructed and packaged up a tree (`analysis-package.json`), we can visualize this data alongside our metadata (`data/metadata.tsv`) using [Auspice][].
+
+---
+
+## Step 1: Load data into Auspice
+
+To do this, please navigate to <http://IP-ADDRESS/module7/> and download the files `analysis-package.json` and `data/metadata.tsv` to your computer (if the link does not download you can **Right-click** and select **Save link as...**).
+
+Next, navigate to <https://auspice.us/> and drag the file `analysis-package.json` onto the page.
+
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/drag-and-drop.png?raw=true" alt="p2" width="750" />
+
+This should result in a phylogenetic tree being loaded that looks like:
+
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/tree.png?raw=true" alt="p2" width="750" />
+
+Next, we will load the metadata `data/metadata.tsv` file onto this view. To do this, please find and drag-and-drop the `data/metadata.tsv` file onto the phylogenetic tree shown in Auspice:
+
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module4/images/auspice-drag-metadata.png?raw=true" alt="p2" width="750" />
+
+You main get some warning messages showing up, but you should still see a green **Added metadata from filtered.tsv** message.
+
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module4/images/auspice-metadata-warnings.png?raw=true" alt="p2" width="750" />
+
+
+---
+
+## Step 2: Explore data
+
+Now you can spend some time to explore the data and get used to the Auspice interface. Try switching between different **Tree Layouts**, or different **Branch Lengths**, or colouring the tree by different criteria in the metadata table.
+
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/auspice-panel.png?raw=true" alt="p2" width="750" />
+
+## Step 3: Examine particular clades
+
+We are now going to compare the tree we constructed from the tree in [Figure 4](https://www.nature.com/articles/s41564-020-00838-z/figures/4) of the existing study.
+
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/figure4bc.png?raw=true" alt="p2" width="750" />
+
+As a first step, let's examine the tree from **Figure 4.b** in Auspice. We can do this by searching for one of the genomic samples `Scotland/CVR50` in Auspice:
+
+1. Select genome `Scotland/CVR50` by using the **Filter Data** box:
+
+   <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/filter-by.png?raw=true" alt="p2" width="750" />
+
+2. Use a combination of **Zoom to Selected** and the zoom out button (magnifying glass) to show the set of genomic samples around `Scotland/CVR50`.
+
+   <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/zoom-to-selected.png?raw=true" alt="p2" width="750" />
+
+3. Select the **Trash icon** for the filter to remove it and select to **Color by** `travel_hx` (Travel history). When you are finished you should see something like below.
+
+   <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/selected-subtree.png?raw=true" alt="p2" width="750" />
+
+### Step 3: Questions
+
+1. Compare this tree from that in **Figure 4.b** above. Are there differences? Is **Figure 4.b** a *Divergence* tree or a *Time* tree?
+2. Can you spot the two cases associated with travel to Italy in the prior 2 weeks?
+3. Try out the same procedure for the clade from **Figure 4.c** (search for `Scotland/GCVR-17033E`, you may need to click **Reset Layout** first). Does it also look simlar to what is shown in **Figure 4**?
+
+---
+
+## Step 4: Compare predicted dates of common ancestors
+
+Time trees place the leafs of the tree at the collection date for each collected sample and predicts the dates for internal nodes (representing hypothetical ancestors). We can compare our tree (scaled by time) with [Figure 5](https://www.nature.com/articles/s41564-020-00838-z/figures/5) from the study (an excerpt seen below):
+
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/fig5.png?raw=true" alt="p2" width="750" />
+
+This figure shows a time-scaled tree (dates are shown on the x-axis) and uses this information to infer the detection lag (difference between the time of the common ancestor to this clade and the first sequenced sample).
+
+To compare this figure to our tree, we can search for the listed lineage (`UK5098`) and zoom into this clade.
+
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/search-by-lineage.png?raw=true" alt="p2" width="750" />
+
+To view sample collection dates you can hover over the particular sample:
+
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/view-dates.png?raw=true" alt="p2" width="750" />
+
+### Step 4: Questions
+
+1. How closely related are some of these genomes in `UK5098` (try toggling between **Time** and **Divergence** for Branch Length)? 
+2. Compare the earliest sample you can find in `UK5098` to the predicted date of the most recent common ancestor to all of `UK5098` (hover over the branch to get the date). How does this compare to the lag time in **Figure 5** above (the shaded gray area that's labeled `6d` for 6 days)?
+
+*Note: Our data may not look exactly the same as the figure. We used slightly different software and methods from that of the paper.*
+
+---
+<a name="selection"></a>
+# 6. Inference of selection
+---
+
+
+
+phylowidget of tree
+datamonkey
+
+<a name="end"></a>
+# 7. End of lab
+
+You've made it to the end of the lab. Awesome job. If you find you have some extra time, you can explore the data in Auspice further and perhaps compare the tree we have generated to the figures from the study ([Figure 4](https://www.nature.com/articles/s41564-020-00838-z/figures/4) or [Figure 5](https://www.nature.com/articles/s41564-020-00838-z/figures/5)).
+
+---
+
+
+[Augur]: https://docs.nextstrain.org/projects/augur/en/stable/index.html
+[mafft]: https://mafft.cbrc.jp/alignment/software/
+[iqtree]: http://www.iqtree.org/
+[ETEToolkit]: http://etetoolkit.org/
+[BuddySuite]: https://github.com/biologyguy/BuddySuite
+[treetime]: https://treetime.readthedocs.io/en/latest/
+[Auspice]: https://auspice.us/
+[drag-and-drop.png]: images/drag-and-drop.png
+[drag-and-drop-small.png]: images/small/drag-and-drop.png
+[auspice-main.png]: images/auspice-main.png
+[auspice-main-small.png]: images/small/auspice-main.png
+[auspice-drag-metadata.png]: images/auspice-drag-metadata.png
+[auspice-drag-metadata-small.png]: images/small/auspice-drag-metadata.png
+[auspice-metadata-warnings.png]: images/auspice-metadata-warnings.png
+[auspice-metadata-warnings-small.png]: images/small/auspice-metadata-warnings.png
+[auspice-panel.png]: images/auspice-panel.png
+[auspice-panel-small.png]: images/auspice-panel.png
+[figure4bc.png]: images/figure4bc.png
+[figure4bc-small.png]: images/small/figure4bc.png
+[tree-alignment.png]: images/tree-alignment.png
+[tree-alignment-small.png]: images/small/tree-alignment.png
+[augur_analysis_sketch.png]: images/augur_analysis_sketch.png
+[augur_analysis_sketch-small.png]: images/small/augur_analysis_sketch.png
+[filter-by.png]: images/filter-by.png
+[filter-by-small.png]: images/filter-by.png
+[zoom-to-selected.png]: images/zoom-to-selected.png
+[zoom-to-selected-small.png]: images/small/zoom-to-selected.png
+[selected-subtree.png]: images/selected-subtree.png
+[selected-subtree-small.png]: images/small/selected-subtree.png
+[fig5.png]: images/fig5.png
+[fig5-small.png]: images/small/fig5.png
+[search-by-lineage.png]: images/search-by-lineage.png
+[search-by-lineage-small.png]: images/search-by-lineage.png
+[view-dates.png]: images/view-dates.png
+[view-dates-small.png]: images/view-dates.png
+[Introduction Slides]: https://drive.google.com/file/d/1-OC9TOOlN4DLoWOX0NitipOhFuWsVB9f/view?usp=sharing
+
