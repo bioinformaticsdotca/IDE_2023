@@ -4,7 +4,7 @@ permalink: /IDE_2023_Module8_lab
 title: IDE Module 8 Lab
 header1: Emerging Pathogen Detection and Identification using Metagenomic Samples
 header2: Infectious Disease Genomic Epidemiology
-image: /site_images/CBW_Metagenome_icon.jpg
+image: /site_images/CBW_epidemiology_icon.png
 home: https://bioinformaticsdotca.github.io/IDE_2023
 description: Emerging Pathogen Detection and Identification using Metagenomic Samples
 author: Aaron Petkau and Gary Van Domselaar

@@ -1,11 +1,11 @@
 ---
 layout: tutorial_page
-permalink: /IDE_2021_Module3_lab
+permalink: /IDE_2023_Module3_lab
 title: Module 3 Lab 
 header1: Workshop Pages for Students
 header2: Molecular Typing Lab
-image: /site_images/CBW_wshop-epidem_map-icon.png
-home: https://bioinformaticsdotca.github.io/IDE_2021
+image: /site_images/CBW_epidemiology_icon.png
+home: https://bioinformaticsdotca.github.io/IDE_2023
 description: Molecular Typing CBW Tutorial 
 author: Dillon Barker
 modified: 2021-10-04 
