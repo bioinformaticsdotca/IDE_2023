@@ -369,19 +369,19 @@ To do this, please navigate to <http://IP-ADDRESS/module7/> and download the fil
 
 Next, navigate to <https://auspice.us/> and drag the file `analysis-package.json` onto the page.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/auspice.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/auspice.png?raw=true" alt="p2" width="750" />
 
 This should result in a phylogenetic tree being loaded that looks like:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/tree.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/tree.png?raw=true" alt="p2" width="750" />
 
 Next, we will load the metadata `data/metadata.tsv` file onto this view. To do this, please find and drag-and-drop the `data/metadata.tsv` file onto the phylogenetic tree shown in Auspice:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/metadata.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/metadata.png?raw=true" alt="p2" width="750" />
 
 You main get some warning messages showing up, but you should still see a green **Added metadata from filtered.tsv** message.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/metadata2.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/metadata2.png?raw=true" alt="p2" width="750" />
 
 
 ---
@@ -398,15 +398,15 @@ Now you can spend some time to explore the data and get used to the Auspice inte
 
 We can use the x-axis to work out the approximate inferred date of the internal nodes in the tree. Alternatively, we can use the mouse tooltip over internal nodes to read the exact inferred date.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/date.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/date.png?raw=true" alt="p2" width="750" />
 
 We can also compare the time-calibrated tree to the original maximum likelihood tree based on substitution distances.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/divergence.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/divergence.png?raw=true" alt="p2" width="750" />
 
 Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome's total branch length in mutations is all the way to root vs the collection date).
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/tip_reg.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/tip_reg.png?raw=true" alt="p2" width="750" />
 
 
 ### Step 3: Questions
@@ -423,11 +423,11 @@ We can colour the tree and rename the tree tip labels using the metadata to infe
 
 For example, you can look at the inferred ancestral host information using these options:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/host.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/host.png?raw=true" alt="p2" width="750" />
 
 Similarly, you can look at the inferred ancestral location information using these options:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/loc.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/loc.png?raw=true" alt="p2" width="750" />
 
 ### Step 4: Questions
 
