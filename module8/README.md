@@ -212,11 +212,11 @@ You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analy
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
 
-This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please anser the following questions.
+This should show an overview of the quality of the reads before and after filtering with `fastp`. Using this report, please answer the following questions.
 
 #### Step 2: Questions
 
-1. Looking at the **Filtering result** section, how many reads **passed filters**? How many were removed due to **low quality**? How many were removed due to **too many**?
+1. Looking at the **Filtering result** section, how many reads **passed filters**? How many were removed due to **low quality**? How many were removed due to **too many N**?
 2. Looking at the **Adapters** section, were there many adapters that needed to be trimmed in this data?
 3. Compare the **quality** and **base contents** plots **Before filtering** and **After filtering**? How do they differ?
 
