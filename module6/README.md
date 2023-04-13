@@ -242,18 +242,18 @@ ls
   <summary>Answers:</summary>
 
 Top 5 (non-efflux) for number of mapped reads:
+* tet(Q) with 40345 reads
 * tet(X) with 7205 reads
+* ErmF with 6510 reads
 * CblA-1 with 4160 reads
-* APH(3'')-Ib with 1084 reads
-* APH(6)-Id with 759 reads
-* EC-8 with 407 reads
+* tet(O) with 1608 reads
 
 Top 5 (non-efflux) for % length coverage (all had 100%):
+* tet(Q)
 * tet(X)
+* ErmF
 * CblA-1
-* APH(3'')-Ib
-* APH(6)-Id
-* APH(3')-IIIa
+* tet(O)
 
 90 AMR genes had sequencing reads mapped.
 
@@ -309,11 +309,11 @@ Looking at the pre-compiled EXCEL spreadsheet, note that we have more informatio
   <summary>Answers:</summary>
 
 Top 5 (non-efflux) for number of mapped reads gives the same list but with more data:
-* tet(X) with 7393 mapped reads (up from 7205)
-* CblA-1 with 4160 mapped reads (unchanged result)
-* APH(6)-Id with 1418 mapped reads (up from 759)
-* EC-8 with 520 mapped reads (up from 407)
-* APH(3'')-Ib with 388 mapped reads (up from 1084)
+* tet(Q) with 42684 mapped reads (up from 40345 reads)
+* tet(X) with 7393 mapped reads (up from 7205 reads)
+* ErmF with 6987 mapped reads (up from 6510 reads)
+* CblA-1 with 4160 mapped reads (no change)
+* tet(O) with 1870 mapped reads (up from 1608 reads)
 
 115 AMR genes had sequencing reads mapped (up from 90).
 
