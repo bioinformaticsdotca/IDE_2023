@@ -315,7 +315,7 @@ Top 5 (non-efflux) for number of mapped reads gives the same list but with more 
 * EC-8 with 520 mapped reads (up from 407)
 * APH(3'')-Ib with 388 mapped reads (up from 1084)
 
-115 AMR genes had sequencing reads mapped (up from 90).
+114 AMR genes had sequencing reads mapped (up from 90).
 
 Top 5 (plasmid associated) for number of mapped reads:
 * tet(X) with 7393 reads
