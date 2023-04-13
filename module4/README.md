@@ -123,7 +123,51 @@ Open your web browser and navigate to `http://xx.uhn-hpc.ca/module4/covid-19-sig
 This file contains plots of the coverage depth for each of the 35 samples we analyzed. 
 
 Explore the results and try to understand what the coverage patterns mean: 
-- What does the sharp drop in coverage for sample `ERR6035561` mean? 
+- What might have caused the sharp drop in coverage for sample `ERR6035561`? 
 - What about the uneven coverage in sample `ERR5508530`?
 
+As explained in the lecture, sequencing coverage is a critical factor for determining the `completeness` of the genome assembly. In the terminal, let's view the consensus sequence for sample `ERR5508530`:
 
+```
+cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta
+```
+
+What do you see? The consensus sequences for other samples are in directories with similiar names, take a look at them. Can you draw any conclusions about the quality of the results?
+
+ncov-tools creates a file that summarizes the genome completeness for every sample. Run this command in the terminal:
+
+```
+cut -f1,10,15 cbw_demo_run_results_dir/ncov-tools-results/qc_reports/cbw_demo_run_results_dir_summary_qc.tsv
+```
+
+This command uses `cut` to find the metrics that we are interested in from the full QC results table. What is the completeness of `ERR5508530`? What about `ERR6035561`?
+
+## Assessing SNP calls
+
+Now, using your browser open the file located at `ncov-tools-results/plots/cbw_demo_run_results_dir_tree_snps.pdf`. This plot arranges the samples using a phylogenetic tree (shown on the left) so that samples with a similar sequence are grouped together. The panel on the right shows SNPs within each sample with respect to the MN908947.3 reference genome, where each colour represents a different base. Also shown on the plot are the pangolin-assigned lineages; B.1.1.7 is the alpha variant, AY.4 is delta. Notice that there are many SNPs in common between the alpha samples and a different set of SNPs in common between the delta samples. These SNPs are what define the different lineages.
+
+Now, we're going to inspect the read-level evidence for some example SNPs. Open up IGV and from the File menu select "Load from URL" and paste in the path `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/ERR5389257/core/ERR5389257_viral_reference.mapping.bam` again replacing `xx` with your instance ID. Once the file loads you will see the pattern of read coverage along the genome. Paste the coordinates `NC_045512.2:2,917-3,156` into the navigation bar. This region shows a single C>T SNP where every read supports the alternative allele (the red bars in the middle of the screen). Now, navigate to `NC_045512.2:631-870`. In this case some reads have evidence for a C>T SNP but other reads have evidence for the reference allele at this position. Since this position is ambiguous the consensus genome will be marked with an ambiguity code. Going back to the mutations plot, look for the row corresponding to sample `ERR5389257`. Notice that it has a black bar in between two purple SNPs at the beginning of the genome - that is the ambiguous position that we are inspecting at IGV. Since this position is only ambiguous in `ERR5389257` we can't draw many conclusions from it - it could be due to low-level contamination, a PCR artificat, or heterogeneity within this sample.
+
+You can view all of the variants for a sample by using `less` on their VCF files:
+
+```
+less cbw_demo_run_results_dir/ERR5389257/freebayes/ERR5389257.variants.norm.vcf
+```
+
+Take a bit of time to look at other variants for this sample (or other samples!). If you find something interesting or unexpected tell the rest of the class in slack and we can discuss it as a group.
+
+## Variant consequence prediction
+
+Once we have variant calls we can run a `mutation consequence predictor` to determine the protein-level changes. This is important as the identification of new variants relies on determining whether the mutations increase the fitness of the lineage, which is usually determined at the amino acid level. View this file in your terminal:
+
+```
+less cbw_demo_run_results_dir/ncov-tools-results/qc_annotation/ERR5389257_aa_table.tsv
+```
+
+This file is a table of predicted amino acid changes for each protein. How many changes to the spike protein does this sample have? Let's compare that number to a different sample from another lineage. First, let's figure out the lineage of sample `ERR5389257`:
+
+```
+grep ERR5389257 cbw_demo_run_results_dir/lineage_assignments.tsv
+```
+
+The file `lineage_assignments.tsv` is produced by pangolin and by grepping (searching the file) for sample `ERR5389257` we can see that it is B.1.1.7 (Alpha). Look in the `lineage_assignments.tsv` file to find the identifier for a delta sample, then use it's consequence prediction file to count the number of spike mutations. Is it more or less than `ERR5389257`? We probably wouldn't want to draw strong conclusions from the number of mutations as many will be neutral (or even deleterious) but this type of analysis - looking at mutation consequence - cross-referenced with other data (for example experimental fitness assays) is what goes into identifying VOCs.
