@@ -369,7 +369,7 @@ To do this, please navigate to <http://IP-ADDRESS/module7/> and download the fil
 
 Next, navigate to <https://auspice.us/> and drag the file `analysis-package.json` onto the page.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/drag-and-drop.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/auspice.png?raw=true" alt="p2" width="750" />
 
 This should result in a phylogenetic tree being loaded that looks like:
 
@@ -377,77 +377,70 @@ This should result in a phylogenetic tree being loaded that looks like:
 
 Next, we will load the metadata `data/metadata.tsv` file onto this view. To do this, please find and drag-and-drop the `data/metadata.tsv` file onto the phylogenetic tree shown in Auspice:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module4/images/auspice-drag-metadata.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/metadata.png?raw=true" alt="p2" width="750" />
 
 You main get some warning messages showing up, but you should still see a green **Added metadata from filtered.tsv** message.
 
-<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module4/images/auspice-metadata-warnings.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/metadata2.png?raw=true" alt="p2" width="750" />
 
 
 ---
 
 ## Step 2: Explore data
 
-Now you can spend some time to explore the data and get used to the Auspice interface. Try switching between different **Tree Layouts**, or different **Branch Lengths**, or colouring the tree by different criteria in the metadata table.
+Now you can spend some time to explore the data and get used to the Auspice interface. Try switching between different **Tree Layouts**, or different **Branch Lengths**, or colouring the tree by different criteria in the metadata table. This is always worth doing a bit before diving into analyses!
 
 <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/auspice-panel.png?raw=true" alt="p2" width="750" />
 
-## Step 3: Examine particular clades
+---
 
-We are now going to compare the tree we constructed from the tree in [Figure 4](https://www.nature.com/articles/s41564-020-00838-z/figures/4) of the existing study.
+## Step 3: Examine the Molecular Clock Analysis
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/figure4bc.png?raw=true" alt="p2" width="750" />
+We can use the x-axis to work out the approximate inferred date of the internal nodes in the tree. Alternatively, we can use the mouse tooltip over internal nodes to read the exact inferred date.
 
-As a first step, let's examine the tree from **Figure 4.b** in Auspice. We can do this by searching for one of the genomic samples `Scotland/CVR50` in Auspice:
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/date.png?raw=true" alt="p2" width="750" />
 
-1. Select genome `Scotland/CVR50` by using the **Filter Data** box:
+We can also compare the time-calibrated tree to the original maximum likelihood tree based on substitution distances.
 
-   <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/filter-by.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/divergence.png?raw=true" alt="p2" width="750" />
 
-2. Use a combination of **Zoom to Selected** and the zoom out button (magnifying glass) to show the set of genomic samples around `Scotland/CVR50`.
+Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome's total branch length in mutations is all the way to root vs the collection date).
 
-   <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/zoom-to-selected.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/tip_reg.png?raw=true" alt="p2" width="750" />
 
-3. Select the **Trash icon** for the filter to remove it and select to **Color by** `travel_hx` (Travel history). When you are finished you should see something like below.
-
-   <img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/selected-subtree.png?raw=true" alt="p2" width="750" />
 
 ### Step 3: Questions
 
-1. Compare this tree from that in **Figure 4.b** above. Are there differences? Is **Figure 4.b** a *Divergence* tree or a *Time* tree?
-2. Can you spot the two cases associated with travel to Italy in the prior 2 weeks?
-3. Try out the same procedure for the clade from **Figure 4.c** (search for `Scotland/GCVR-17033E`, you may need to click **Reset Layout** first). Does it also look simlar to what is shown in **Figure 4**?
+1. When was the last common ancestor of the ON Deer clade?
+2. What about the last common ancestor of this clade and the nearest other sequences?
+3. Does the trend line for the molecular clock (tip-to-root regression) look a good fit? Do you think there may be more than 1 mutation rate in these samples? 
+4. Given the amount of data and your answer to 1, how accurate do you think the inferred node dates is?
+5. How might you represent the degree of certainty or uncertainty in these estimates?
 
----
+## Step 4: Examine the ancestral trait inference
 
-## Step 4: Compare predicted dates of common ancestors
+We can colour the tree and rename the tree tip labels using the metadata to infer ancestral traits.  The internal nodes/branches will be coloured based on the inferred ancestral state.
 
-Time trees place the leafs of the tree at the collection date for each collected sample and predicts the dates for internal nodes (representing hypothetical ancestors). We can compare our tree (scaled by time) with [Figure 5](https://www.nature.com/articles/s41564-020-00838-z/figures/5) from the study (an excerpt seen below):
+For example, you can look at the inferred ancestral host information using these options:
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/fig5.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/host.png?raw=true" alt="p2" width="750" />
 
-This figure shows a time-scaled tree (dates are shown on the x-axis) and uses this information to infer the detection lag (difference between the time of the common ancestor to this clade and the first sequenced sample).
+Similarly, you can look at the inferred ancestral location information using these options:
 
-To compare this figure to our tree, we can search for the listed lineage (`UK5098`) and zoom into this clade.
-
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/search-by-lineage.png?raw=true" alt="p2" width="750" />
-
-To view sample collection dates you can hover over the particular sample:
-
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/view-dates.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2023/blob/main/module7/images/loc.png?raw=true" alt="p2" width="750" />
 
 ### Step 4: Questions
 
-1. How closely related are some of these genomes in `UK5098` (try toggling between **Time** and **Divergence** for Branch Length)? 
-2. Compare the earliest sample you can find in `UK5098` to the predicted date of the most recent common ancestor to all of `UK5098` (hover over the branch to get the date). How does this compare to the lag time in **Figure 5** above (the shaded gray area that's labeled `6d` for 6 days)?
-
-*Note: Our data may not look exactly the same as the figure. We used slightly different software and methods from that of the paper.*
+1. Based on this analysis was the common ancestor of the ON Deer+Human clade inferred to have been in a human or in a deer?
+2. What about the common ancestor of the wider ON Deer+Human, MI Mink+Human clades?
+3. Why might this analysis be misleading?
+4. Where is the ON Deer+Human clade inferred to have originated: Ontario or Michigan?
+---
 
 ---
 <a name="selection"></a>
 # 6. Inference of selection
 ---
-
 
 
 phylowidget of tree
@@ -456,7 +449,7 @@ datamonkey
 <a name="end"></a>
 # 7. End of lab
 
-You've made it to the end of the lab. Awesome job. If you find you have some extra time, you can explore the data in Auspice further and perhaps compare the tree we have generated to the figures from the study ([Figure 4](https://www.nature.com/articles/s41564-020-00838-z/figures/4) or [Figure 5](https://www.nature.com/articles/s41564-020-00838-z/figures/5)).
+You've made it to the end of the lab. Awesome job. If you find you have some extra time, you can explore the data in Auspice further and perhaps compare the tree we have generated to the figures from the study ()
 
 ---
 
