@@ -156,7 +156,7 @@ An additional 3 nudged Strict annotations (*Escherichia coli* PtsI with mutation
                 
 </details>
 
-We have pre-compiled results for all 112 samples under “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage", so let’s try RGI’s heat map tool (pre-compiled images can be downloaded from the course GitHub repo) (please ignore the FutureWarning):
+We have pre-compiled results for all 112 samples under “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage", so let’s try RGI’s heat map tool ([pre-compiled images](https://github.com/bioinformaticsdotca/IDE_2023/tree/main/module6/rgi_main_results) can be downloaded from the course GitHub repo) (please ignore the FutureWarning):
 
 ```bash
 ls /home/ubuntu/CourseData/IDE_data/module6/ecoli_json
