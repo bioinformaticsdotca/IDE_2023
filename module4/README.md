@@ -57,7 +57,7 @@ You can view the contents of this directory using `ls`:
 ls cbw_demo_run
 ```
 
-You should see 35 pairs of files. Each pair of files is the raw sequencing data for a single sample. The first half of the Illumina paired-end reads is stored in files ending in `_R1.fastq.gz` and the second half in `_R2.fastq.gz`. The samples are identified with _accession_ numbers like `ERR5338522`, a unique identifier of a sample that has been deposited in a public database. You can view the contents of one of the data files by decompressing it and piping it to `head`:
+You should see 36 pairs of files. Each pair of files is the raw sequencing data for a single sample. The first half of the Illumina paired-end reads is stored in files ending in `_R1.fastq.gz` and the second half in `_R2.fastq.gz`. The samples are identified with _accession_ numbers like `ERR5338522`, a unique identifier of a sample that has been deposited in a public database. You can view the contents of one of the data files by decompressing it and piping it to `head`:
 
 ```
 zcat cbw_demo_run/ERR5338522_R1.fastq.gz | head
@@ -120,7 +120,7 @@ We can now start exploring the results. First we will look at the depth of cover
 
 Open your web browser and navigate to `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/` where **xx** is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the `ncov-tools-results/plots/` subdirectory you will find a file called `cbw_demo_run_results_dir_depth_by_position.pdf`. Open this file. 
 
-This file contains plots of the coverage depth for each of the 35 samples we analyzed. 
+This file contains plots of the coverage depth for each of the 36 samples we analyzed. 
 
 Explore the results and try to understand what the coverage patterns mean: 
 - What might have caused the sharp drop in coverage for sample `ERR6035561`? 
