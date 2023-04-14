@@ -15,8 +15,8 @@ modified: April 04, 2023
 1. [Introduction](#intro)
 2. [Software](#software)    
 3. [Exercise setup](#setup)
-4. [Building a tree](#build-tree)
-5. [Visualizing the tree](#visualize-tree)
+4. [Phylodyamics Analysis](#phylodyn)
+5. [Visualizing the Phylodynamics](#visualize-tree)
 6. [End of Lab](#end)
 7. [Bonus](#bonus)
 
@@ -39,8 +39,6 @@ These analyses are:
 
 - Ancestral state reconstruction to identify where this took place
 
-- Testing for signatures of relaxed or intensified selection amongst the deer-associated lineage.
-
 Now the big caveat here is that a lot of these analyses (including some of the more classic epidemiological parameter estimation phylodynamics) are typically done using a Bayesian framework such as [BEAST](http://www.beast2.org/).  However, given these can be quite challenging logistically to run in the context of a practical.  
 To this end, we are instead going to focus on the more "quick and dirty" maximum likelihood approaches using mostly tools designed for the scale of data SARS-CoV-2 genomics brought.
 
@@ -53,7 +51,6 @@ If you are interested in phylodynamics more deeply, I recommend checking out som
 * [mafft][]
 * [iqtree][]
 * [treetime][]
-* [hyphy][]
 * [Auspice][]
 
 <a name="setup"></a>
@@ -110,9 +107,8 @@ curl http://checkip.amazonaws.com
 
 This should print a number like XX.XX.XX.XX. Once you have your address, try going to <http://IP-ADDRESS> and clicking the link for **module7**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab (phylogenetic trees, etc). 
 
-<a name="build-tree"></a>
-
-# 4. Building the phylogenetic tree
+<a name="phylodyn"></a>
+# 4. Phylodyamics Analysis
 
 The overall goal of this lab is to make use of a set of SARS-CoV-2 genomes sequenced and analyzed in the above study and then use associated metadata and phylodynamic methods to gain insight into where and when the zoonoses most likely occurred.
 To do this, we will make use of the [Augur][] tool suite, which powers the [NextStrain](https://nextstrain.org/) website.
@@ -357,7 +353,7 @@ The parameters we used are:
 ---
 
 <a name="visualize-tree"></a>
-# 5. Visualizing the phylogenetic tree alongside epidemiological metadata
+# 5. Visualizing the phylodynamic analysis alongside epidemiological metadata
 
 Now that we've constructed and packaged up a tree (`analysis-package.json`), we can visualize this data alongside our metadata (`data/metadata.tsv`) using [Auspice][].
 
@@ -437,19 +433,52 @@ Similarly, you can look at the inferred ancestral location information using the
 4. Where is the ON Deer+Human clade inferred to have originated: Ontario or Michigan?
 ---
 
----
-<a name="selection"></a>
-# 6. Inference of selection
----
+<a name='selection'></a>
+# 6. Selection Analysis
 
+Now we are going to try and do a selection analysis. In particular, we are going to use some of the models in hyphy to determine whether the dN/dS (also known as ω) ratio (ratio of non-synonymous mutations per non-synonymous site to synonymous mutation per synonymous site) is significantly different in the ON Deer+Human clade than the rest of our dataset.
 
-phylowidget of tree
-datamonkey
+To do this we first need an alignment that captures information about dN/dS i.e., a codon alignment.  To be honest, these are fairly irritating to generate. The classic tool [PAL2NAL](http://www.bork.embl.de/pal2nal/#RunP2N) or [hyphy's own method](https://github.com/veg/hyphy-analyses/blob/master/codon-msa/README.md) needs us to have an alignment of a given gene (dN and dS only make sense for coding sequences) in both protein and nucleotide form. This can often require custom sequence manipulation and is sensitive to sequences with errors or unresolved regions.
 
+For this exercise, we are going to generate a codon alignment for the S using a tool called [virulign](https://github.com/rega-cev/virulign)
+
+**Commands**
+```bash
+# Time: 5 minutes
+./code/virulign data/S.xml data/sequences.fasta --exportAlphabet Nucleotides --exportKind GlobalAlignment --exportReferenceSequence yes --progress yes > S_codon_alignment.fasta
+```
+
+Then as you did previously, you want to download `S_codon_alignment.fasta` by navigating to <http://IP-ADDRESS/module7/> (or using scp if you are familiar with it).
+Once you've got the codon alignment, we are going to go the [datamonkey.org](https://www.datamonkey.org/) website. This is very useful webserver that is provided by the authors of hyphy to make it easier to use their methods.
+As you can see on the home page there is even a nice wizard that will guide you towards the correct model for the analysis you want to perform.
+
+In this case we are interested in *selection* across *branches* of the *episodic* kind which will guide us towards a method called [aBSREL (adaptiveBranch-Site RandomEffects Likelihood](https://www.datamonkey.org/absrel).
+
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/absrel.png?raw=true" alt="p2" width="750" />
+
+We are going to follow the instructions on the page and select our `S_codon_alignment.fasta` as input, enter our email address (just in case), then hit `run analysis`.
+
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/absrel2.png?raw=true" alt="p2" width="750" />
+
+This will take us to a new page where we can select the branches we want to test for increased episodic selection relative to the rest of the tree. In this case we are interested in the ON Deer+Human clade so we will select those branches. Then we will hit `Save Branch Selection` and begin running our analysis.
+
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/select_all.png?raw=true" alt="p2" width="750" />
+
+If all goes well this will run for a minute or two (depending on server load) before directing us to an nice results page with lots of details.
+
+<img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/results.png?raw=true" alt="p2" width="750" />
+
+## Questions
+
+1. At the top of the page there is a summary of the result, is there any sign of increased episodic selection in this clade?
+2. Look at the fitted tree output below, based on the colorbar in the legend for values of ω (dN/dS), is the inferred ω > 1 or < 1 in the branches leading up to the ON Deer+Human clade?
+3. What might this represent in terms of the differences between deer and human immune responses?
+
+--- 
 <a name="end"></a>
-# 7. End of lab
+# 6. End of lab
 
-You've made it to the end of the lab. Awesome job. If you find you have some extra time, you can explore the data in Auspice further and perhaps compare the tree we have generated to the figures from the study ()
+You've made it to the end of the lab. Awesome job. If you find you have some extra time, you can explore the data in Auspice further or play with the different models in hyphy (on datamonkey.org).
 
 ---
 
@@ -458,7 +487,6 @@ You've made it to the end of the lab. Awesome job. If you find you have some ext
 [mafft]: https://mafft.cbrc.jp/alignment/software/
 [iqtree]: http://www.iqtree.org/
 [ETEToolkit]: http://etetoolkit.org/
-[BuddySuite]: https://github.com/biologyguy/BuddySuite
 [treetime]: https://treetime.readthedocs.io/en/latest/
 [Auspice]: https://auspice.us/
 [drag-and-drop.png]: images/drag-and-drop.png
