@@ -169,7 +169,7 @@ Once the alignment is complete, you should have a file `alignment.fasta` in your
 
 ---
 
-## Step 3: Build a Maximum Liklihood phylogenetic tree (`augur tree`)
+## Step 2: Build a Maximum Liklihood phylogenetic tree (`augur tree`)
 
 The next step is to take the set of aligned genomes `alignment.fasta` and build a phylogenetic tree (a divergence tree). We will use `augur tree` for this, but underneath it runs [iqtree][], which uses the Maximim Likihood method to build a phylogenetic tree. To build a tree, please run the following:
 
@@ -229,7 +229,7 @@ As iqtree uses a Maximum Liklihood approach, you will see that it will report th
 
 ---
 
-## Step 4: Inferring timing of host change (`augur refine`)
+## Step 3: Inferring timing of host change (`augur refine`)
 
 The tree output by [iqtree][] shows hypothetical evolutionary relationships between different SARS-CoV-2 genomes with branch lengths representing distances between different genomes (in units of **substitutions/site** or the predicted number of substitutions between genomes divided by the alignment length). However, other methods of measuring distance between genomes are possible. In particular we can incorporate the collection dates of the different SARS-CoV-2 genomes to infer a tree where branches are scaled according to the elapsed time and the dates of internal nodes are inferred. Such trees are called **time trees**.
 
@@ -277,7 +277,7 @@ As output, the file `tree.time.nwk` will contain the time tree while the file `r
 
 ---
 
-## Step 5: Infer ancestral states for host and location
+## Step 4: Infer ancestral states for host and location
 
 We will now be using treetime's `mugration` model to reconstruct ancestral trait states. In other words, we are trying to use the tree and genome metadata to reconstruct the most likely host and location (the state/province stored as `division` in data/metadata.tsv) at each of the internal nodes in the tree.
 As with the other analyses, augur makes this process very convenient:
@@ -318,7 +318,7 @@ The parameters we used are:
 
 ---
 
-## Step 6: Package up data for Auspice Visualisation (`augur export`)
+## Step 5: Package up data for Auspice Visualisation (`augur export`)
 
 We will be using [Auspice][] to visualize the tree alongside our metadata. To do this, we need to package up all of the data we have so far into a special file which can be used by Auspice. To do this, please run the following command:
 
@@ -410,7 +410,7 @@ Finally, we can look at the tip-to-root regression from the divergence tree (i.e
 1. When was the last common ancestor of the ON Deer clade?
 2. What about the last common ancestor of this clade and the nearest other sequences?
 3. Does the trend line for the molecular clock (tip-to-root regression) look a good fit? Do you think there may be more than 1 mutation rate in these samples? 
-4. Given the amount of data and your answer to 1, how accurate do you think the inferred node dates is?
+4. Given the amount of data and your answer to 1, how accurate do you think the inferred node date is?
 5. How might you represent the degree of certainty or uncertainty in these estimates?
 
 ## Step 4: Examine the ancestral trait inference
