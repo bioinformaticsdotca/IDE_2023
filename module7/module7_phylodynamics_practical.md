@@ -452,7 +452,7 @@ Then as you did previously, you want to download `S_codon_alignment.fasta` by na
 Once you've got the codon alignment, we are going to go the [datamonkey.org](https://www.datamonkey.org/) website. This is very useful webserver that is provided by the authors of hyphy to make it easier to use their methods.
 As you can see on the home page there is even a nice wizard that will guide you towards the correct model for the analysis you want to perform.
 
-In this case we are interested in *selection* across *branches* of the *episodic* kind which will guide us towards a method called [aBSREL (adaptiveBranch-Site RandomEffects Likelihood](https://www.datamonkey.org/absrel).
+In this case we are interested in *selection* across *branches* of the *episodic* kind which will guide us towards a method called [aBSREL (adaptive Branch-Site RandomEffects Likelihood)](https://www.datamonkey.org/absrel).
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/absrel.png?raw=true" alt="p2" width="750" />
 
