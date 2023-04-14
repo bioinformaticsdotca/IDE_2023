@@ -23,18 +23,18 @@ The "Big 3" databases that are comprehensive (involving many organisms, genes, a
 3. [ResFinder](https://cge.cbs.dtu.dk/services/ResFinder/) database with its associated [ResFinder](https://bitbucket.org/genomicepidemiology/resfinder/src/master/) tool.
 
 In this practical we are going to focus on CARD and the associated RGI tool because:
-* The [Antibiotic Resistance Ontology](https://github.com/arpcard/aro) it is built upon is a great way to organize information about AMR.
+* The [Antibiotic Resistance Ontology](https://card.mcmaster.ca/ontology/36006) it is built upon is a great way to organize information about AMR.
 * CARD is the most heavily used database internationally, with over 5000 citations.
 * We are biased. CARD is Canadian and pretty much all the CBW faculty collaborate or are part of the group that develops CARD! See [Alcock *et al.* 2023. CARD 2023: expanded curation, support for machine learning, and resistome prediction at the Comprehensive Antibiotic Resistance Database. *Nucleic Acids Research*, 51, D690-D699](https://pubmed.ncbi.nlm.nih.gov/36263822/).
 
 <a name="cardweb"></a>
 ## CARD Website and Antibiotic Resistance Ontology
 
-The relationship between AMR genotype and AMR phenotype is complicated and no tools for complete prediction of phenotype from genotype exist. Instead, analyses focus on prediction or catalog of the AMR resistome – the collection of AMR genes and mutants in the sequenced sample. While BLAST and other sequence similarity tools can be used to catalog the resistance determinants in a sample via comparison to a reference sequence database, interpretation and phenotypic prediction are often the largest challenge. To start the tutorial, we will use the Comprehensive Antibiotic Resistance Database ([CARD](http://card.mcmaster.ca)) website to examine the diversity of resistance mechanisms, how they influence bioinformatics analysis approaches, and how CARD’s Antibiotic Resistance Ontology (ARO) can provide an organizing principle for interpretation of bioinformatics results.
+The relationship between AMR genotype and AMR phenotype is complicated and no tools for complete prediction of phenotype from genotype exist. Instead, analyses focus on prediction or catalog of the AMR resistome – the collection of AMR genes and mutants in the sequenced sample. While BLAST and other sequence similarity tools can be used to catalog the resistance determinants in a sample via comparison to a reference sequence database, interpretation and phenotypic prediction are often the largest challenge. To start the tutorial, we will use the Comprehensive Antibiotic Resistance Database ([CARD](http://card.mcmaster.ca)) website to examine the diversity of resistance mechanisms, how they influence bioinformatics analysis approaches, and how CARD’s [Antibiotic Resistance Ontology](https://card.mcmaster.ca/ontology/36006) (ARO) can provide an organizing principle for interpretation of bioinformatics results.
 
 CARD’s website provides the ability to: 
 
-* Browse the Antibiotic Resistance Ontology (ARO) and associated knowledgebase.
+* Browse the [Antibiotic Resistance Ontology](https://card.mcmaster.ca/ontology/36006) (ARO) and associated knowledgebase.
 * Browse the underlying AMR detection models, reference sequences, and SNP matrices.
 * Download the ARO, reference sequence data, and indices in a number of formats for custom analyses.
 * Perform integrated genome analysis using the Resistance Gene Identifier (RGI).
