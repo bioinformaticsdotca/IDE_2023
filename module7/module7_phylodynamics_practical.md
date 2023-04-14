@@ -15,7 +15,7 @@ modified: April 04, 2023
 1. [Introduction](#intro)
 2. [Software](#software)    
 3. [Exercise setup](#setup)
-4. [Phylodyamics Analysis](#phylodyn)
+4. [Phylodynamics Analysis](#phylodyn)
 5. [Visualizing the Phylodynamics](#visualize-tree)
 6. [Selection Analysis](#selection)
 7. [End of Lab](#end)
@@ -110,7 +110,7 @@ curl http://checkip.amazonaws.com
 This should print a number like XX.XX.XX.XX. Once you have your address, try going to <http://IP-ADDRESS> and clicking the link for **module7**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab (phylogenetic trees, etc). 
 
 <a name="phylodyn"></a>
-# 4. Phylodyamics Analysis
+# 4. Phylodynamics Analysis
 
 The overall goal of this lab is to make use of a set of SARS-CoV-2 genomes sequenced and analyzed in the above study and then use associated metadata and phylodynamic methods to gain insight into where and when the zoonoses most likely occurred.
 To do this, we will make use of the [Augur][] tool suite, which powers the [NextStrain](https://nextstrain.org/) website.
@@ -247,7 +247,7 @@ You should expect to see the following as output:
 
 **Output**
 ```
-augur refine is using TreeTime version 0.8.4
+augur refine is using TreeTime version 0.9.4
 
 21.73   WARNING: Previous versions of TreeTime (<0.7.0) RECONSTRUCTED sequences of
         tips at positions with AMBIGUOUS bases. This resulted in unexpected
@@ -294,14 +294,14 @@ You should expect to see the following as output:
 **Output**
 ```
 augur traits is using TreeTime version 0.9.4
-Assigned discrete traits to 21 out of 22 taxa.
+Assigned discrete traits to 31 out of 35 taxa.
 
 NOTE: previous versions (<0.7.0) of this command made a 'short-branch
 length assumption. TreeTime now optimizes the overall rate numerically
 and thus allows for long branches along which multiple changes
 accumulated. This is expected to affect estimates of the overall rate
 while leaving the relative rates mostly unchanged.
-Assigned discrete traits to 21 out of 22 taxa.
+Assigned discrete traits to 31 out of 35 taxa.
 
 [...]
 
@@ -402,7 +402,7 @@ We can also compare the time-calibrated tree to the original maximum likelihood 
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/divergence.png?raw=true" alt="p2" width="750" />
 
-Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome's total branch length in mutations is all the way to root vs the collection date).
+Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome's total branch length in mutations is all the way to root vs the collection date). This can be done by selecting "DIVERGENCE" under the "Branch Length" header.
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/tip_reg.png?raw=true" alt="p2" width="750" />
 
