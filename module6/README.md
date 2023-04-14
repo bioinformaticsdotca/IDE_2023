@@ -30,7 +30,7 @@ In this practical we are going to focus on CARD and the associated RGI tool beca
 <a name="cardweb"></a>
 ## CARD Website and Antibiotic Resistance Ontology
 
-The relationship between AMR genotype and AMR phenotype is complicated and no tools for complete prediction of phenotype from genotype exist. Instead, analyses focus on prediction or catalog of the AMR resistome – the collection of AMR genes and mutants in the sequenced sample. While BLAST and other sequence similarity tools can be used to catalog the resistance determinants in a sample via comparison to a reference sequence database, interpretation and phenotypic prediction are often the largest challenge. To start the tutorial, we will use the Comprehensive Antibiotic Resistance Database ([CARD](http://card.mcmaster.ca)) website to examine the diversity of resistance mechanisms, how they influence bioinformatics analysis approaches, and how CARD’s [Antibiotic Resistance Ontology](https://card.mcmaster.ca/ontology/36006) (ARO) can provide an organizing principle for interpretation of bioinformatics results.
+The relationship between AMR genotype and AMR phenotype is complicated and no tools for complete prediction of phenotype from genotype exist. Instead, analyses focus on prediction or catalog of the AMR resistome - the collection of AMR genes and mutants in the sequenced sample. While BLAST and other sequence similarity tools can be used to catalog the resistance determinants in a sample via comparison to a reference sequence database, interpretation and phenotypic prediction are often the largest challenge. To start the tutorial, we will use the Comprehensive Antibiotic Resistance Database ([CARD](http://card.mcmaster.ca)) website to examine the diversity of resistance mechanisms, how they influence bioinformatics analysis approaches, and how CARD’s [Antibiotic Resistance Ontology](https://card.mcmaster.ca/ontology/36006) (ARO) can provide an organizing principle for interpretation of bioinformatics results.
 
 CARD’s website provides the ability to: 
 
@@ -125,7 +125,7 @@ ls
 We don’t have time to analyze all 112 samples, so let’s analyze 1 as an example (the course GitHub repo contains an EXCEL version of the resulting [`C0001.txt`](https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module6/rgi_main_results/C0001.xlsx) file). When analyzing FASTA files we use the **main** sub-command, here with default settings “Perfect and Strict hits only”, "Exclude nudge", and "High quality/coverage":
 
 ```bash
-rgi main –h
+rgi main -h
 rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
 ls
 less C0001.json
@@ -143,7 +143,7 @@ Default RGI **main** analysis of C0001 lists 17 Perfect annotations and 52 Stric
 What if these results did not explain our observed phenotype? We might want to explore the RGI Loose hits (the course GitHub repo contains an EXCEL version of the resulting [C0001_IncludeLoose.txt](https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module6/rgi_main_results/C0001_IncludeLoose.xlsx) file), shown here with settings “Perfect, Strict, and Loose hits”, "Include nudge", and "High quality/coverage":
 
 ```bash
-rgi main –h
+rgi main -h
 rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
 ls
 column -t -s $'\t' C0001_IncludeLoose.txt  | less -S
@@ -160,7 +160,7 @@ We have pre-compiled results for all 112 samples under “Perfect and Strict hit
 
 ```bash
 ls /home/ubuntu/CourseData/IDE_data/module6/ecoli_json
-rgi heatmap –h
+rgi heatmap -h
 rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o genefamily_samples --category gene_family --cluster samples
 rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o drugclass_samples --category drug_class --cluster samples
 rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o cluster_both --cluster both
