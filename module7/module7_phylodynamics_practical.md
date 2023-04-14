@@ -15,7 +15,7 @@ modified: April 04, 2023
 1. [Introduction](#intro)
 2. [Software](#software)    
 3. [Exercise setup](#setup)
-4. [Phylodyamics Analysis](#phylodyn)
+4. [Phylodynamics Analysis](#phylodyn)
 5. [Visualizing the Phylodynamics](#visualize-tree)
 6. [Selection Analysis](#selection)
 7. [End of Lab](#end)
@@ -110,7 +110,7 @@ curl http://checkip.amazonaws.com
 This should print a number like XX.XX.XX.XX. Once you have your address, try going to <http://IP-ADDRESS> and clicking the link for **module7**. This page will be referred to later to view some of our output files. In addition, the link **precompuated-analysis** will contain all the files we will generate during this lab (phylogenetic trees, etc). 
 
 <a name="phylodyn"></a>
-# 4. Phylodyamics Analysis
+# 4. Phylodynamics Analysis
 
 The overall goal of this lab is to make use of a set of SARS-CoV-2 genomes sequenced and analyzed in the above study and then use associated metadata and phylodynamic methods to gain insight into where and when the zoonoses most likely occurred.
 To do this, we will make use of the [Augur][] tool suite, which powers the [NextStrain](https://nextstrain.org/) website.
