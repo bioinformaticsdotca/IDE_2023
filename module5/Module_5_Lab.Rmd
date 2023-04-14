@@ -48,7 +48,6 @@ Let's begin by loading all R packages and helper scripts required to run all the
 ```{r load pkgs and helper scripts}
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(data.table))
-suppressPackageStartupMessages(library(here))
 suppressPackageStartupMessages(library(treedataverse))
 suppressPackageStartupMessages(library(plotly))
 suppressPackageStartupMessages(library(ggnewscale))
@@ -57,17 +56,18 @@ suppressPackageStartupMessages(library(circlize))
 suppressPackageStartupMessages(library(randomcoloR))
 suppressPackageStartupMessages(library(RColorBrewer))
 suppressPackageStartupMessages(library(phangorn))
-source(here("src/mlst_helper.R"))
-source(here("src/ggtree_helper.R"))
-source(here("src/cluster_helper.R"))
+suppressPackageStartupMessages(library(knitr))
+source("src/mlst_helper.R")
+source("src/ggtree_helper.R")
+source("src/cluster_helper.R")
 ```
 
 Next, read the cgMLST data and metadata into memory using `fread()` from the `data.table` package.
 
 ```{r load data}
 # data paths
-metadata_path <- here("data/senterica_metadata_full.tsv")
-cgmlst_path <- here("data/senterica_cgMLST_full.tsv")
+metadata_path <- "data/senterica_metadata_full.tsv"
+cgmlst_path <- "data/senterica_cgMLST_full.tsv"
 # read file
 meta <- fread(metadata_path, sep = "\t")
 cgmlst <- fread(cgmlst_path, sep = "\t")
