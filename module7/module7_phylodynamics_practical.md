@@ -23,8 +23,6 @@ modified: April 04, 2023
 <a name="intro"></a>
 # 1. Introduction
 
-* [Introduction Slides][]
-
 In this tutorial we will be using phylogenetics and metadata to try and better understand the underlying evolutionary, ecological, and epidemiological processes of the SARS-CoV-2 pathogen. 
 This is a field of study and methodology known as phylodynamics.
 
@@ -91,7 +89,7 @@ Next we will activate the [conda](https://docs.conda.io/en/latest/) environment,
 conda activate signalcovtools
 ```
 
-You should see the command-prompt (where you type commands) switch to include `(augur)` at the beginning, showing you are inside this environment. You should also be able to run the `augur` command like `augur --version` and see output:
+You should see the command-prompt (where you type commands) switch to include `(signalcovtools)` at the beginning, showing you are inside this environment. You should also be able to run the `augur` command like `augur --version` and see output:
 
 **Output after running `augur --version`**
 ```
