@@ -17,8 +17,8 @@ modified: April 04, 2023
 3. [Exercise setup](#setup)
 4. [Phylodyamics Analysis](#phylodyn)
 5. [Visualizing the Phylodynamics](#visualize-tree)
-6. [End of Lab](#end)
-7. [Bonus](#bonus)
+6. [Selection Analysis](#selection)
+7. [End of Lab](#end)
 
 <a name="intro"></a>
 # 1. Introduction
@@ -52,6 +52,8 @@ If you are interested in phylodynamics more deeply, I recommend checking out som
 * [iqtree][]
 * [treetime][]
 * [Auspice][]
+* [HyPhy][]
+* [aBSREL][]
 
 <a name="setup"></a>
 # 3. Exercise setup
@@ -77,7 +79,7 @@ You should also see a directory `data/` in the current directory which contains 
 
 **Output after running `ls data`**
 ```
-sequences.fasta	    metadata.tsv     reference_MN908947.3.fasta 
+sequences.fasta	    metadata.tsv     reference_MN908947.3.fasta     S.xml
 ```
 
 ## 3.2. Activate environment
@@ -386,7 +388,7 @@ You main get some warning messages showing up, but you should still see a green 
 
 Now you can spend some time to explore the data and get used to the Auspice interface. Try switching between different **Tree Layouts**, or different **Branch Lengths**, or colouring the tree by different criteria in the metadata table. This is always worth doing a bit before diving into analyses!
 
-<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/auspice-panel.png?raw=true" alt="p2" width="750" />
+<img src="https://github.com/bioinformatics-ca/IDE_2021/blob/main/module4/images/auspice-panel.png?raw=true" alt="p2" width="400" />
 
 ---
 
@@ -473,6 +475,7 @@ If all goes well this will run for a minute or two (depending on server load) be
 1. At the top of the page there is a summary of the result, is there any sign of increased episodic selection in this clade?
 2. Look at the fitted tree output below, based on the colorbar in the legend for values of ω (dN/dS), is the inferred ω > 1 or < 1 in the branches leading up to the ON Deer+Human clade?
 3. What might this represent in terms of the differences between deer and human immune responses?
+4. Can you think of any limitations of this analysis?
 
 --- 
 <a name="end"></a>
@@ -486,36 +489,7 @@ You've made it to the end of the lab. Awesome job. If you find you have some ext
 [Augur]: https://docs.nextstrain.org/projects/augur/en/stable/index.html
 [mafft]: https://mafft.cbrc.jp/alignment/software/
 [iqtree]: http://www.iqtree.org/
-[ETEToolkit]: http://etetoolkit.org/
 [treetime]: https://treetime.readthedocs.io/en/latest/
 [Auspice]: https://auspice.us/
-[drag-and-drop.png]: images/drag-and-drop.png
-[drag-and-drop-small.png]: images/small/drag-and-drop.png
-[auspice-main.png]: images/auspice-main.png
-[auspice-main-small.png]: images/small/auspice-main.png
-[auspice-drag-metadata.png]: images/auspice-drag-metadata.png
-[auspice-drag-metadata-small.png]: images/small/auspice-drag-metadata.png
-[auspice-metadata-warnings.png]: images/auspice-metadata-warnings.png
-[auspice-metadata-warnings-small.png]: images/small/auspice-metadata-warnings.png
-[auspice-panel.png]: images/auspice-panel.png
-[auspice-panel-small.png]: images/auspice-panel.png
-[figure4bc.png]: images/figure4bc.png
-[figure4bc-small.png]: images/small/figure4bc.png
-[tree-alignment.png]: images/tree-alignment.png
-[tree-alignment-small.png]: images/small/tree-alignment.png
-[augur_analysis_sketch.png]: images/augur_analysis_sketch.png
-[augur_analysis_sketch-small.png]: images/small/augur_analysis_sketch.png
-[filter-by.png]: images/filter-by.png
-[filter-by-small.png]: images/filter-by.png
-[zoom-to-selected.png]: images/zoom-to-selected.png
-[zoom-to-selected-small.png]: images/small/zoom-to-selected.png
-[selected-subtree.png]: images/selected-subtree.png
-[selected-subtree-small.png]: images/small/selected-subtree.png
-[fig5.png]: images/fig5.png
-[fig5-small.png]: images/small/fig5.png
-[search-by-lineage.png]: images/search-by-lineage.png
-[search-by-lineage-small.png]: images/search-by-lineage.png
-[view-dates.png]: images/view-dates.png
-[view-dates-small.png]: images/view-dates.png
-[Introduction Slides]: https://drive.google.com/file/d/1-OC9TOOlN4DLoWOX0NitipOhFuWsVB9f/view?usp=sharing
-
+[HyPhy]: http://hyphy.org/
+[aBSREL]: http://hyphy.org/methods/selection-methods/
