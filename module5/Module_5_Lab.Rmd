@@ -87,7 +87,7 @@ Before proceeding any further, you will first need to evaluate cgMLST data quali
 # across all loci
 loci_completeness <- compute_lc(cgmlst)
 # write to file
-write.table(loci_completeness, here("cgmlst_loci_quality.stats.tsv"),
+write.table(loci_completeness, "cgmlst_loci_quality.stats.tsv",
             quote = F, row.names = F, sep = "\t")
 # print summary statistics for locus completeness
 summary(loci_completeness)
@@ -105,7 +105,7 @@ lqual_loci <- loci_completeness %>%
 # remove low qual loci from input cgMLST data
 cgmlst_lc <- cgmlst %>% select(-all_of(lqual_loci))
 # write to file
-write.table(cgmlst_lc, here("cgmlst_lqual_loci_rm.tsv"),
+write.table(cgmlst_lc, "cgmlst_lqual_loci_rm.tsv",
             quote = F, row.names = F, sep = "\t")
 # print filtering results
 message(paste("Number of loci before filter:", ncol(cgmlst)-1))
@@ -131,7 +131,7 @@ core_loci <- filt_loci_completeness %>%
 
 cgmlst_core <- cgmlst_lc %>% select(1, all_of(core_loci))
 # write to file
-write.table(cgmlst_core, here("cgmlst_core_loci.tsv"),
+write.table(cgmlst_core, "cgmlst_core_loci.tsv",
             quote = F, row.names = F, sep = "\t")
 # print filtering results
 message(paste("Number of loci before filter:", ncol(cgmlst_lc)-1))
@@ -147,7 +147,7 @@ message(paste0("Core gene definition: less than or equal to ", core_threshold, "
 # given quality filtered scheme
 genome_completeness <- compute_gc(cgmlst_core)
 # write to file
-write.table(genome_completeness, here("cgmlst_genome_qual.stats.tsv"),
+write.table(genome_completeness, "cgmlst_genome_qual.stats.tsv",
             quote = F, row.names = F, sep = "\t")
 # print data summary of genome completeness
 summary(genome_completeness)
@@ -167,7 +167,7 @@ cgmlst_final <- cgmlst_core %>% filter(!(`#Name` %in% lqual_genomes))
 # remove low qual genomes from metadata
 metadata <- meta %>% filter(!(ID %in% lqual_genomes))
 # write to file
-write.table(cgmlst_final, here("cgmlst_final.tsv"),
+write.table(cgmlst_final, "cgmlst_final.tsv",
             quote = F, row.names = F, sep = "\t")
 # print filtering results
 message(paste("Number of genomes before filter:", nrow(cgmlst_core)))
