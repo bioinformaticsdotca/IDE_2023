@@ -247,7 +247,7 @@ You should expect to see the following as output:
 
 **Output**
 ```
-augur refine is using TreeTime version 0.8.4
+augur refine is using TreeTime version 0.9.4
 
 21.73   WARNING: Previous versions of TreeTime (<0.7.0) RECONSTRUCTED sequences of
         tips at positions with AMBIGUOUS bases. This resulted in unexpected
