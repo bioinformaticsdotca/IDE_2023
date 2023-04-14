@@ -294,14 +294,14 @@ You should expect to see the following as output:
 **Output**
 ```
 augur traits is using TreeTime version 0.9.4
-Assigned discrete traits to 21 out of 22 taxa.
+Assigned discrete traits to 31 out of 35 taxa.
 
 NOTE: previous versions (<0.7.0) of this command made a 'short-branch
 length assumption. TreeTime now optimizes the overall rate numerically
 and thus allows for long branches along which multiple changes
 accumulated. This is expected to affect estimates of the overall rate
 while leaving the relative rates mostly unchanged.
-Assigned discrete traits to 21 out of 22 taxa.
+Assigned discrete traits to 31 out of 35 taxa.
 
 [...]
 
