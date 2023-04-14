@@ -402,7 +402,7 @@ We can also compare the time-calibrated tree to the original maximum likelihood 
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/divergence.png?raw=true" alt="p2" width="750" />
 
-Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome's total branch length in mutations is all the way to root vs the collection date).
+Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome's total branch length in mutations is all the way to root vs the collection date). This can be done by selecting "DIVERGENCE" under the "Branch Length" header.
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module7/images/tip_reg.png?raw=true" alt="p2" width="750" />
 
