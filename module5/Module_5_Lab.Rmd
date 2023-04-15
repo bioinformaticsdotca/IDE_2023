@@ -2,7 +2,7 @@
 title: "Module 5 Lab"
 author: "Jimmy Liu and Eduardo Taboada"
 date: "2023-04-03"
-output: md_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +29,7 @@ chewBBACA.py AlleleCall -i /path/to/my_genomes/ -g /path/to/cgMLST_scheme/ -o /p
 -   Explaining the difference between core, accessory and pan-genome loci and their use in MLST analysis
 -   Building dendrograms from MLST data
 -   Familiarisation with the ggtree R library for tree visualization
--   Exploring the clonality of bacterial populations in the context of bactertial foodborne outbreaks
+-   Exploring the clonality of bacterial populations in the context of bacterial foodborne outbreaks
 -   Leveraging epidemiological data by linking it to MLST-based dendrograms to explain molecular differences and infer possible outbreak scenarios
 
 ## Analysis Dataset
@@ -66,7 +66,7 @@ Next, read the cgMLST data and metadata into memory using `fread()` from the `da
 
 ```{r load data}
 # data paths
-metadata_path <- "data/senterica_metadata_full.tsv"
+metadata_path <- "data/senterica_metadata_final.tsv"
 cgmlst_path <- "data/senterica_cgMLST_full.tsv"
 # read file
 meta <- fread(metadata_path, sep = "\t")
@@ -377,7 +377,7 @@ cg_tree %>%
 
 ## Cluster Analysis
 
-```{r serovar subtree, fig.height = 25}
+```{r serovar subtree, fig.height = 25, fig.show = 'hide'}
 # NOTE: there needs to be a comma at the end of each line!
 serovar_subtree(
   tree = cg_tree,
