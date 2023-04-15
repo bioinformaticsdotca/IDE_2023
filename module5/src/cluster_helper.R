@@ -6,7 +6,8 @@ cluster_summary <- function(
     serovar_name = NULL,
     vars = c("Country", "iso_source"), # metadata vars only
     panel.ncol = 1, # number of panels per column
-    rm.low.freq.clust = T # whether to remove low frequency clusters
+    rm.low.freq.clust = T, # whether to remove low frequency clusters
+    interactive = T # whether to produce interactive plots
 ) {
   
   if ( is.null(distance_threshold) ) { 
@@ -86,9 +87,13 @@ cluster_summary <- function(
                          breaks = seq(1, max(as.numeric(meta$cluster)), 3)
       )
   }
-    
-  
-  ggplotly(p)
+   
+  # print plot 
+  if ( interactive ) {
+    ggplotly(p)  
+  } else {
+    p
+  }
     
 }
 
