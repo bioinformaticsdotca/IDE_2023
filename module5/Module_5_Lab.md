@@ -507,8 +507,6 @@ tree tips assigned to the same clusters at <u>a specified threshold</u>.
       show.title = T # whether to display distance threshold
     )
 
-![](Module_5_Lab_files/figure-markdown_strict/serovar%20subtree-1.png)
-
     # export tree to pdf format
     ggsave("serovar_subtree.pdf", height = 30, width = 16)
 
