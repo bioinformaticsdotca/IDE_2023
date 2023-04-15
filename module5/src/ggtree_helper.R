@@ -2,14 +2,14 @@
 plot_subtree <- function(
     tree = NULL,
     clusters = NULL,
-    color_by = "outbreak_id",
+    color_by = "country",
     color.tiplab = F,
     tip.size = 3,
     legend.x = 0.2,
     legend.y = 0.77,
     legend.size = 3,
     plot.xlim = 20,
-    label_vars = c("iso_dat_v2", "iso_source","geo_loc_v2"),
+    label_vars = c("country", "iso_date", "iso_source"),
     label.offset = 5,
     label.size = 4,
     annot.offset = 0.5,
@@ -48,7 +48,8 @@ plot_subtree <- function(
     unique() %>% 
     length()
   
-  meta <- metadata %>% 
+  local_meta <- metadata %>% 
+    filter(ID %in% tree$tip.label) %>% 
     left_join(tip_labs, by = "ID") %>% 
     group_by(!!sym(color_by)) %>% 
     mutate(n = n(),
@@ -78,7 +79,7 @@ plot_subtree <- function(
   
   # plot
   p <- tree %>% 
-    ggtree(layout = "fan") %<+% meta +
+    ggtree(layout = "fan") %<+% local_meta +
     geom_tippoint(aes(color = color_by),
                   size = tip.size) +
     scale_color_manual(values = distinctColorPalette(n_colors)) +
@@ -88,7 +89,7 @@ plot_subtree <- function(
     guides(color = guide_legend(override.aes = list(size = legend.size),
                                 nrow = if_else(n_colors >= 8, 8, n_colors))) +
     geom_treescale(y = 0, x = 0.2) +
-    xlim(NA, plot.xlim) +
+    ggtree::xlim(NA, plot.xlim) +
     new_scale_fill() +
     geom_fruit(
       data = clusters_long,
@@ -99,7 +100,7 @@ plot_subtree <- function(
       offset = annot.offset,
       color = "white",
       pwidth = annot.width,
-      axis.params = list(title = "Clust",
+      axis.params = list(
                          axis="x", # add axis text of the layer.
                          text.angle=90, # the text size of axis.
                          hjust=1,  # adjust the horizontal position of axis labels

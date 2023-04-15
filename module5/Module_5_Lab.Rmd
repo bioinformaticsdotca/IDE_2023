@@ -6,12 +6,12 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = F)
+knitr::opts_chunk$set(echo = TRUE, warning = F, results = 'hide')
 ```
 
 # Background
 
-The primary objective of the Module 5 lab will be to provide a practical overview of core genome multilocus sequencing typing (cgMLST), a genome-based typing method widely adopted in bacterial genomic surveillance networks across the globe. The widespread adoption of cgMLST is due in large part to recent advances in high-throughput sequencing, which have enabled the routine adoption of whole genome sequencing in microbial surveillance, coupled with the development of efficient computational algorithms to perform multilocus sequence typing at genome scales.
+The primary objective of the Module 5 lab will be to provide a practical overview of core genome multilocus sequencing typing (cgMLST), a genome-based typing method widely adopted in bacterial genomic surveillance networks across the globe. The widespread adoption of cgMLST is due in large part to the recent advances in high-throughput sequencing, which have enabled the routine adoption of whole genome sequencing (WGS) in microbial surveillance. With WGS becoming increasingly accessible, part of the cascading effect was the development of efficient computational algorithms that further expedited the establishment of multilocus sequence typing at genome scales as routine practice.
 
 The implementation of cgMLST by the PulseNet International network for foodborne outbreak surveillance has made it possible for WGS data to be used as evidence in public health investigations. Here, you will work with cgMLST data to conduct a retrospective analysis on a dataset that includes a number of possible Salmonella enterica outbreaks. Salmonella, which is primarily transmitted to humans through the consumption of contaminated foods, is one of the leading enteric pathogens in Canada and across the globe and was the first pathogen for which comprehensive genomic surveillance was implemented in Canada.
 
@@ -69,7 +69,7 @@ Next, read the cgMLST data and metadata into memory using `fread()` from the `da
 metadata_path <- "data/senterica_metadata_final.tsv"
 cgmlst_path <- "data/senterica_cgMLST_full.tsv"
 # read file
-meta <- fread(metadata_path, sep = "\t")
+meta <- fread(metadata_path, sep = "\t", colClasses = "character")
 cgmlst <- fread(cgmlst_path, sep = "\t")
 ```
 
@@ -159,16 +159,18 @@ lqual_genomes <- genome_completeness %>%
   filter(missing_alleles > lqual_g_threshold) %>% 
   pull(ID)
 # remove low qual genomes from quality filtered cgmlst
-cgmlst_final <- cgmlst_core %>% filter(!(`#Name` %in% lqual_genomes))
+cgmlst_final <- cgmlst_lc %>% 
+  filter(!(`#Name` %in% lqual_genomes)) %>% 
+  select(1, all_of(core_loci))
 # remove low qual genomes from metadata
 metadata <- meta %>% filter(!(ID %in% lqual_genomes))
 # write to file
 write.table(cgmlst_final, "cgmlst_final.tsv",
             quote = F, row.names = F, sep = "\t")
 # print filtering results
-message(paste("Number of genomes before filter:", nrow(cgmlst_core)))
+message(paste("Number of genomes before filter:", nrow(cgmlst_lc)))
 message(paste("Number of genomes after filter:", nrow(cgmlst_final)))
-message(paste("Number of genomes removed:", nrow(cgmlst_core)-nrow(cgmlst_final)))
+message(paste("Number of genomes removed:", nrow(cgmlst_lc)-nrow(cgmlst_final)))
 message(paste0("Genomes with ", lqual_g_threshold, " or less missing alleles were retained"))
 ```
 
@@ -387,10 +389,10 @@ serovar_subtree(
   tree = cg_tree,
   serovar_name = NULL, # which serovar cluster to visualize?
   distance_threshold = 25, # the dist threshold used for cluster definition?
-  color_by = "outbreak_id.v2", # which metadata variable to color tree tips by?
+  color_by = "serovar", # which metadata variable to color tree tips by?
   color.tiplab = T, # whether to color tip labels
   tip.size = 4, # size of tree tip point
-  label_vars = c("geo_loc_v2", "iso_dat_v2", "iso_source", "serovar"), # metadata vars only
+  label_vars = c("geo_loc", "iso_date", "iso_source"), # metadata vars only
   label.offset = 80, # distance between labels and tree tips
   label.size = 5, # tree tip label text size
   legend.x = 0.23, # legend position on x axis
@@ -417,15 +419,15 @@ cluster_subtree(
   clusters = clusters,
   distance_threshold = 25, # the dist threshold used for cluster definition?
   cluster_name = "1", # cluster ID to visualize?
-  color_by = "outbreak_id.v2", # which metadata variable to color tree tips by?
+  color_by = "country", # which metadata variable to color tree tips by?
   color.tiplab = T, # whether to color tip labels
   tip.size = 3, # size of tree tip point
   legend.x = 0.1, # legend position on x axis
   legend.y = 0.85, # legend position on y axis
   legend.size = 5, # legend text size
-  plot.xlim = 28, # plot area width
-  label_vars = c("geo_loc_v2", "iso_dat_v2", "iso_source"), # metadata vars only
-  label.offset = 4.5, # distance between labels and tree tips
+  plot.xlim = 30, # plot area width
+  label_vars = c("country", "iso_date", "iso_source"), # metadata vars only
+  label.offset = 5.5, # distance between labels and tree tips
   label.size = 4, # tree tip label text size
   annot.offset = 0.1, # distance between heatmap and tree tips
   annot.width = 0.4, # heatmap width
@@ -443,7 +445,7 @@ The purpose of the function `cluster_summary` is to compare the distribution of 
 cluster_summary(
   distance_threshold = 10, # the dist threshold used for cluster definition?
   serovar_name = "typhimurium", # which serovar to include?
-  vars = c("Country","iso_source", "Plasmids", "serovar"), # metadata vars only
+  vars = c("country","iso_source", "plasmids", "serovar"), # metadata vars only
   panel.ncol = 2, # number of columns to arrange the panels in
   rm.low.freq.clust = T, # whether to remove low frequency (N < 4) clusters
   interactive = T # whether to generate interactive plots
@@ -481,15 +483,15 @@ clusters_local <- data.frame(hclust_res_local) %>%
 plot_subtree(
   tree = local_tree,
   clusters = clusters_local,
-  color_by = "outbreak_id.v2", # which metadata variable to color tree tips by?
+  color_by = "country", # which metadata variable to color tree tips by?
   color.tiplab = T, # whether to color tip labels
   tip.size = 3, # size of tree tip point
   legend.x = 0.15, # legend position on x axis
   legend.y = 0.85, # legend position on y axis
   legend.size = 5, # legend text size
-  plot.xlim = 35, # plot area width
-  label_vars = c("geo_loc_v2", "iso_dat_v2", "iso_source"), # metadata vars only
-  label.offset = 7, # distance between labels and tree tips
+  plot.xlim = 150, # plot area width
+  label_vars = c("country", "iso_date", "iso_source"), # metadata vars only
+  label.offset = 25, # distance between labels and tree tips
   label.size = 4, # tree tip label text size
   annot.offset = 0.1, # distance between heatmap and tree tips
   annot.width = 0.3, # heatmap width

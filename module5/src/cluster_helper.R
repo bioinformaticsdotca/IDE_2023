@@ -79,7 +79,8 @@ cluster_summary <- function(
     scale_fill_manual(values = distinctColorPalette(n_colors)) +
     labs(x = paste0("Clusters at T = ", distance_threshold),
          y = "Count")  +
-    theme(panel.spacing = unit(2, "lines"))
+    theme(panel.spacing = unit(2, "lines")) +
+    ggtitle(paste0("T = ", distance_threshold))
   
   if ( !rm.low.freq.clust ) {
     p <- p + 
@@ -202,7 +203,7 @@ local_cg_tree <- function(
   message(paste("Number of loci after:", ncol(local_cgmlst)-1))
   message(paste("Number of accessory loci found:", 
                 ncol(local_cgmlst)-ncol(core_mlst)))
-  message(paste0("Core gene definition: less than ", core_threshold, " missing alleles"))
+  message(paste0("Core gene definition: less than or equal to ", core_threshold, " missing alleles"))
   # return tree
   return(local_tree)
 }

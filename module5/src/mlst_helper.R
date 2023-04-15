@@ -47,7 +47,7 @@ calculate_core <- function(
   lc <- mlst %>% 
     filter(! `#Name` %in% lq_genomes) %>% 
     compute_lc()
-  core_loci <- filt_loci_completeness %>% 
+  core_loci <- lc %>% 
     filter(missing_alleles <= core_threshold) %>% 
     pull(locus)
   # print results
