@@ -31,6 +31,34 @@ compute_gc <- function(mlst) {
   return(gc)
 }
 
+# calculate core loci
+calculate_core <- function(
+  mlst = NULL,
+  core_threshold = 1,
+  genome_qual = 25
+) {
+  # compute gc
+  genome_completeness <- compute_gc(mlst)
+  # identify low qual genomes
+  lq_genomes <- genome_completeness %>% 
+    filter(missing_alleles > 25) %>% 
+    pull(ID)
+  # remove lq genomes and compute core
+  lc <- mlst %>% 
+    filter(! `#Name` %in% lq_genomes) %>% 
+    compute_lc()
+  core_loci <- filt_loci_completeness %>% 
+    filter(missing_alleles <= core_threshold) %>% 
+    pull(locus)
+  # print results
+  message(paste("Number of loci before filter:", ncol(mlst)-1))
+  message(paste("Number of loci after filter:", length(core_loci)))
+  message(paste("Number of accessory loci found:", ncol(mlst)-1-length(core_loci)))
+  message(paste0("Core gene definition: less than or equal to ", core_threshold, " missing allele(s)"))
+  # return core loci
+  return(core_loci)
+}
+
 # helper func for hamming distance calc
 hamming_binary <- function(X, Y = NULL) {
   if (is.null(Y)) {

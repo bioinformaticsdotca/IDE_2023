@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = F)
 
 # Background
 
-The primary objective of the Module 5 lab will be to provide a practical overview of core genome multilocus sequencing typing (cgMLST), a genome-based typing method widely adopted in bacterial genomic surveillance networks across the globe. The widespread adoption of cgMLST is due in large part to recent advances in high-throughput sequencing, which have enabled the routine adoption of whole genome sequencing in microbial surveillance, coupled with the development of efficient computational algorithms to perform multilocus sequence typing at genome scales. 
+The primary objective of the Module 5 lab will be to provide a practical overview of core genome multilocus sequencing typing (cgMLST), a genome-based typing method widely adopted in bacterial genomic surveillance networks across the globe. The widespread adoption of cgMLST is due in large part to recent advances in high-throughput sequencing, which have enabled the routine adoption of whole genome sequencing in microbial surveillance, coupled with the development of efficient computational algorithms to perform multilocus sequence typing at genome scales.
 
 The implementation of cgMLST by the PulseNet International network for foodborne outbreak surveillance has made it possible for WGS data to be used as evidence in public health investigations. Here, you will work with cgMLST data to conduct a retrospective analysis on a dataset that includes a number of possible Salmonella enterica outbreaks. Salmonella, which is primarily transmitted to humans through the consumption of contaminated foods, is one of the leading enteric pathogens in Canada and across the globe and was the first pathogen for which comprehensive genomic surveillance was implemented in Canada.
 
@@ -75,7 +75,7 @@ cgmlst <- fread(cgmlst_path, sep = "\t")
 
 # cgMLST QC
 
-Before proceeding any further, you will first evaluate cgMLST data quality. A number of quality criteria will be defined to determine whether the properties of the allele profiles meet quality standards. Incomplete genome assembly and reference bias during MLST scheme construction can introduce significant levels of missing information in MLST data in the form of unassigned alleles at various loci. Hence, care must be taken to avoid comparisons that include loci and genomes with excessive numbers of unassigned alleles that could reduce the precision of genetic similarity calculations to be used for generating dendrograms for inferring relationships between the various genomes in the dataset. 
+Before proceeding any further, you will first evaluate cgMLST data quality. A number of quality criteria will be defined to determine whether the properties of the allele profiles meet quality standards. Incomplete genome assembly and reference bias during MLST scheme construction can introduce significant levels of missing information in MLST data in the form of unassigned alleles at various loci. Hence, care must be taken to avoid comparisons that include loci and genomes with excessive numbers of unassigned alleles that could reduce the precision of genetic similarity calculations to be used for generating dendrograms for inferring relationships between the various genomes in the dataset.
 
 Below, you will conduct a series of steps to compute the frequency of unassigned alleles across each locus (i.e. columns) and genome (i.e. rows), which will inform the identification of poor quality loci/genomes that may need to be flagged for removal from downstream analyses.
 
@@ -123,25 +123,15 @@ message(paste0("Loci with ", lqual_threshold, " or less missing allele(s) were r
 ```{r identify core loci}
 ##### EDITABLE VARIABLE #####
 core_threshold <- 1
+genome_qual <- 25
 #############################
 
-# recompute the loci completeness
-# of quality filtered scheme
-filt_loci_completeness <- compute_lc(cgmlst_lc)
-# determine core genome loci
-core_loci <- filt_loci_completeness %>% 
-  filter(missing_alleles <= core_threshold) %>% 
-  pull(locus)
-
-cgmlst_core <- cgmlst_lc %>% select(1, all_of(core_loci))
-# write to file
-write.table(cgmlst_core, "cgmlst_core_loci.tsv",
-            quote = F, row.names = F, sep = "\t")
-# print filtering results
-message(paste("Number of loci before filter:", ncol(cgmlst_lc)-1))
-message(paste("Number of loci after filter:", ncol(cgmlst_core)-1))
-message(paste("Number of accessory loci found:", ncol(cgmlst_lc)-ncol(cgmlst_core)))
-message(paste0("Core gene definition: less than or equal to ", core_threshold, " missing allele(s)"))
+# compute core loci
+core_loci <- calculate_core(
+  mlst = cgmlst_lc,
+  core_threshold = core_threshold,
+  genome_qual = genome_qual
+)
 ```
 
 ## Genome Quality
@@ -149,7 +139,9 @@ message(paste0("Core gene definition: less than or equal to ", core_threshold, "
 ```{r genome completeness}
 # compute genome completeness
 # given quality filtered scheme
-genome_completeness <- compute_gc(cgmlst_core)
+genome_completeness <- cgmlst_lc %>% 
+  select(1, all_of(core_loci)) %>% 
+  compute_gc()
 # write to file
 write.table(genome_completeness, "cgmlst_genome_qual.stats.tsv",
             quote = F, row.names = F, sep = "\t")
@@ -182,7 +174,7 @@ message(paste0("Genomes with ", lqual_g_threshold, " or less missing alleles wer
 
 # Hamming Distance
 
-Distance-based and character-based methods can both be used to construct dendrograms from cgMLST data. However, the scope of this lab will only cover distance-based dendrograms, as character-based methods are covered extensively in other modules. In phylogenetic analysis, distance-based approaches are rather flexible in the sense that they can be constructed from any measure that quantifies genetic similarity, including distances computed by alignment-free (e.g. Mash) or alignment-based (e.g. BLAST) similarity search algorithms. Below, you are introduced to a metric called "Hamming distance", which is based on computing the number of differences between a pair of character vectors. 
+Distance-based and character-based methods can both be used to construct dendrograms from cgMLST data. However, the scope of this lab will only cover distance-based dendrograms, as character-based methods are covered extensively in other modules. In phylogenetic analysis, distance-based approaches are rather flexible in the sense that they can be constructed from any measure that quantifies genetic similarity, including distances computed by alignment-free (e.g. Mash) or alignment-based (e.g. BLAST) similarity search algorithms. Below, you are introduced to a metric called "Hamming distance", which is based on computing the number of differences between a pair of character vectors.
 
 Given two character vectors of equal lengths, hamming distance is the total number of positions in which the two vectors are [different:]{.underline}
 
@@ -239,7 +231,7 @@ dist_mat %>%
 
 Here you will construct a neighbour-joining (NJ) tree using the `nj()` function from the ape package. Alternatively, a UPGMA tree can be constructed by simply replacing `method = 'nj'` with `method = 'upgma'` in the code chunk below.
 
-To visualize the resulting dendrogram, you will interact with the R package `ggtree`,  which offers an extensive suite of functions to manipulate, visualize, and annotate tree-like data structures. In this section, you will be introduced to the different visual capabilities of the `ggtree` package, and progressively update the same tree with several layers of visual annotations based on available metadata.
+To visualize the resulting dendrogram, you will interact with the R package `ggtree`, which offers an extensive suite of functions to manipulate, visualize, and annotate tree-like data structures. In this section, you will be introduced to the different visual capabilities of the `ggtree` package, and progressively update the same tree with several layers of visual annotations based on available metadata.
 
 ## A Simple Tree Vis
 
@@ -279,7 +271,7 @@ cg_tree_p
 
 ## Clustering by Distance
 
-Identifying clusters of genomes sharing highly similar cgMLST profiles through the application of distance thresholds is a common practice in genomic surveillance and epidemiological investigations. Detecting novel clusters, comprising pathogen isolates from human clinical cases, can signal the emergence of an outbreak requiring a public health response and can provide important epidemiological insights on outbreak progression. Similarly, the co-clustering of outbreak isolates with isolates from food/environmental sources can help link the outbreak to possible sources/reservoirs of the pathogen in order to inform prevention and control measures. 
+Identifying clusters of genomes sharing highly similar cgMLST profiles through the application of distance thresholds is a common practice in genomic surveillance and epidemiological investigations. Detecting novel clusters, comprising pathogen isolates from human clinical cases, can signal the emergence of an outbreak requiring a public health response and can provide important epidemiological insights on outbreak progression. Similarly, the co-clustering of outbreak isolates with isolates from food/environmental sources can help link the outbreak to possible sources/reservoirs of the pathogen in order to inform prevention and control measures.
 
 In this section, you will generate genomic clusters from the dataset by applying several distance cutoffs. You will then place clusters within the dendrogram and analyze cluster memberships to spot possible outbreaks in the dataset.
 
@@ -385,7 +377,7 @@ In order to analyze the clustering patterns in the core genome tree at greater r
 
 ### serovar_subtree
 
-The purpose of the function `serovar_subtree` is to analyze subtrees of specific serovars. The target serovar to examine is defined by the `serovar_name` variable. Specifying a “NULL” value to the variable will display the entire tree. 
+The purpose of the function `serovar_subtree` is to analyze subtrees of specific serovars. The target serovar to examine is defined by the `serovar_name` variable. Specifying a "NULL" value to the variable will display the entire tree.
 
 The serovar tree can be annotated with cluster information [at a specific threshold]{.underline} in the form of tip-spanning text labels. The cluster membership annotations are defined by the variable, `distance_threshold`
 
@@ -417,7 +409,6 @@ ggsave("serovar_subtree.pdf", height = 30, width = 16)
 ### cluster_subtree
 
 The purpose of the function `cluster_subtree` is to analyze subtrees of specific clusters defined at a given distance threshold. A cluster is defined by its ID and the distance threshold used for assignment, which are defined by the variables `cluster_name` and `distance_threshold`, respectively. Note that you will need to utilize the `serovar_subtree` to identify the IDs of clusters of interest.
-
 
 ```{r cluster subtree, fig.height = 6}
 # NOTE: there needs to be a comma at the end of each line!
