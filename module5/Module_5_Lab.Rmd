@@ -398,6 +398,7 @@ serovar_subtree(
   annot.barsize = 0.75, # annotation bar width
   show.title = T # whether to display distance threshold
 )
+# export tree to pdf format
 ggsave("serovar_subtree.pdf", height = 30, width = 16)
 ```
 
@@ -432,7 +433,8 @@ cluster_summary(
   serovar_name = "typhimurium", # which serovar to include?
   vars = c("Country","iso_source", "Plasmids", "serovar"), # metadata vars only
   panel.ncol = 2, # number of columns to arrange the panels in
-  rm.low.freq.clust = T # whether to remove low frequency (N < 4) clusters
+  rm.low.freq.clust = T, # whether to remove low frequency (N < 4) clusters
+  interactive = T # whether to generate interactive plots
 )
 ```
 
