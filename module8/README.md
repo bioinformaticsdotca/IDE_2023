@@ -370,7 +370,7 @@ More information on interpreting this file can be found at <https://github.com/D
 <a name="exercise-pavian"></a>
 ### Step 5: Generate an interactive html-based report using Pavian
 
-Instead of reading a text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
+Instead of reading text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
 1. Download the `kraken_report.txt` to your local machine from <http://IP-ADDRESS/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
 2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
@@ -508,7 +508,7 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 #### Step 7: Questions
 
 1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
-2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What is the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
+2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What are the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
 3. Is there another type of source for this RNA fragment that could explain it's length? Possibly a [Virus](https://en.wikipedia.org/wiki/Coronavirus#Genome)?
 4. Also try looking at the QUAST report (<http://IP_ADDRESS/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
 
@@ -540,7 +540,7 @@ Here, we first use [seqkit][] to sort all contigs by length (`seqkit sort --by-l
 
 *Note that the pipe `|` character will take the output of one command (`seqkit sort --by-length ...`, which sorts sequences in the file by length) and forward it into the input of another command (`seqkit head -n 50`, which takes only the first 50 sequences from the file). The greater-than symbol `>` takes the output of one command `seqkit head ...` and writes it to a file (named `contigs-50.fa`).*
 
-The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The (`-html -out blast_results.html`) tells BLAST to write it's results as an HTML file.
+The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The `-html -out blast_results.html` tells BLAST to write its results as an HTML file.
 
 To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
@@ -570,7 +570,7 @@ Congratulations, you've finished this lab. As a final check on your results, you
 
 The source of the data and patient background information can be found at <https://doi.org/10.1038/s41586-020-2008-3> (**clicking this link will reveal what the illness is**). The only modification made to the original metatranscriptomic reads was to reduce them to 10% of the orginal file size.
 
-While we used **megahit** to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the [SPAdes](https://cab.spbu.ru/software/spades/) suite of tools (such as [metaviralspades](https://doi.org/10.1093/bioinformatics/btaa490) or [rnaspades](https://doi.org/10.1093/gigascience/giz100)) may be useful to look into for this sort of data analysis.
+While we used **MEGAHIT** to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the [SPAdes](https://cab.spbu.ru/software/spades/) suite of tools (such as [metaviralspades](https://doi.org/10.1093/bioinformatics/btaa490) or [rnaspades](https://doi.org/10.1093/gigascience/giz100)) may be useful to look into for this sort of data analysis.
 
 If you wish to see how the data (and databases) were generated for this example, please refer to the [CourseData/IDE_data/module8/data-generation.md](CourseData/IDE_data/module8/data-generation.md) file.
 
