@@ -376,7 +376,7 @@ More information on interpreting this file can be found at <https://github.com/D
 
 Instead of reading text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
-1. Download the `kraken_report.txt` to your local machine from <http://IP-ADDRESS/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
+1. Download the `kraken_report.txt` to your local machine from <http://xx.uhn-hpc.ca/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
 2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
 
    <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-upload.png?raw=true" alt="p2" width="750" />
@@ -391,7 +391,7 @@ If all the steps are completed successfully then the report you should see shoul
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-report.png?raw=true" alt="p2" width="750" />
 
-If something did not work, you can alternatively view a pre-computed report at <http://IP-ADDRESS/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
+If something did not work, you can alternatively view a pre-computed report at <http://xx.uhn-hpc.ca/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
 
 #### Step 5: Questions
 
@@ -503,7 +503,7 @@ NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
 Thank you for using QUAST!
 ```
 
-Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
+Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://xx.uhn-hpc.ca/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
 
@@ -514,7 +514,7 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
 2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What are the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
 3. Is there another type of source for this RNA fragment that could explain it's length? Possibly a [Virus](https://en.wikipedia.org/wiki/Coronavirus#Genome)?
-4. Also try looking at the QUAST report (<http://IP_ADDRESS/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
+4. Also try looking at the QUAST report (<http://xx.uhn-hpc.ca/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
 
 ---
 
@@ -546,7 +546,7 @@ Here, we first use [seqkit][] to sort all contigs by length with the largest one
 
 The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The `-html -out blast_results.html` tells BLAST to write its results as an HTML file.
 
-To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
+To view these results, please browse to <http://xx.uhn-hpc.ca/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
