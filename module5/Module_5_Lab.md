@@ -550,7 +550,7 @@ tree tips assigned to the same clusters at <u>a specified threshold</u>.
       vars = c("Country","iso_source", "Plasmids", "serovar"), # metadata vars only
       panel.ncol = 2, # number of columns to arrange the panels in
       rm.low.freq.clust = T, # whether to remove low frequency (N < 4) clusters
-      interactive = F # whether to generate interactive plots
+      interactive = T # whether to generate interactive plots
     )
 
 ![](Module_5_Lab_files/figure-markdown_strict/intercluster%20analysis-1.png)
