@@ -3,7 +3,7 @@
 # in facets
 cluster_summary <- function(
     distance_threshold = 50, # the dist threshold used for cluster definition?
-    serovar_name = NULL,
+    serovar_name = NULL, # if NULL show all serovars
     vars = c("Country", "iso_source"), # metadata vars only
     panel.ncol = 1, # number of panels per column
     rm.low.freq.clust = T, # whether to remove low frequency clusters
@@ -17,8 +17,10 @@ cluster_summary <- function(
   # filter metadata by serovar if non-null values
   # are provided
   if ( !is.null(serovar_name) ) {
-    meta <- metadata %>% 
+    local_meta <- metadata %>% 
       filter(serovar %in% serovar_name)
+  } else {
+    local_meta <- metadata
   }
   
   target_variable <- paste0("clust_", distance_threshold)
@@ -26,7 +28,7 @@ cluster_summary <- function(
   # set random seed
   set.seed(123)
   
-  meta <- meta %>% 
+  local_meta <- local_meta %>% 
     left_join(
       clusters %>% select(ID, !!sym(target_variable)),
       by = "ID"
@@ -41,7 +43,7 @@ cluster_summary <- function(
   
   if ( rm.low.freq.clust ) {
     
-    low_freq_clusts <- meta %>% 
+    low_freq_clusts <- local_meta %>% 
       select(ID, cluster) %>% 
       distinct() %>% 
       group_by(cluster) %>% 
@@ -49,7 +51,7 @@ cluster_summary <- function(
       filter(n < 4) %>% 
       pull(cluster)
     
-    meta <- meta %>% 
+    local_meta <- local_meta %>% 
       filter(!(cluster %in% low_freq_clusts))
     
   }
@@ -57,15 +59,15 @@ cluster_summary <- function(
   # if filtering parameters are specified
   # convert cluster variable to factor
   if ( rm.low.freq.clust | !is.null(serovar_name) ) {
-    meta <- meta %>% mutate(cluster = factor(cluster))
+    local_meta <- local_meta %>% mutate(cluster = factor(cluster))
   }
   
-  n_colors <- meta %>% 
+  n_colors <- local_meta %>% 
     pull(value) %>% 
     unique() %>% 
     length()
   
-  p <- meta %>% 
+  p <- local_meta %>% 
     group_by(cluster, variable, value) %>% 
     tally() %>% 
     rename("count" = "n") %>% 
@@ -79,10 +81,9 @@ cluster_summary <- function(
     scale_fill_manual(values = distinctColorPalette(n_colors)) +
     labs(x = paste0("Clusters at T = ", distance_threshold),
          y = "Count")  +
-    theme(panel.spacing = unit(2, "lines")) +
-    ggtitle(paste0("T = ", distance_threshold))
+    theme(panel.spacing = unit(2, "lines"))
   
-  if ( !rm.low.freq.clust ) {
+  if ( !rm.low.freq.clust | !is.null(serovar_name) ) {
     p <- p + 
       scale_x_continuous(limits = c(0, max(as.numeric(meta$cluster))),
                          breaks = seq(1, max(as.numeric(meta$cluster)), 3)
