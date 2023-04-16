@@ -3,7 +3,7 @@ layout: tutorial_page
 permalink: /IDE_2023_Module5_lab
 title: CBW Infectious Disease Epidemiology 2023
 header1: Workshop Pages for Students
-header2: CBW Infectious Disease Epidemiology 2023 Module 4 Lab
+header2: CBW Infectious Disease Epidemiology 2023 Module 5 Lab
 image: /site_images/CBW_epidemiology_icon.png
 home: https://bioinformaticsdotca.github.io/
 description: CBW IDE 2023 Module 5 - Bacterial Pathogen Genomic Analysis
