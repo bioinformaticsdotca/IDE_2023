@@ -2,7 +2,9 @@
 title: "Module 5 Lab"
 author: "Jimmy Liu and Eduardo Taboada"
 date: "2023-04-03"
-output: html_document
+output:
+  html_document:
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -115,7 +117,7 @@ write.table(cgmlst_lc, "cgmlst_lqual_loci_rm.tsv",
 message(paste("Number of loci before filter:", ncol(cgmlst)-1))
 message(paste("Number of loci after filter:", ncol(cgmlst_lc)-1))
 message(paste("Number of loci removed:", ncol(cgmlst)-ncol(cgmlst_lc)))
-message(paste0("Loci with ", lqual_threshold, " or less missing allele(s) were retained"))
+message(paste0("Loci with ", lqual_threshold, " or less missing alleles were retained"))
 ```
 
 ## Defining Core Genes
@@ -123,7 +125,7 @@ message(paste0("Loci with ", lqual_threshold, " or less missing allele(s) were r
 ```{r identify core loci}
 ##### EDITABLE VARIABLE #####
 core_threshold <- 1
-genome_qual <- 25
+genome_qual <- 27
 #############################
 
 # compute core loci
@@ -151,7 +153,7 @@ summary(genome_completeness)
 
 ```{r low assignment genomes}
 ##### EDITABLE VARIABLE #####
-lqual_g_threshold <- 25
+lqual_g_threshold <- 26
 #############################
 
 # identify low qual genomes
@@ -186,7 +188,7 @@ Profile B: `[ 0 , 1 , 0 , 4 , 3 , 0 , 0 , 0 , 0 ]`
 
   A != B: `[ 0 , 1 , 0 , 1 , 1 , 0 , 0 , 0 , 0 ]`
 
-Hamming distance = sum( A != B ) = 3
+Hamming distance = `sum( A != B )` = 3
 
 ```{r calculate hamming distance}
 dist_mat <- cgmlst_final %>% 
@@ -379,25 +381,27 @@ In order to analyze the clustering patterns in the core genome tree at greater r
 
 ### serovar_subtree
 
-The purpose of the function `serovar_subtree` is to analyze subtrees of specific serovars. The target serovar to examine is defined by the `serovar_name` variable. Specifying a "NULL" value to the variable will display the entire tree.
+The purpose of the function `serovar_subtree` is to analyze subtrees of specific serovars. The target serovar to examine is defined by the `serovar_name` variable. Specifying a NULL value to the variable will display the entire tree.
 
-The serovar tree can be annotated with cluster information [at a specific threshold]{.underline} in the form of tip-spanning text labels. The cluster membership annotations are defined by the variable, `distance_threshold`
+The serovar tree can be annotated with cluster information [at a specific threshold]{.underline} in the form of tip-spanning text labels. The cluster membership annotations are defined by the variable, `distance_threshold` .
 
-```{r serovar subtree, fig.height = 25, fig.show = 'hide'}
+```{r serovar subtree, fig.height = 25, fig.show = 'hide', message = F}
 # NOTE: there needs to be a comma at the end of each line!
 serovar_subtree(
   tree = cg_tree,
   serovar_name = NULL, # which serovar cluster to visualize?
-  distance_threshold = 25, # the dist threshold used for cluster definition?
+  distance_threshold = 10, # the dist threshold used for cluster definition?
   color_by = "serovar", # which metadata variable to color tree tips by?
-  color.tiplab = T, # whether to color tip labels
+  color.tiplab = F, # whether to color tip labels
   tip.size = 4, # size of tree tip point
   label_vars = c("geo_loc", "iso_date", "iso_source"), # metadata vars only
   label.offset = 80, # distance between labels and tree tips
   label.size = 5, # tree tip label text size
   legend.x = 0.23, # legend position on x axis
   legend.y = 0.9, # legend position on y axis
-  legend.size = 4, # legend text size
+  legend.size = 6, # legend text size
+  legend.ncat.per.col = 8, # number of categories to show per column in legend
+  hide.legend = F, # whether to hide colour legend
   plot.xlim = 2300, # plot area width
   annot.offset = 3, # distance between heatmap and tree tips
   annot.textsize = 5, # heatmap x axis text label size
@@ -412,7 +416,7 @@ ggsave("serovar_subtree.pdf", height = 30, width = 16)
 
 The purpose of the function `cluster_subtree` is to analyze subtrees of specific clusters defined at a given distance threshold. A cluster is defined by its ID and the distance threshold used for assignment, which are defined by the variables `cluster_name` and `distance_threshold`, respectively. Note that you will need to utilize the `serovar_subtree` to identify the IDs of clusters of interest.
 
-```{r cluster subtree, fig.height = 6}
+```{r cluster subtree, fig.height = 6, message = F}
 # NOTE: there needs to be a comma at the end of each line!
 cluster_subtree(
   tree = cg_tree,
@@ -420,11 +424,13 @@ cluster_subtree(
   distance_threshold = 25, # the dist threshold used for cluster definition?
   cluster_name = "1", # cluster ID to visualize?
   color_by = "country", # which metadata variable to color tree tips by?
-  color.tiplab = T, # whether to color tip labels
+  color.tiplab = F, # whether to color tip labels
   tip.size = 3, # size of tree tip point
   legend.x = 0.1, # legend position on x axis
   legend.y = 0.85, # legend position on y axis
   legend.size = 5, # legend text size
+  legend.ncat.per.col = 8, # number of categories to show per column in legend
+  hide.legend = F, # whether to hide colour legend
   plot.xlim = 30, # plot area width
   label_vars = c("country", "iso_date", "iso_source"), # metadata vars only
   label.offset = 5.5, # distance between labels and tree tips
@@ -444,9 +450,9 @@ The purpose of the function `cluster_summary` is to compare the distribution of 
 # NOTE: there needs to be a comma at the end of each line!
 cluster_summary(
   distance_threshold = 10, # the dist threshold used for cluster definition?
-  serovar_name = "typhimurium", # which serovar to include?
-  vars = c("country","iso_source", "plasmids", "serovar"), # metadata vars only
-  panel.ncol = 2, # number of columns to arrange the panels in
+  serovar_name = NULL, # which serovar to include?
+  vars = c("geo_loc","iso_source", "iso_date_ym"), # metadata vars only
+  panel.ncol = 1, # number of columns to arrange the panels in
   rm.low.freq.clust = T, # whether to remove low frequency (N < 4) clusters
   interactive = T # whether to generate interactive plots
 )
@@ -479,16 +485,18 @@ clusters_local <- data.frame(hclust_res_local) %>%
     rownames_to_column("ID")
 ```
 
-```{r plot local cg tree, fig.height = 6}
+```{r plot local cg tree, fig.height = 6, message = F}
 plot_subtree(
   tree = local_tree,
   clusters = clusters_local,
   color_by = "country", # which metadata variable to color tree tips by?
-  color.tiplab = T, # whether to color tip labels
+  color.tiplab = F, # whether to color tip labels
   tip.size = 3, # size of tree tip point
   legend.x = 0.15, # legend position on x axis
   legend.y = 0.85, # legend position on y axis
   legend.size = 5, # legend text size
+  legend.ncat.per.col = 8, # number of categories to show per column in legend
+  hide.legend = F, # whether to hide colour legend
   plot.xlim = 150, # plot area width
   label_vars = c("country", "iso_date", "iso_source"), # metadata vars only
   label.offset = 25, # distance between labels and tree tips
@@ -506,7 +514,7 @@ plot_subtree(
 
 2.  Review the circular tree and identify which serovar(s) is/are not monophyletic (i.e. serovars that are distributed in multiple areas of the tree).
 
-3.  Use the functions: `serovar_subtree()`, `cluster_subtree()`, `cluster_summary()` to analyse one particular serovar and identify three clusters that likely correspond to different outbreaks.
+3.  Use one of the following functions or in combination: `serovar_subtree()`, `cluster_subtree()`, `cluster_summary()` to analyse one particular serovar and identify three clusters that likely correspond to different outbreaks.
 
 4.  Identify genomic clusters that fit the following criteria and consider possible scenarios for interpretation of genomic data and epidemiological metadata:
 
