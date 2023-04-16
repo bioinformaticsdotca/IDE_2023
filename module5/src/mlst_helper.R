@@ -41,7 +41,7 @@ calculate_core <- function(
   genome_completeness <- compute_gc(mlst)
   # identify low qual genomes
   lq_genomes <- genome_completeness %>% 
-    filter(missing_alleles > 25) %>% 
+    filter(missing_alleles > genome_qual) %>% 
     pull(ID)
   # remove lq genomes and compute core
   lc <- mlst %>% 
