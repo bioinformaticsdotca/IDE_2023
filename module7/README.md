@@ -1,6 +1,6 @@
 ---
 layout: tutorial_page
-permalink: /IDE_2023_Mobule7_lab
+permalink: /IDE_2023_Module7_lab
 title: IDE Module 7 Lab
 header1: Phylodynamics of SARS-CoV-2
 header2: Infectious Disease Genomic Epidemiology

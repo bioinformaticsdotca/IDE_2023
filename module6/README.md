@@ -1,3 +1,16 @@
+---
+layout: tutorial_page
+permalink: /IDE_2023_Module6_lab
+title: CBW Infectious Disease Epidemiology 2023
+header1: Workshop Pages for Students
+header2: CBW Infectious Disease Epidemiology 2023 Module 6 Lab
+image: /site_images/CBW_epidemiology_icon.png
+home: https://bioinformaticsdotca.github.io/
+description: CBW IDE 2023 Module 6 - Antimicrobial Resistant Gene (AMR) Analysis
+author: Andrew McArthur and Karyn Mukiri
+modified: March 21, 2023
+---
+
 ## Table of contents
 1. [Introduction](#intro)
 1. [CARD Website and Antibiotic Resistance Ontology](#cardweb)
