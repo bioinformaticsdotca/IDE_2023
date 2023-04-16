@@ -46,6 +46,8 @@ Let's begin by loading all R packages and helper scripts required to run all the
 > [Every time you begin a new R session, you must reload all the packages and scripts!]{.underline}
 
 ```{r load pkgs and helper scripts}
+# BiocManager::install("YuLab-SMU/treedataverse")
+
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(data.table))
 suppressPackageStartupMessages(library(treedataverse))
@@ -75,7 +77,7 @@ cgmlst <- fread(cgmlst_path, sep = "\t")
 
 # cgMLST QC
 
-Before proceeding any further, you will first evaluate cgMLST data quality. A number of quality criteria will be defined to determine whether the properties of the allele profiles meet quality standards. Incomplete genome assembly and reference bias during MLST scheme construction can introduce significant levels of missing information in MLST data in the form of unassigned alleles at various loci. Hence, care must be taken to avoid comparisons that include loci and genomes with excessive numbers of unassigned alleles that could reduce the precision of genetic similarity calculations to be used for generating dendrograms for inferring relationships between the various genomes in the dataset.
+Before proceeding any further, you will first evaluate cgMLST data quality. A number of quality criteria will be defined to determine whether the properties of the allele profiles meet quality standards. Incomplete genome assembly and reference bias during MLST scheme construction can introduce significant levels of missing information in MLST data in the form of unassigned alleles at various loci. Hence, loci and genomes with excessive numbers of unassigned alleles should be removed as they could reduce the precision of genetic similarity calculations used in dendrograms to infer relationships between the various genomes in the dataset.
 
 Below, you will conduct a series of steps to compute the frequency of unassigned alleles across each locus (i.e. columns) and genome (i.e. rows), which will inform the identification of poor quality loci/genomes that may need to be flagged for removal from downstream analyses.
 
@@ -103,6 +105,7 @@ lqual_threshold <- 2
 #############################
 
 # identify low qual loci
+# exclude those with more than a threshold of missing values
 lqual_loci <- loci_completeness %>% 
   filter(missing_alleles > lqual_threshold) %>% 
   pull(locus)
@@ -176,7 +179,9 @@ message(paste0("Genomes with ", lqual_g_threshold, " or less missing alleles wer
 
 # Hamming Distance
 
-Distance-based and character-based methods can both be used to construct dendrograms from cgMLST data. However, the scope of this lab will only cover distance-based dendrograms, as character-based methods are covered extensively in other modules. In phylogenetic analysis, distance-based approaches are rather flexible in the sense that they can be constructed from any measure that quantifies genetic similarity, including distances computed by alignment-free (e.g. Mash) or alignment-based (e.g. BLAST) similarity search algorithms. Below, you are introduced to a metric called "Hamming distance", which is based on computing the number of differences between a pair of character vectors.
+Distance-based and character-based methods can both be used to construct dendrograms from cgMLST data. However, the scope of this lab will only cover distance-based dendrograms, as character-based methods are covered extensively in other modules. 
+
+In phylogenetic analysis, distance-based approaches are rather flexible in the sense that they can be constructed from any measure that quantifies genetic similarity, including distances computed by alignment-free (e.g. Mash) or alignment-based (e.g. BLAST) similarity search algorithms. Below, you are introduced to a metric called "Hamming distance", which is based on computing the number of differences between a pair of character vectors.
 
 Given two character vectors of equal lengths, hamming distance is the total number of positions in which the two vectors are [different:]{.underline}
 
@@ -189,6 +194,7 @@ Profile B: `[ 0 , 1 , 0 , 4 , 3 , 0 , 0 , 0 , 0 ]`
 Hamming distance = sum( A != B ) = 3
 
 ```{r calculate hamming distance}
+# may take around 5 mins
 dist_mat <- cgmlst_final %>% 
   column_to_rownames("#Name") %>% 
   t() %>% 
