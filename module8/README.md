@@ -38,7 +38,7 @@ modified: April 4, 2023
 This tutorial aims to introduce a variety of software and concepts related to detecting emerging pathogens from a complex host sample. The provided data and methods are derived from real-world data, but have been modified to either illustrate a specific learning objective or to reduce the complexity of the problem. Contamination and a lack of large and accurate databases render detection of microbial pathogens difficult. As a disclaimer, all results produced from the tools described in this tutorial and others must also be verified with supplementary bioinformatics or wet-laboratory techniques.
 
 <a name="software"></a>
-# 2. List of software for tutorial
+# 2. List of software for tutorial and its respective documentation
 
 * [fastp][]
 * [multiqc][]
@@ -120,7 +120,7 @@ We will proceed through the following steps to attempt to diagnose the situation
 * Filter host (human) reads with `kat`
 * Run Kraken2 with a bacterial and viral database to look at the taxonomic makeup of the reads.
 * Assemble the metatranscriptome with `megahit`
-* Examine assembly using `quast` and `blast`
+* Examine assembly quality using `quast` and possible pathogens with `blast`
 
 ---
 
@@ -132,7 +132,7 @@ The first set of steps follows through an assembly-free approach where we will p
 <a name="exercise-examine-reads"></a>
 ### Step 1: Examine the reads
 
-Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic seqencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the DNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
+Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic sequencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the cDNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
 
 The reads were generated from paired-end sequencing, which means that a particular fragment (of cDNA) was sequenced twice--once from either end (see the [Illumina Paired vs. Single-End Reads](https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) for some additional details). These pairs of cDNA sequence reads are stored as separate files (named `emerging-pathogen-reads_1.fastq.gz` and `emerging-pathogen-reads_2.fastq.gz`). You can see each file by running `ls`:
 
@@ -207,7 +207,7 @@ fastp v0.23.2, time used: 22 seconds
 
 #### Examine output
 
-You should now be able to nagivate to <http://IP-ADDRESS/module8_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
+You should now be able to nagivate to < http://xx.uhn-hpc.ca/module8_workspace/analysis> and see some of the output files. In particular, you should be able to find **fastp.html**, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
 
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/fastp.png?raw=true" alt="p2" width="750" />
@@ -350,12 +350,16 @@ Let's also take a look at `kraken_out.txt`. This file contains the kraken2 resul
 column -s$'\t' -t kraken_out.txt | less -S
 ```
 
+`column` formats a text file (`kraken_out.txt`) into multiple columns according to a tab delimiter character (flag `-s'$\t'`) and produces a table (flag `-t`). 
+
 **Output**
 ```
-C  SRR10971381.56        29465    151|151  0:40 909932:2 0:8 909932:2 0:20 29465:4 0:7 1783272:2 0:1 29465:5 0:1 29465:1 0:24 |:| 0:2 29465:5 0:25 29465:1 0:1 2946>
-C  SRR10971381.97        838      122|122  0:44 2:5 0:23 838:1 0:10 838:2 0:3 |:| 0:3 838:2 0:10 838:1 0:23 2:5 0:44
-C  SRR10971381.126       9606     109|109  0:2 9606:5 0:7 9606:1 0:12 9606:1 0:47 |:| 0:47 9606:1 0:12 9606:1 0:7 9606:5 0:2
-C  SRR10971381.135       838      151|151  0:95 838:3 0:19 |:| 0:15 838:1 0:12 838:5 0:6 838:3 0:75
+C       SRR10971381.56  29465   151|151 0:40 909932:2 0:8 909932:2 0:20 29465:4 0:7 178327>
+C       SRR10971381.97  838     122|122 0:44 2:5 0:23 838:1 0:10 838:2 0:3 |:| 0:3 838:2 0>
+C       SRR10971381.126 9606    109|109 0:2 9606:5 0:7 9606:1 0:12 9606:1 0:47 |:| 0:47 96>
+C       SRR10971381.135 838     151|151 0:95 838:3 0:19 |:| 0:15 838:1 0:12 838:5 0:6 838:>
+C       SRR10971381.219 1177574 151|151 0:11 838:3 0:5 838:2 0:9 838:5 0:11 838:1 976:5 83>
+C       SRR10971381.223 838     151|151 0:117 |:| 0:61 838:4 0:40 838:1 0:11
 [...]
 ```
 
@@ -372,7 +376,7 @@ More information on interpreting this file can be found at <https://github.com/D
 
 Instead of reading text-based files like above, we can visualize this information using [Pavian][], which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the `kraken_report.txt` file to the web application. Please do this now using the following steps:
 
-1. Download the `kraken_report.txt` to your local machine from <http://IP-ADDRESS/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
+1. Download the `kraken_report.txt` to your local machine from <http://xx.uhn-hpc.ca/module8_workspace/analysis> (you can right-click and select **Save as...** on the file).
 2. Visit the [Pavian][] website and click on **Upload files > Browse...** and select the file `kraken_report.txt` we just downloaded.
 
    <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-upload.png?raw=true" alt="p2" width="750" />
@@ -387,7 +391,7 @@ If all the steps are completed successfully then the report you should see shoul
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/pavian-report.png?raw=true" alt="p2" width="750" />
 
-If something did not work, you can alternatively view a pre-computed report at <http://IP-ADDRESS/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
+If something did not work, you can alternatively view a pre-computed report at <http://xx.uhn-hpc.ca/module8_workspace/precomputed-analysis/Uploaded_sample_set-report.html>.
 
 #### Step 5: Questions
 
@@ -499,7 +503,7 @@ NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
 Thank you for using QUAST!
 ```
 
-Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://IP_ADDRESS/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
+Quast writes it's output to a directory `quast_results/`, which includes HTML and PDF reports. We can view this using a web browser by navigating to <http://xx.uhn-hpc.ca/module8_workspace/analysis/> and clicking on **quast_results** then **latest** then **icarus.html**. From here, click on **Contig size viewer**. You should see the following:
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/quast-contigs.png?raw=true" alt="p2" width="750" />
 
@@ -510,7 +514,7 @@ This shows the length of each contig in the `megahit_out/final.contigs.fa` file,
 1. What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
 2. Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What are the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
 3. Is there another type of source for this RNA fragment that could explain it's length? Possibly a [Virus](https://en.wikipedia.org/wiki/Coronavirus#Genome)?
-4. Also try looking at the QUAST report (<http://IP_ADDRESS/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
+4. Also try looking at the QUAST report (<http://xx.uhn-hpc.ca/module8_workspace/analysis/quast_results/latest/> then clicking on **report.html**). How many contigs >= 1000 bp are there compared to the number < 1000 bp?
 
 ---
 
@@ -536,13 +540,13 @@ As output you should see something like (`blastn` won't print any output):
 [INFO] output ...
 ```
 
-Here, we first use [seqkit][] to sort all contigs by length (`seqkit sort --by-length ...`) and we then extract only the top **50** longest contigs (`seqkit head -n 50`) and write these to a file **contigs-50.fa** (`> contigs-50.fa`).
+Here, we first use [seqkit][] to sort all contigs by length with the largest ones first (`seqkit sort --by-length --reverse ...`) and we then extract only the top **50** longest contigs (`seqkit head -n 50`) and write these to a file **contigs-50.fa** (`> contigs-50.fa`).
 
 *Note that the pipe `|` character will take the output of one command (`seqkit sort --by-length ...`, which sorts sequences in the file by length) and forward it into the input of another command (`seqkit head -n 50`, which takes only the first 50 sequences from the file). The greater-than symbol `>` takes the output of one command `seqkit head ...` and writes it to a file (named `contigs-50.fa`).*
 
 The next command will run [BLAST][] on these top 50 longest contigs using a pre-computed database of viral genomes (`blastn -db ~/CourseData/IDE_data/module8/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...`). The `-html -out blast_results.html` tells BLAST to write its results as an HTML file.
 
-To view these results, please browse to <http://IP-ADDRESS/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
+To view these results, please browse to <http://xx.uhn-hpc.ca/module8_workspace/analysis/blast_results.html> to view the ouptut `blast_results.html` file. This should look something like below:
 
 
 <img src="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module8/images/blast-report.png?raw=true" alt="p2" width="750" />
