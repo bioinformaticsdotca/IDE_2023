@@ -1,6 +1,6 @@
 # Answer Key for Module 5 Lab
 
-1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 27 unassigned alleles).
+1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 26 unassigned alleles).
 
 > There are a number of ways to do this: 
 > 1) Students can manually inspect and compare the rows of cgMLST profiles (`cgmlst_lqual_loci_rm.tsv` and `cgmlst_final.tsv`) 
