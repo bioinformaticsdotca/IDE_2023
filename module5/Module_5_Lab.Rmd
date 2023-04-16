@@ -510,7 +510,7 @@ plot_subtree(
 
 # Group Exercise
 
-1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 27 unassigned alleles).
+1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 26 unassigned alleles).
 
 2.  Review the circular tree and identify which serovar(s) is/are not monophyletic (i.e. serovars that are distributed in multiple areas of the tree).
 
