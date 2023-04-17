@@ -93,12 +93,15 @@ In order to run SIGNAL, we first need to prepare two files: a configuration file
 ```
 python signalexe.py --directory ../cbw_demo_run --config-only
 ```
+The output should be as follows
+
+<img src="./images/create_config.png" width="1080" height="820">
 
 If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_sample_table.csv` files have been created. You can use `more` or `less` to examine the input files.
 
 ## Reference-based assembly using SIGNAL
 
-Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
+Using our configuration file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
 
 ```
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
@@ -111,7 +114,7 @@ This will take around 30-45 minutes to run, so is a good time for a short break.
 Now that SIGNAL is complete, we will run an additional step to generate some quality control results:
 
 ```
-python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 ncov_tools
+python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 ncov_tools
 ```
 
 ## Coverage analysis
