@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = F, results = 'hide')
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 ```
 
 # Background
@@ -81,7 +81,7 @@ Before proceeding any further, you will first evaluate cgMLST data quality. A nu
 
 Below, you will conduct a series of steps to compute the frequency of unassigned alleles across each locus (i.e. columns) and genome (i.e. rows), which will inform the identification of poor quality loci/genomes that may need to be flagged for removal from downstream analyses.
 
-![](img/mlst_qc_flowchart.jpg)
+<img src="img/mlst_qc_flowchart.jpg" width="650"/>
 
 > [Editable parts of the code have been highlighted in the code chunks.]{.underline} You are highly encouraged to adjust them to observe how different parameters affect the outcome.
 
@@ -279,7 +279,7 @@ Identifying clusters of genomes sharing highly similar cgMLST profiles through t
 
 In this section, you will generate genomic clusters from the dataset by applying several distance cutoffs. You will then place clusters within the dendrogram and analyze cluster memberships to spot possible outbreaks in the dataset.
 
-```{r cluster by distance}
+```{r cluster by distance, results = 'hide'}
 # define clustering distance cutoffs
 dist_cutoff <- c(0, seq(5, 100, 5), seq(200, 1000, 100))
 # perform complete linkage clustering
@@ -460,7 +460,7 @@ cluster_summary(
 
 ## Investigating Local Core Genes
 
-```{r local core gene tree}
+```{r local core gene tree, message = F}
 # identify a local core genome scheme
 # for a target cluster and build tree
 local_tree <- local_cg_tree(

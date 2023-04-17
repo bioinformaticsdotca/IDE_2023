@@ -11,7 +11,6 @@ author: Ed Taboada and Jimmy Liu
 modified: March 21, 2023
 ---
 
-
 # Background
 
 The primary objective of the Module 5 lab will be to provide a practical overview of core genome multilocus sequencing typing (cgMLST), a genome-based typing method widely adopted in bacterial genomic surveillance networks across the globe. The widespread adoption of cgMLST is due in large part to the recent advances in high-throughput sequencing, which have enabled the routine adoption of whole genome sequencing (WGS) in microbial surveillance. With WGS becoming increasingly accessible, part of the cascading effect was the development of efficient computational algorithms that further expedited the establishment of multilocus sequence typing at genome scales as routine practice.
@@ -84,7 +83,7 @@ Before proceeding any further, you will first evaluate cgMLST data quality. A nu
 
 Below, you will conduct a series of steps to compute the frequency of unassigned alleles across each locus (i.e. columns) and genome (i.e. rows), which will inform the identification of poor quality loci/genomes that may need to be flagged for removal from downstream analyses.
 
-![](img/mlst_qc_flowchart.jpg)
+<img src="img/mlst_qc_flowchart.jpg" width="650"/>
 
 > [Editable parts of the code have been highlighted in the code chunks.]{.underline} You are highly encouraged to adjust them to observe how different parameters affect the outcome.
 
@@ -101,6 +100,16 @@ write.table(loci_completeness, "cgmlst_loci_quality.stats.tsv",
             quote = F, row.names = F, sep = "\t")
 # print summary statistics for locus completeness
 summary(loci_completeness)
+```
+
+```
+##     locus           valid_alleles   missing_alleles    completeness    
+##  Length:2952        Min.   :  4.0   Min.   :  0.000   Min.   :  2.198  
+##  Class :character   1st Qu.:181.0   1st Qu.:  0.000   1st Qu.: 99.451  
+##  Mode  :character   Median :182.0   Median :  0.000   Median :100.000  
+##                     Mean   :180.1   Mean   :  1.885   Mean   : 98.964  
+##                     3rd Qu.:182.0   3rd Qu.:  1.000   3rd Qu.:100.000  
+##                     Max.   :182.0   Max.   :178.000   Max.   :100.000
 ```
 
 
@@ -120,34 +129,9 @@ write.table(cgmlst_lc, "cgmlst_lqual_loci_rm.tsv",
             quote = F, row.names = F, sep = "\t")
 # print filtering results
 message(paste("Number of loci before filter:", ncol(cgmlst)-1))
-```
-
-```
-## Number of loci before filter: 2952
-```
-
-```r
 message(paste("Number of loci after filter:", ncol(cgmlst_lc)-1))
-```
-
-```
-## Number of loci after filter: 2728
-```
-
-```r
 message(paste("Number of loci removed:", ncol(cgmlst)-ncol(cgmlst_lc)))
-```
-
-```
-## Number of loci removed: 224
-```
-
-```r
 message(paste0("Loci with ", lqual_threshold, " or less missing alleles were retained"))
-```
-
-```
-## Loci with 2 or less missing alleles were retained
 ```
 
 ## Defining Core Genes
@@ -167,22 +151,6 @@ core_loci <- calculate_core(
 )
 ```
 
-```
-## Number of loci before filter: 2728
-```
-
-```
-## Number of loci after filter: 2668
-```
-
-```
-## Number of accessory loci found: 60
-```
-
-```
-## Core gene definition: less than or equal to 1 missing allele(s)
-```
-
 ## Genome Quality
 
 
@@ -197,6 +165,16 @@ write.table(genome_completeness, "cgmlst_genome_qual.stats.tsv",
             quote = F, row.names = F, sep = "\t")
 # print data summary of genome completeness
 summary(genome_completeness)
+```
+
+```
+##       ID            valid_alleles  missing_alleles   completeness   
+##  Length:182         Min.   :2581   Min.   : 0.000   Min.   : 96.74  
+##  Class :character   1st Qu.:2667   1st Qu.: 0.000   1st Qu.: 99.96  
+##  Mode  :character   Median :2668   Median : 0.000   Median :100.00  
+##                     Mean   :2664   Mean   : 4.275   Mean   : 99.84  
+##                     3rd Qu.:2668   3rd Qu.: 1.000   3rd Qu.:100.00  
+##                     Max.   :2668   Max.   :87.000   Max.   :100.00
 ```
 
 
@@ -220,34 +198,9 @@ write.table(cgmlst_final, "cgmlst_final.tsv",
             quote = F, row.names = F, sep = "\t")
 # print filtering results
 message(paste("Number of genomes before filter:", nrow(cgmlst_lc)))
-```
-
-```
-## Number of genomes before filter: 182
-```
-
-```r
 message(paste("Number of genomes after filter:", nrow(cgmlst_final)))
-```
-
-```
-## Number of genomes after filter: 172
-```
-
-```r
 message(paste("Number of genomes removed:", nrow(cgmlst_lc)-nrow(cgmlst_final)))
-```
-
-```
-## Number of genomes removed: 10
-```
-
-```r
 message(paste0("Genomes with ", lqual_g_threshold, " or less missing alleles were retained"))
-```
-
-```
-## Genomes with 26 or less missing alleles were retained
 ```
 
 # Hamming Distance
@@ -273,6 +226,10 @@ dist_mat <- cgmlst_final %>%
 # print matrix dimension
 # the dimension should be symmetric!
 dim(dist_mat)
+```
+
+```
+## [1] 172 172
 ```
 
 In the context of two cgMLST profiles, hamming distance can be calculated based on the number of allele differences across all loci. Hamming distances will be computed in an all vs all fashion to generate a pairwise distance matrix that will serve as the input for distance-based tree-building algorithms such as UPGMA and Neighbour-joining. We will visualize the clustering patterns in the distance matrix using the ComplexHeatmap package. We will also overlay serovar information to examine inter- and intra-serovar distances.
@@ -551,6 +508,11 @@ cluster_summary(
 )
 ```
 
+```{=html}
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f85a982514ce28ae593b" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f85a982514ce28ae593b">{"x":{"data":[{"orientation":"v","width":0.9,"base":4,"x":[6],"y":[7],"text":"cluster: 13<br />count:  7<br />value: 2009-03","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(65,202,236,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":4,"x":[15],"y":[1],"text":"cluster: 48<br />count:  1<br />value: egg farm environmental swab","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,49,214,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":2,"x":[13],"y":[2],"text":"cluster: 41<br />count:  2<br />value: 2001-04","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(70,182,126,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":3,"x":[2],"y":[2],"text":"cluster: 2<br />count:  2<br />value: alfalfa sprout","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(79,239,201,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999],"base":[0,0],"x":[5,13],"y":[1,2],"text":["cluster: 10<br />count:  1<br />value: USA:TX","cluster: 41<br />count:  2<br />value: USA:TX"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(80,115,205,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":2,"x":[16],"y":[4],"text":"cluster: 49<br />count:  4<br />value: 2001-05","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(88,219,228,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[6],"y":[1],"text":"cluster: 13<br />count:  1<br />value: 2009-NA","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(93,128,132,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.9],"base":[7,10,14],"x":[1,5,6],"y":[1,3,1],"text":["cluster: 1<br />count:  1<br />value: USA","cluster: 10<br />count:  3<br />value: USA","cluster: 13<br />count:  1<br />value: USA"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(95,118,163,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[11],"y":[4],"text":"cluster: 27<br />count:  4<br />value: 2010-10","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(97,197,173,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[13],"y":[1],"text":"cluster: 41<br />count:  1<br />value: raw almond","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(98,237,226,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":9,"x":[9],"y":[2],"text":"cluster: 25<br />count:  2<br />value: 2001-07","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(101,161,236,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999],"base":[0,3],"x":[7,13],"y":[4,1],"text":["cluster: 16<br />count:  4<br />value: CAN","cluster: 41<br />count:  1<br />value: CAN"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(103,178,223,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.899999999999999,0.899999999999999],"base":[11,0],"x":[9,16],"y":[1,2],"text":["cluster: 25<br />count:  1<br />value: 2001-06","cluster: 49<br />count:  2<br />value: 2001-06"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(104,229,145,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":14,"x":[6],"y":[1],"text":"cluster: 13<br />count:  1<br />value: cashew/almond/pistachio blend","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(104,234,81,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":7,"x":[9],"y":[2],"text":"cluster: 25<br />count:  2<br />value: 2010-04","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(109,163,127,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999],"base":[5,1],"x":[5,12],"y":[8,3],"text":["cluster: 10<br />count:  8<br />value: 2009-01","cluster: 33<br />count:  3<br />value: 2009-01"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(110,172,180,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.899999999999999,0.899999999999999],"base":[0,0],"x":[8,10],"y":[7,5],"text":["cluster: 23<br />count:  7<br />value: AUS","cluster: 26<br />count:  5<br />value: AUS"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(116,67,119,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":14,"x":[6],"y":[1],"text":"cluster: 13<br />count:  1<br />value: 2008-09","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(122,171,91,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[1],"y":[5],"text":"cluster: 1<br />count:  5<br />value: 2010-02","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(128,97,222,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999],"base":[0,0],"x":[4,11],"y":[3,4],"text":["cluster: 6<br />count:  3<br />value: environmental swab","cluster: 27<br />count:  4<br />value: environmental swab"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(142,97,58,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":5,"x":[1],"y":[3],"text":"cluster: 1<br />count:  3<br />value: 2010-01","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(143,220,241,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[5],"y":[1],"text":"cluster: 10<br />count:  1<br />value: peanut meal","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(154,245,199,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[12],"y":[4],"text":"cluster: 33<br />count:  4<br />value: MUS","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(155,65,174,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[10],"y":[5],"text":"cluster: 26<br />count:  5<br />value: ready to eat food","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(157,179,54,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":5,"x":[9],"y":[7],"text":"cluster: 25<br />count:  7<br />value: USA:CT","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(159,210,171,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[1],"y":[7],"text":"cluster: 1<br />count:  7<br />value: USA:RI","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(161,232,129,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[14],"y":[4],"text":"cluster: 43<br />count:  4<br />value: 2000-09","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(162,236,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":13,"x":[6],"y":[1],"text":"cluster: 13<br />count:  1<br />value: 2008-10","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(163,159,227,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[4],"y":[1],"text":"cluster: 6<br />count:  1<br />value: USA:MO","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(165,67,232,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":11,"x":[5],"y":[2],"text":"cluster: 10<br />count:  2<br />value: cheese cracker with peanut butter","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(169,197,238,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[11,5,0,0,1],"x":[6,8,9,12,13],"y":[3,2,9,1,3],"text":["cluster: 13<br />count:  3<br />value: human","cluster: 23<br />count:  2<br />value: human","cluster: 25<br />count:  9<br />value: human","cluster: 33<br />count:  1<br />value: human","cluster: 41<br />count:  3<br />value: human"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(171,175,200,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[1],"y":[4],"text":"cluster: 1<br />count:  4<br />value: red pepper","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(172,152,140,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":9,"x":[5],"y":[1],"text":"cluster: 10<br />count:  1<br />value: USA:CO","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(172,189,185,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,9,0,0,0],"x":[3,9,14,15,16],"y":[4,3,4,4,6],"text":["cluster: 4<br />count:  4<br />value: feces","cluster: 25<br />count:  3<br />value: feces","cluster: 43<br />count:  4<br />value: feces","cluster: 48<br />count:  4<br />value: feces","cluster: 49<br />count:  6<br />value: feces"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(176,135,161,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[7],"y":[4],"text":"cluster: 16<br />count:  4<br />value: 2014-06","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(178,126,218,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[4],"y":[5],"text":"cluster: 6<br />count:  5<br />value: 2012-08","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(179,151,82,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[8],"y":[7],"text":"cluster: 23<br />count:  7<br />value: 2012-02","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(181,228,161,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":1,"x":[6],"y":[7],"text":"cluster: 13<br />count:  7<br />value: pistachio","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(182,239,70,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[2],"y":[3],"text":"cluster: 2<br />count:  3<br />value: spent irrigation water","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(188,187,147,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9],"base":[4,1],"x":[2,6],"y":[1,3],"text":["cluster: 2<br />count:  1<br />value: 2009-04","cluster: 13<br />count:  3<br />value: 2009-04"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(204,232,240,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":8,"x":[6],"y":[3],"text":"cluster: 13<br />count:  3<br />value: nut raisin blend trail mixture","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(211,105,163,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[9],"y":[7],"text":"cluster: 25<br />count:  7<br />value: 2010-11","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(212,140,128,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[15],"y":[2],"text":"cluster: 48<br />count:  2<br />value: 2011-09","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(214,236,204,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":3,"x":[4],"y":[2],"text":"cluster: 6<br />count:  2<br />value: cantaloupe","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(221,50,242,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":1,"x":[3],"y":[3],"text":"cluster: 4<br />count:  3<br />value: 2003-11","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(221,228,110,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[8],"y":[5],"text":"cluster: 23<br />count:  5<br />value: raw-egg mayonnaise","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(223,150,230,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":2,"x":[15],"y":[3],"text":"cluster: 48<br />count:  3<br />value: 2011-08","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(223,190,183,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[2],"y":[4],"text":"cluster: 2<br />count:  4<br />value: 2009-05","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(224,111,221,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":10,"x":[5],"y":[1],"text":"cluster: 10<br />count:  1<br />value: organic peanut butter","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(224,184,234,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":11,"x":[6],"y":[2],"text":"cluster: 13<br />count:  2<br />value: 2008-11","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(227,84,233,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[10],"y":[5],"text":"cluster: 26<br />count:  5<br />value: 2012-04","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(227,233,154,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[2],"y":[5],"text":"cluster: 2<br />count:  5<br />value: USA:AZ","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(229,63,176,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":1,"x":[4],"y":[4],"text":"cluster: 6<br />count:  4<br />value: USA:IN","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(230,117,133,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":4,"x":[1],"y":[4],"text":"cluster: 1<br />count:  4<br />value: peppercorn","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(230,137,77,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"base":[0,1,2,0,0,0],"x":[3,5,9,14,15,16],"y":[4,1,3,4,5,6],"text":["cluster: 4<br />count:  4<br />value: USA:MN","cluster: 10<br />count:  1<br />value: USA:MN","cluster: 25<br />count:  3<br />value: USA:MN","cluster: 43<br />count:  4<br />value: USA:MN","cluster: 48<br />count:  5<br />value: USA:MN","cluster: 49<br />count:  6<br />value: USA:MN"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(231,228,64,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[13],"y":[2],"text":"cluster: 41<br />count:  2<br />value: 2011-NA","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(232,156,207,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":1,"x":[5],"y":[9],"text":"cluster: 10<br />count:  9<br />value: peanut butter","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(233,180,142,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":2,"x":[5],"y":[7],"text":"cluster: 10<br />count:  7<br />value: USA:GA","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(233,218,237,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[7],"y":[4],"text":"cluster: 16<br />count:  4<br />value: chia powder","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(235,78,59,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":0,"x":[9],"y":[2],"text":"cluster: 25<br />count:  2<br />value: USA:NJ","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(236,236,228,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999,0.899999999999999],"base":[0,0,2],"x":[6,11,13],"y":[14,4,1],"text":["cluster: 13<br />count: 14<br />value: USA:CA","cluster: 27<br />count:  4<br />value: USA:CA","cluster: 41<br />count:  1<br />value: USA:CA"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(237,79,135,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.9,0.899999999999999],"base":[0,0],"x":[5,12],"y":[5,1],"text":["cluster: 10<br />count:  5<br />value: 2009-02","cluster: 33<br />count:  1<br />value: 2009-02"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(237,223,178,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.899999999999999,"base":1,"x":[12],"y":[3],"text":"cluster: 33<br />count:  3<br />value: food","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(238,176,193,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[3],"y":[1],"text":"cluster: 4<br />count:  1<br />value: 2003-12","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(238,194,104,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[6],"y":[1],"text":"cluster: 13<br />count:  1<br />value: roasted salted garlic onion pistachio","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(241,47,216,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":37.9178082191781,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,16.6],"tickmode":"array","ticktext":["1","2","4","6","10","13","16","23","25","26","27","33","41","43","48","49"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],"categoryorder":"array","categoryarray":["1","2","4","6","10","13","16","23","25","26","27","33","41","43","48","49"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"annotations":[{"text":"Clusters at T = 10","x":0.5,"y":0,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis","yshift":-21.9178082191781},{"text":"Count","x":0,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis","xshift":-21.9178082191781},{"text":"geo_loc","x":0.5,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"iso_date_ym","x":0.5,"y":0.588401826484018,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"},{"text":"iso_source","x":0.5,"y":0.255068493150685,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"bottom"}],"yaxis":{"domain":[0.744931506849315,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.75,15.75],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.744931506849315,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":1,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.411598173515982,"y1":0.588401826484018},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.588401826484018,"ysizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":0.255068493150685},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":23.37899543379,"yanchor":0.255068493150685,"ysizemode":"pixel"}],"yaxis2":{"type":"linear","autorange":false,"range":[-0.75,15.75],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.411598173515982,0.588401826484018],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[-0.75,15.75],"tickmode":"array","ticktext":["0","5","10","15"],"tickvals":[0,5,10,15],"categoryorder":"array","categoryarray":["0","5","10","15"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.255068493150685],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"38b41f7a6ab1":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"38b41f7a6ab1","visdat":{"38b41f7a6ab1":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+```
+
 ## Investigating Local Core Genes
 
 
@@ -565,25 +527,6 @@ local_tree <- local_cg_tree(
   core_threshold = 1, # minimum number of missing alleles allowed
   method = "nj" # tree method: nj or upgma
 )
-```
-
-```
-## Number of loci before: 2668
-```
-
-```
-## Number of loci after: 2725
-```
-
-```
-## Number of accessory loci found: 57
-```
-
-```
-## Core gene definition: less than or equal to 1 missing alleles
-```
-
-```r
 # perform complete linkage clustering
 hclust_res_local <- map(dist_cutoff, function(x) {
   cophenetic.phylo(local_tree) %>% 
@@ -626,7 +569,7 @@ plot_subtree(
 
 # Group Exercise
 
-1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 27 unassigned alleles).
+1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 26 unassigned alleles).
 
 2.  Review the circular tree and identify which serovar(s) is/are not monophyletic (i.e. serovars that are distributed in multiple areas of the tree).
 
