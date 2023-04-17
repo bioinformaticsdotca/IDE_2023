@@ -81,7 +81,7 @@ Before proceeding any further, you will first evaluate cgMLST data quality. A nu
 
 Below, you will conduct a series of steps to compute the frequency of unassigned alleles across each locus (i.e. columns) and genome (i.e. rows), which will inform the identification of poor quality loci/genomes that may need to be flagged for removal from downstream analyses.
 
-<img src="img/mlst_qc_flowchart.jpg" width="650"/>
+<img src="https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module5/img/mlst_qc_flowchart.jpg" width="750"/>
 
 > [Editable parts of the code have been highlighted in the code chunks.]{.underline} You are highly encouraged to adjust them to observe how different parameters affect the outcome.
 
