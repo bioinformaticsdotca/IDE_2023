@@ -1,3 +1,15 @@
+---
+layout: tutorial_page
+permalink: /IDE_2023_Module5_labsetup
+title: CBW Infectious Disease Epidemiology 2023
+header1: Workshop Pages for Students
+header2: CBW Infectious Disease Epidemiology 2023 Module 5 Lab Setup
+image: /site_images/CBW_epidemiology_icon.png
+home: https://bioinformaticsdotca.github.io/
+description: CBW IDE 2023 Module 5 - Bacterial Pathogen Genomic Analysis - Setup
+author: Ed Taboada and Jimmy Liu
+---
+
 # Module 5 Lab
 
 The lab assignment is written in Rmarkdown (.Rmd) which means that the lab is intended to be run in RStudio IDE.
