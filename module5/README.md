@@ -39,7 +39,7 @@ ls ./module5
 
 Expected output:
 
-![](img/ls_output.png)
+<img src="https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module5/img/ls_output.png" width="750"/>
 
 ## Launching RStudio
 
@@ -51,10 +51,10 @@ Expected output:
 
     If logged in successfully, you should see the following graphical interface in your browser:
 
-![](img/rstudio.png)
+<img src="https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module5/img/rstudio.png" width="750"/>
 
 3. Load up `Module_5_Lab.Rmd` by clicking [File] -> [Open File] -> [Select the .Rmd file in `module5` directory]
 
     If you have successfully opened the `.Rmd` file, you will see the following screen:
 
-![](img/rmarkdown.png)
+<img src="https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module5/img/rmarkdown.png" width="750"/>
