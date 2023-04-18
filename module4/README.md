@@ -104,7 +104,7 @@ If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_samp
 Using our configuration file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
 
 ```
-python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
+python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 all postprocess
 ```
 
 This will take around 30-45 minutes to run, so is a good time for a short break.
@@ -123,7 +123,9 @@ We can now start exploring the results. First we will look at the depth of cover
 
 Open your web browser and navigate to `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/` where **xx** is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the `ncov-tools-results/plots/` subdirectory you will find a file called `cbw_demo_run_results_dir_depth_by_position.pdf`. Open this file. 
 
-This file contains plots of the coverage depth for each of the 36 samples we analyzed. 
+This file contains plots of the coverage depth for each of the 36 samples we analyzed as shown below. 
+
+<img src="./images/coverage_by_position.png" width="1080" height="820">
 
 Explore the results and try to understand what the coverage patterns mean: 
 - What might have caused the sharp drop in coverage for sample `ERR6035561`? 
