@@ -9,7 +9,7 @@ Users do not need to access or use the Amazon Web Services (AWS) for the purpose
 
 | Filename | Google Drive Version | Description |
 | --- | --- | --- |
-| `IDE_2023_DataCurationAndSharingLecture_Griffiths.pdf` | [pdf](https://docs.google.com/presentation/d/1YsmGfn51KJ-RDPXB_VmnjXr7n8inTFo8/edit?usp=share_link&ouid=102600819750531968872&rtpof=true&sd=true) | Lecture slides |
+| `IDE_2023_DataCurationAndSharingLecture_Griffiths.pdf` | [pdf](https://drive.google.com/file/d/1wZ74oM6SaO3aJPYJThCNgcfgepQaPdjQ/view?usp=share_link) | Lecture slides |
 | `IDE_2023_Module3_Contextual Data Curation Scenarios.docx` / `.pdf` | [docx](https://docs.google.com/document/d/1WsP1zhzpyRdwM9oN8ICpj40xR1N2UgU7/edit?usp=share_link&ouid=102600819750531968872&rtpof=true&sd=true)/[pdf](https://drive.google.com/file/d/1kX3GOoUOxxgMYBMnZ4EC5eHigDJzTG3F/view?usp=share_link) | Scenarios for Exercise 1 |
 | **`IDE_2023_Module3_Data curation and sharing lab instructions.docx` / `.pdf`** | [docx](https://docs.google.com/document/d/1rCamhZyvWS8SvgZ1Jv5IeDk51Y495t8_/edit?usp=share_link&ouid=102600819750531968872&rtpof=true&sd=true)/[pdf](https://drive.google.com/file/d/1N9C2AnlozZCg-wSVwRD_cFAbrfVKE9J5/view?usp=share_link) | **Lab instructions** |
 | `IDE_2023_Module3_FirstScenarioAnswers_demo.xlsx` | [xlsx](https://docs.google.com/spreadsheets/d/1EerSucrWX4wBa_sy-P3CE8EOWwJFBU70/edit?usp=share_link&ouid=102600819750531968872&rtpof=true&sd=true) | A DataHarmonizer template with "Scenario 1" (demo) filled in |

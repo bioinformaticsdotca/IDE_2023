@@ -8,8 +8,10 @@ plot_subtree <- function(
     legend.x = 0.2,
     legend.y = 0.77,
     legend.size = 3,
+    legend.ncat.per.col = 8,
+    hide.legend = F,
     plot.xlim = 20,
-    label_vars = c("country", "iso_date", "iso_source"),
+    label_vars = c("geo_loc", "iso_date", "iso_source"),
     label.offset = 5,
     label.size = 4,
     annot.offset = 0.5,
@@ -87,7 +89,9 @@ plot_subtree <- function(
           legend.text = element_text(size = legend.size+6)) +
     labs(color = "") +
     guides(color = guide_legend(override.aes = list(size = legend.size),
-                                nrow = if_else(n_colors >= 8, 8, n_colors))) +
+                                nrow = if_else(n_colors >= legend.ncat.per.col,
+                                               legend.ncat.per.col,
+                                               n_colors))) +
     geom_treescale(y = 0, x = 0.2) +
     ggtree::xlim(NA, plot.xlim) +
     new_scale_fill() +
@@ -116,7 +120,13 @@ plot_subtree <- function(
     scale_color_manual(
       values = distinctColorPalette(n_colors))
   
-  p
+  # whether to hide color legend
+  if ( hide.legend ) {
+    p <- p + guides(color = 'none')
+  }
+  
+  # return plot
+  return(p)
 }
 
 
@@ -126,14 +136,16 @@ cluster_subtree <- function(
   clusters = NULL,
   distance_threshold = NULL,
   cluster_name = NULL,
-  color_by = "outbreak_id",
+  color_by = "country",
   color.tiplab = F,
   tip.size = 3,
   legend.x = 0.2,
   legend.y = 0.77,
   legend.size = 3,
+  legend.ncat.per.col = 8,
+  hide.legend = F,
   plot.xlim = 5,
-  label_vars = c("geo_loc_v2", "iso_dat_v2", "iso_source"),
+  label_vars = c("geo_loc", "iso_date", "iso_source"),
   label.offset = 5,
   label.size = 3,
   annot.offset = 0.5,
@@ -142,14 +154,22 @@ cluster_subtree <- function(
   annot.nthreshold = 6
 ) {
   # parameter checks
-  if ( is.null(cluster_name) ) { 
-    stop("Please specify a value for `cluster_name`")
+    if ( is.null(cluster_name) | !is.character(cluster_name) ) { 
+    stop("Please specify a valid value for `cluster_name`")
   }
   if ( is.null(distance_threshold) ) { 
     stop("Please specify a value for `distance_threshold`")
   }
+  if ( ! distance_threshold %in% c(0, seq(5, 100, 5), seq(200, 1000, 100)) ) {
+    stop("`distance_threshold` is not within the valid range of values")
+  }
   
   target_variable <- paste0("clust_", distance_threshold)
+
+  if ( ! cluster_name %in% pull(clusters, !!sym(target_variable)) ) {
+    stop("The specified `cluster name` does not exist!")
+  }
+
   target_tips <- clusters %>% 
     filter(!!sym(target_variable) == cluster_name) %>% 
     pull(ID)
@@ -166,6 +186,8 @@ cluster_subtree <- function(
     legend.x = legend.x,
     legend.y = legend.y,
     legend.size = legend.size,
+    legend.ncat.per.col = legend.ncat.per.col,
+    hide.legend = hide.legend,
     plot.xlim = plot.xlim,
     label_vars = label_vars,
     label.offset = label.offset,
@@ -183,14 +205,16 @@ serovar_subtree <- function(
     tree = cg_tree,
     serovar_name = NULL,
     distance_threshold = NULL,
-    color_by = "outbreak_id",
+    color_by = "country",
     color.tiplab = F,
     tip.size = 3,
     legend.x = 0.2,
     legend.y = 0.77,
     legend.size = 3,
+    legend.ncat.per.col = 8,
+    hide.legend = F,
     plot.xlim = 5,
-    label_vars = c("geo_loc_v2", "iso_dat_v2", "iso_source"),
+    label_vars = c("geo_loc", "iso_date", "iso_source"),
     label.offset = 5,
     label.size = 3,
     annot.offset = 0.5,
@@ -204,6 +228,11 @@ serovar_subtree <- function(
     message("Please specify a value for `distance_threshold`")
     stop()
   }
+
+  if ( ! distance_threshold %in% c(0, seq(5, 100, 5), seq(200, 1000, 100)) ) {
+    stop("`distance_threshold` is not within the valid range of values")
+  }
+
   # set random seed
   set.seed(1)
   
@@ -212,6 +241,10 @@ serovar_subtree <- function(
     # plot the entire tree
     subtree <- tree  
   } else {
+    # parameter check
+    if ( ! serovar_name %in% metadata$serovar ) {
+      stop("Invalid value passed to `serovar_name`")
+    }
     # identify tree tips of target serovar
     # and determine MRCA of the tree tips
     target_tips <- metadata %>% filter(serovar == serovar_name) %>% pull(ID)
@@ -263,9 +296,11 @@ serovar_subtree <- function(
     length()
   
   tip_labs <- metadata %>% 
+    mutate(ID_2 = ID) %>% # create duplicate column of ID
     pivot_longer(cols = 2:ncol(.),
                  names_to = "var",
                  values_to = "val") %>% 
+    mutate(var = if_else(var == "ID_2", "ID", var)) %>% 
     filter(var %in% label_vars) %>% 
     group_by(ID) %>% 
     group_split() %>% 
@@ -315,7 +350,9 @@ serovar_subtree <- function(
           title = element_text(size = 20)) +
     labs(color = "") +
     guides(color = guide_legend(override.aes = list(size = legend.size),
-                                nrow = if_else(n_colors >= 10, 10, n_colors))) +
+                                nrow = if_else(n_colors >= legend.ncat.per.col,
+                                               legend.ncat.per.col,
+                                               n_colors))) +
     geom_treescale(y = 0, x = 0.2) +
     xlim(NA, plot.xlim) +
     guides(fill = "none") +
@@ -337,10 +374,17 @@ serovar_subtree <- function(
     ) +
     scale_color_manual(values = distinctColorPalette(n_colors))
   
+  # whether to hide title
   if ( show.title ) {
-    p + ggtitle(paste0("T = ", distance_threshold))
-  } else {
-    p
+    p <- p + ggtitle(paste0("T = ", distance_threshold))
   }
+  
+  # whether to hide color legend
+  if ( hide.legend ) {
+    p <- p + guides(color = 'none')
+  }
+  
+  # return plot
+  return(p)
 }
 
