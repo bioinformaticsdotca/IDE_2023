@@ -48,10 +48,14 @@ cd workspace/module4
 From within your `module4` directory, you can create a symlink which is a shortcut to where the raw sequencing data is stored:
 
 ```
+### Current working directory: ~/workspace/module4
+
 ln -s ~/CourseData/IDE_data/module4/cbw_demo_run/
 ```
 
-You can view the contents of this directory using `ls`:
+If you run `ls` you should see only one directory: `cbw_demo_run`.
+
+You can view the contents of the `cbw_demo_run` directory using `ls`:
 
 ```
 ls cbw_demo_run
@@ -74,7 +78,7 @@ git clone --recursive https://github.com/jaleezyy/covid-19-signal
 cd covid-19-signal
 ```
 
-Next, we need to switch to the version of SIGNAL that we will use for this workshop. This version tells SIGNAL that we have installed all of the software we used in a single conda environment:
+Ensure that your current working directory is within the `covid-19-signal` directory using `pwd`. Next, we need to switch to the version of SIGNAL that we will use for this workshop. This version tells SIGNAL that we have installed all of the software we used in a single conda environment:
 
 ```
 git checkout single-conda
@@ -85,12 +89,19 @@ Finally, we need to activate the conda environment containing the software SIGNA
 ```
 conda activate signalcovtools
 ln -s ~/CourseData/IDE_data/module4/data/
+
+### Current working directory: ~/workspace/module4/covid-19-signal
+
 python signalexe.py -h
 ```
+
+The `data` directory you have linked should be found within `~/workspace/module4/covid-19-signal/data`.
 
 In order to run SIGNAL, we first need to prepare two files: a configuration file, where all of our assembly parameters will be assigned, and a sample table, which will list the indivdual samples and the location of corresponding R1 and R2 FASTQs. Remember that our sequencing data is located one directory level up (i.e., `../cbw_demo_run/`). Generating the required files can all be done using the following command:
 
 ```
+### Current working directory: ~/workspace/module4/covid-19-signal
+
 python signalexe.py --directory ../cbw_demo_run --config-only
 ```
 
@@ -101,6 +112,8 @@ If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_samp
 Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
 
 ```
+### Current working directory: ~/workspace/module4/covid-19-signal
+
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
 ```
 
@@ -111,6 +124,8 @@ This will take around 30-45 minutes to run, so is a good time for a short break.
 Now that SIGNAL is complete, we will run an additional step to generate some quality control results:
 
 ```
+### Current working directory: ~/workspace/module4/covid-19-signal
+
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 ncov_tools
 ```
 
@@ -129,7 +144,7 @@ Explore the results and try to understand what the coverage patterns mean:
 As explained in the lecture, sequencing coverage is a critical factor for determining the `completeness` of the genome assembly. In the terminal, let's view the consensus sequence for sample `ERR5508530`:
 
 ```
-cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta
+less cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta
 ```
 
 What do you see? The consensus sequences for other samples are in directories with similiar names, take a look at them. Can you draw any conclusions about the quality of the results?
