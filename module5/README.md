@@ -25,16 +25,16 @@ Before connecting to your RStudio instance, please perform the following steps:
 ssh -i CBW.pem xx.uhn-hpc.ca
 ```
 
-2. Copy the lab materials from `CourseData` to your home directory
+2. Copy the lab materials from `CourseData` to `workspace/`
 
 ```bash
-cp -r  ~/CourseData/IDE_data/module5/ .
+cp -r  ~/CourseData/IDE_data/module5/ ~/workspace/
 ```
 
-3. You should now find a directory called `module5` in your home directory. Use `ls` to list the file content in `module5` to verify that you have successfully copied all of the required files.
+3. You should now find a directory called `module5` under `~/workspace/`. Use `ls` to list the file content in `~/workspace/module5` to verify that you have successfully copied all of the required files.
 
 ```bash
-ls ./module5
+ls ~/workspace/module5
 ```
 
 Expected output:
