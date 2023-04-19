@@ -144,7 +144,7 @@ Explore the results and try to understand what the coverage patterns mean:
 As explained in the lecture, sequencing coverage is a critical factor for determining the `completeness` of the genome assembly. In the terminal, let's view the consensus sequence for sample `ERR5508530`:
 
 ```
-cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta
+less cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta
 ```
 
 What do you see? The consensus sequences for other samples are in directories with similiar names, take a look at them. Can you draw any conclusions about the quality of the results?
