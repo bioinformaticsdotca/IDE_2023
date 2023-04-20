@@ -106,6 +106,7 @@ RGI is a command line tool as well, so we’ll do a demo analysis of 112 clinica
 Login into your course account’s working directory and make a module6 directory:
 
 ```bash
+cd ~/workspace
 mkdir module6
 cd module6
 ```
