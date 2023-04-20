@@ -12,13 +12,19 @@ modified: March 21, 2023
 ---
 
 ## Table of contents
+0. [Download Files](#download)
 1. [Introduction](#intro)
-1. [CARD Website and Antibiotic Resistance Ontology](#cardweb)
+2. [CARD Website and Antibiotic Resistance Ontology](#cardweb)
 3. [RGI for Genome Analysis](#rgigenome)
 4. [RGI at the Command Line](#rgicommand)
 5. [RGI for Merged Metagenomics Reads](#rgimerged)
 6. [Metagenomic Sequencing Reads and the KMA Algorithm](#bwt)
 7. [Pathogen of Origin Prediction](#pathogen)
+
+<a name="download"></a>
+## Download Files
+
+If you are doing this demo live, you can download all the files we will be viewing here: https://github.com/bioinformaticsdotca/IDE_2023/tree/main/module6/downloads_for_demo
 
 <a name="intro"></a>
 ## Introduction
