@@ -104,17 +104,24 @@ In order to run SIGNAL, we first need to prepare two files: a configuration file
 
 python signalexe.py --directory ../cbw_demo_run --config-only
 ```
+The output should be as follows
+
+<img src="./images/create_config.png" width="1080" height="820">
 
 If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_sample_table.csv` files have been created. You can use `more` or `less` to examine the input files.
 
 ## Reference-based assembly using SIGNAL
 
-Using our configuatrion file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
+Using our configuration file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
 
 ```
+<<<<<<< HEAD
+python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 all postprocess
+=======
 ### Current working directory: ~/workspace/module4/covid-19-signal
 
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
+>>>>>>> main
 ```
 
 This will take around 30-45 minutes to run, so is a good time for a short break.
@@ -124,9 +131,14 @@ This will take around 30-45 minutes to run, so is a good time for a short break.
 Now that SIGNAL is complete, we will run an additional step to generate some quality control results:
 
 ```
+<<<<<<< HEAD
+# APPROXIMATE RUNTIME: 3 minutes
+python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 ncov_tools
+=======
 ### Current working directory: ~/workspace/module4/covid-19-signal
 
 python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 ncov_tools
+>>>>>>> main
 ```
 
 ## Coverage analysis
@@ -135,7 +147,9 @@ We can now start exploring the results. First we will look at the depth of cover
 
 Open your web browser and navigate to `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/` where **xx** is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the `ncov-tools-results/plots/` subdirectory you will find a file called `cbw_demo_run_results_dir_depth_by_position.pdf`. Open this file. 
 
-This file contains plots of the coverage depth for each of the 36 samples we analyzed. 
+This file contains plots of the coverage depth for each of the 36 samples we analyzed as shown below. 
+
+<img src="./images/coverage_by_position.png" width="1080" height="820">
 
 Explore the results and try to understand what the coverage patterns mean: 
 - What might have caused the sharp drop in coverage for sample `ERR6035561`? 
@@ -144,6 +158,10 @@ Explore the results and try to understand what the coverage patterns mean:
 As explained in the lecture, sequencing coverage is a critical factor for determining the `completeness` of the genome assembly. In the terminal, let's view the consensus sequence for sample `ERR5508530`:
 
 ```
+<<<<<<< HEAD
+cd ~/workspace/module4/covid-19-signal
+=======
+>>>>>>> main
 less cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta
 ```
 
@@ -159,9 +177,18 @@ This command uses `cut` to find the metrics that we are interested in from the f
 
 ## Assessing SNP calls
 
-Now, using your browser open the file located at `ncov-tools-results/plots/cbw_demo_run_results_dir_tree_snps.pdf`. This plot arranges the samples using a phylogenetic tree (shown on the left) so that samples with a similar sequence are grouped together. The panel on the right shows SNPs within each sample with respect to the MN908947.3 reference genome, where each colour represents a different base. Also shown on the plot are the pangolin-assigned lineages; B.1.1.7 is the alpha variant, AY.4 is delta. Notice that there are many SNPs in common between the alpha samples and a different set of SNPs in common between the delta samples. These SNPs are what define the different lineages.
+Now, using your browser open the file located at `ncov-tools-results/plots/cbw_demo_run_results_dir_tree_snps.pdf`.
 
-Now, we're going to inspect the read-level evidence for some example SNPs. Open up IGV and using the first dropdown menu select the "SARS-CoV-2" genome. Now, click on the File menu and select "Load from URL" and paste in the path `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/ERR5389257/core/ERR5389257_viral_reference.mapping.bam` again replacing `xx` with your instance ID. Once the file loads you will see the pattern of read coverage along the genome. Paste the coordinates `NC_045512.2:2,917-3,156` into the navigation bar. This region shows a single C>T SNP where every read supports the alternative allele (the red bars in the middle of the screen). Now, navigate to `NC_045512.2:631-870`. In this case some reads have evidence for a C>T SNP but other reads have evidence for the reference allele at this position. Since this position is ambiguous the consensus genome will be marked with an ambiguity code. Going back to the mutations plot, look for the row corresponding to sample `ERR5389257`. Notice that it has a black bar in between two purple SNPs at the beginning of the genome - that is the ambiguous position that we are inspecting at IGV. Since this position is only ambiguous in `ERR5389257` we can't draw many conclusions from it - it could be due to low-level contamination, a PCR artificat, or heterogeneity within this sample.
+<img src="./images/tree_snps.png" width="1080" height="620">
+
+
+ This plot arranges the samples using a phylogenetic tree (shown on the left) so that samples with a similar sequence are grouped together. The panel on the right shows SNPs within each sample with respect to the MN908947.3 reference genome, where each colour represents a different base. Also shown on the plot are the pangolin-assigned lineages; B.1.1.7 is the alpha variant, AY.4 is delta. Notice that there are many SNPs in common between the alpha samples and a different set of SNPs in common between the delta samples. These SNPs are what define the different lineages.
+
+Now, we're going to inspect the read-level evidence for some example SNPs. Open up IGV and using the first dropdown menu select the "SARS-CoV-2" genome. Now, click on the File menu and select "Load from URL" and paste in the path `http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/ERR5389257/core/ERR5389257_viral_reference.mapping.bam` again replacing `xx` with your instance ID. Once the file loads you will see the pattern of read coverage along the genome. 
+
+<img src="./images/igv_sarscov2.png" width="1080" height="620">
+
+Paste the coordinates `NC_045512.2:2,917-3,156` into the navigation bar. This region shows a single C>T SNP where every read supports the alternative allele (the red bars in the middle of the screen). Now, navigate to `NC_045512.2:631-870`. In this case some reads have evidence for a C>T SNP but other reads have evidence for the reference allele at this position. Since this position is ambiguous the consensus genome will be marked with an ambiguity code. Going back to the mutations plot, look for the row corresponding to sample `ERR5389257`. Notice that it has a black bar in between two purple SNPs at the beginning of the genome - that is the ambiguous position that we are inspecting at IGV. Since this position is only ambiguous in `ERR5389257` we can't draw many conclusions from it - it could be due to low-level contamination, a PCR artificat, or heterogeneity within this sample.
 
 You can view all of the variants for a sample by using `less` on their VCF files:
 
