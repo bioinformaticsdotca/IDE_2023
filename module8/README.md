@@ -600,4 +600,4 @@ As a final note, NCBI also performs taxonomic analysis using their own software 
 [quast-contigs.png]: images/quast-contigs.png
 [Quast]: http://quast.sourceforge.net/quast
 [blast-report.png]: images/blast-report.png
-[Introduction Slides]: https://drive.google.com/file/d/1PdQbTW2Ax3KV0JisAxYaWsEajSCMfIO8/view?usp=sharing
+[Introduction Slides]: https://drive.google.com/file/d/1BJOeBuOLmJIxjvzMLPJ0vcXdnoQzzdk9/view
