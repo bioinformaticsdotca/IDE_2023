@@ -1,3 +1,16 @@
+---
+layout: tutorial_page
+permalink: /IDE_2023_Module5_lab_answer
+title: CBW Infectious Disease Epidemiology 2023
+header1: Workshop Pages for Students
+header2: CBW Infectious Disease Epidemiology 2023 Module 5 Lab Answer Key
+image: /site_images/CBW_epidemiology_icon.png
+home: https://bioinformaticsdotca.github.io/
+description: CBW IDE 2023 Module 5 - Bacterial Pathogen Genomic Analysis Answer Key
+author: Ed Taboada and Jimmy Liu
+modified: March 21, 2023
+---
+
 # Answer Key for Module 5 Lab
 
 1.  Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed \>1% unassigned alleles (i.e. with more than 26 unassigned alleles).
