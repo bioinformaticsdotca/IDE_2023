@@ -14,7 +14,19 @@ length: 4 days
 Install Miniconda by following the instructoion at [Miniconda official site](https://docs.conda.io/en/main/miniconda.html)
 
 ## signalcovtools
-download the [signalncovtools_yaml.yaml](https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module4/signalncovtools_yaml.yaml)
+download [signalncovtools_yaml.yaml](https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module4/signalncovtools_yaml.yaml)
 ```
 conda env create -f ./signalncovtools_yaml.yaml -n signalcovtools
+```
+
+## rgi
+```
+conda create --name rgi --channel conda-forge --channel bioconda --channel defaults rgi
+pip install hAMRonization
+```
+
+## module8-emerging-pathogen
+download [environment.yml](https://raw.githubusercontent.com/bioinformaticsdotca/IDE_2023/main/module8/environment.yml)
+```
+conda env create -f module8-emerging-pathogen.yaml -n module8-emerging-pathogen
 ```
