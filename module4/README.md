@@ -115,13 +115,8 @@ If you run `ls` you should see `cbw_demo_run_config.yaml` and `cbw_demo_run_samp
 Using our configuration file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:
 
 ```
-<<<<<<< HEAD
 python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 all postprocess
-=======
-### Current working directory: ~/workspace/module4/covid-19-signal
 
-python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 all postprocess
->>>>>>> main
 ```
 
 This will take around 30-45 minutes to run, so is a good time for a short break.
@@ -131,14 +126,8 @@ This will take around 30-45 minutes to run, so is a good time for a short break.
 Now that SIGNAL is complete, we will run an additional step to generate some quality control results:
 
 ```
-<<<<<<< HEAD
-# APPROXIMATE RUNTIME: 3 minutes
 python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 ncov_tools
-=======
-### Current working directory: ~/workspace/module4/covid-19-signal
 
-python signalexe.py --configfile cbw_demo_run_config.yaml --cores 4 ncov_tools
->>>>>>> main
 ```
 
 ## Coverage analysis
