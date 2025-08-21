@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Module 8: Emerging Pathogen Detection and Identification | Infectious Disease Genomic Epidemiology 2023</title>
+  <meta name="description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Module 8: Emerging Pathogen Detection and Identification | Infectious Disease Genomic Epidemiology 2023" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+  <meta property="og:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="github-repo" content="bioinformaticsdotca/IDE_2023" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Module 8: Emerging Pathogen Detection and Identification | Infectious Disease Genomic Epidemiology 2023" />
+  
+  <meta name="twitter:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="twitter:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+
+<meta name="author" content="Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="module-7-phylodynamics-and-transmission-dynamics.html"/>
+<link rel="next" href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://bioinformaticsdotca.github.io/">
+ <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+ </a>
+<li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+<a href="./">
+ <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+ </a>
+<br>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Workshop Info</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#class-photo"><i class="fa fa-check"></i>Class Photo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-work"><i class="fa fa-check"></i>Pre-work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="meet-your-faculty.html"><a href="meet-your-faculty.html"><i class="fa fa-check"></i>Meet Your Faculty</a></li>
+<li class="chapter" data-level="" data-path="data-and-compute-setup.html"><a href="data-and-compute-setup.html"><i class="fa fa-check"></i>Data and Compute Setup</a></li>
+<li class="part"><span><b>II Modules</b></span></li>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html"><i class="fa fa-check"></i>Module 1: Introduction to Genomic Epidemiology</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html#lecture"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html"><i class="fa fa-check"></i>Module 2: Phylogenetic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#lecture-1"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#aws-setup"><i class="fa fa-check"></i>AWS Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html"><i class="fa fa-check"></i>Module 3: Data Curation and Data Sharing</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lecture-2"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lab"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><i class="fa fa-check"></i>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-3"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis"><i class="fa fa-check"></i>Virus Short-Read Genome Assembly and Variant Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html"><i class="fa fa-check"></i>Module 5: Bacterial Pathogen Genomic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-4"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#setup"><i class="fa fa-check"></i>Setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#background"><i class="fa fa-check"></i>Background</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset"><i class="fa fa-check"></i>Analysis Dataset</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc"><i class="fa fa-check"></i>cgMLST QC</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality"><i class="fa fa-check"></i>Locus Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes"><i class="fa fa-check"></i>Defining Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality"><i class="fa fa-check"></i>Genome Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance"><i class="fa fa-check"></i>Hamming Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction"><i class="fa fa-check"></i>Dendrogram Construction</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis"><i class="fa fa-check"></i>A Simple Tree Vis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance"><i class="fa fa-check"></i>Clustering by Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis"><i class="fa fa-check"></i>Cluster Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes"><i class="fa fa-check"></i>Investigating Local Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise"><i class="fa fa-check"></i>Group Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html"><i class="fa fa-check"></i>Module 6: Antimicrobial Resistant Gene (AMR) Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lecture-5"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lab-3"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#card-website-and-antibiotic-resistance-ontology"><i class="fa fa-check"></i>CARD Website and Antibiotic Resistance Ontology</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-genome-analysis"><i class="fa fa-check"></i>RGI for Genome Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-at-the-command-line"><i class="fa fa-check"></i>RGI at the Command Line</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-merged-metagenomic-reads"><i class="fa fa-check"></i>RGI for Merged Metagenomic Reads</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#metagenomic-sequencing-reads-and-the-kma-algorithm"><i class="fa fa-check"></i>Metagenomic Sequencing Reads and the KMA Algorithm</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#pathogen-of-origin-prediction"><i class="fa fa-check"></i>Pathogen of Origin Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html"><i class="fa fa-check"></i>Module 7: Phylodynamics and Transmission Dynamics</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lecture-6"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lab-4"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#introduction-2"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#list-of-software-for-tutorial"><i class="fa fa-check"></i>2. List of Software for Tutorial</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#exercise-setup"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#phylodynamics-analysis"><i class="fa fa-check"></i>4. Phylodynamics Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata"><i class="fa fa-check"></i>5. Visualizing the Phylodynamic Analysis Alongside Epidemiological Metadata</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#selection-analysis"><i class="fa fa-check"></i>6. Selection Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html"><i class="fa fa-check"></i>Module 8: Emerging Pathogen Detection and Identification</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#lecture-7"><i class="fa fa-check"></i>Lecture</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#introduction-3"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#list-fo-software-for-tutorial-and-its-respective-documentation"><i class="fa fa-check"></i>2. List fo Software for Tutorial and its Respective Documentation</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise-setup-1"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise"><i class="fa fa-check"></i>4. Exercise</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#final-words"><i class="fa fa-check"></i>5. Final words</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><i class="fa fa-check"></i>Keynote Lecture | Follow That Virus!: Genomics Leading the Way</a>
+<ul>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html#lecture-8"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><i class="fa fa-check"></i>Module 9: Mobile Genetic Elements and Environmental Microbiome</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lecture-9"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lab-5"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="divider"></li>
+<h1 id="sponsors">Sponsors</h1>
+<center>
+<a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+<a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+<br><br>
+<a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+<a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+<br><br>
+<a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Infectious Disease Genomic Epidemiology 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-8-emerging-pathogen-detection-and-identification" class="section level1 hasAnchor">
+<h1>Module 8: Emerging Pathogen Detection and Identification<a href="module-8-emerging-pathogen-detection-and-identification.html#module-8-emerging-pathogen-detection-and-identification" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-7" class="section level2 hasAnchor">
+<h2>Lecture<a href="module-8-emerging-pathogen-detection-and-identification.html#lecture-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/G77HdsVV87Q?si=JxT7Fku7lJv1ac5b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p><br></p>
+<iframe src="https://drive.google.com/file/d/1sEa-cK8K2fax5XLDAZas9HWZrrcpmnvq/preview" width="640" height="480" allow="autoplay">
+</iframe>
+<div id="introduction-3" class="section level3 hasAnchor">
+<h3>1. Introduction<a href="module-8-emerging-pathogen-detection-and-identification.html#introduction-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<iframe src="https://drive.google.com/file/d/1BJOeBuOLmJIxjvzMLPJ0vcXdnoQzzdk9/preview" width="640" height="480" allow="autoplay">
+</iframe>
+<p>This tutorial aims to introduce a variety of software and concepts related to detecting emerging pathogens from a complex host sample. The provided data and methods are derived from real-world data, but have been modified to either illustrate a specific learning objective or to reduce the complexity of the problem. Contamination and a lack of large and accurate databases render detection of microbial pathogens difficult. As a disclaimer, all results produced from the tools described in this tutorial and others must also be verified with supplementary bioinformatics or wet-laboratory techniques.</p>
+</div>
+<div id="list-fo-software-for-tutorial-and-its-respective-documentation" class="section level3 hasAnchor">
+<h3>2. List fo Software for Tutorial and its Respective Documentation<a href="module-8-emerging-pathogen-detection-and-identification.html#list-fo-software-for-tutorial-and-its-respective-documentation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><a href="https://github.com/OpenGene/fastp">fastp</a></li>
+<li><a href="https://multiqc.info/">multiqc</a></li>
+<li><a href="https://kat.readthedocs.io/en/latest/">KAT</a></li>
+<li><a href="https://ccb.jhu.edu/software/kraken2/">Kraken2</a></li>
+<li><a href="https://fbreitwieser.shinyapps.io/pavian/">Pavian</a></li>
+<li><a href="https://github.com/voutcn/megahit">MEGAHIT</a></li>
+<li><a href="http://quast.sourceforge.net/quast">Quast</a></li>
+<li><a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">NCBI blast</a></li>
+</ul>
+<p>The workshop machines already have this software installed within a conda environment, but to perform this analysis later on, you can make use of the conda environment located at <a href="https://bioinformaticsdotca.github.io/IDE_2024/module10/environment.yml">environment.yml</a> to install the necessary software.</p>
+</div>
+<div id="exercise-setup-1" class="section level3 hasAnchor">
+<h3>3. Exercise Setup<a href="module-8-emerging-pathogen-detection-and-identification.html#exercise-setup-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="copy-data-files-1" class="section level4 hasAnchor">
+<h4>3.1. Copy Data Files<a href="module-8-emerging-pathogen-detection-and-identification.html#copy-data-files-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>To begin, we will copy over the exercises to <code>~/workspace</code>. This let’s use view the resulting output files in a web browser.</p>
+<p><strong>Commands</strong></p>
+<pre><code>cp -r ~/CourseData/IDE_data/module10/module10_workspace/ ~/workspace/
+cd ~/workspace/module10_workspace/analysis</code></pre>
+<p>When you are finished with these steps you should be inside the directory <code>/home/ubuntu/workspace/module10_workspace/analysis</code>. You can verify this by running the command <code>pwd</code>.</p>
+<p><strong>Output after running</strong> <code>pwd</code></p>
+<pre><code>/home/ubuntu/workspace/module10_workspace/analysis</code></pre>
+<p>You should also have a directory like <code>data</code>/ one directory up from here. To check this, you can run <code>ls ../</code>:</p>
+<p><strong>Output after running</strong> <code>ls ../</code></p>
+<pre><code>analysis  data  precomputed-analysis</code></pre>
+</div>
+<div id="activate-environment-1" class="section level4 hasAnchor">
+<h4>3.2. Activate Environment<a href="module-8-emerging-pathogen-detection-and-identification.html#activate-environment-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Next we will activate the <a href="https://docs.conda.io/en/latest/">conda</a> environment, which will have all the tools needed by this tutorial pre-installed. To do this please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code>conda activate module10-emerging-pathogen</code></pre>
+<p>You should see the command-prompt (where you type commands) switch to include <code>(module10-emerging-pathogen)</code> at the beginning, showing you are inside this environment. You should also be able to run one of the commands like <code>kraken2 --version</code> and see output:</p>
+<p><strong>Output after running</strong> <code>kraken2 --version</code></p>
+<pre><code>Kraken version 2.1.3
+Copyright 2013-2023, Derrick Wood (dwood@cs.jhu.edu)</code></pre>
+</div>
+<div id="verify-your-workshop-machine-url" class="section level4 hasAnchor">
+<h4>3.3. Verify your Workshop Machine URL<a href="module-8-emerging-pathogen-detection-and-identification.html#verify-your-workshop-machine-url" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>This exercise will produce output files intended to be viewed in a web browser. These should be accessible by going to <a href="http://xx.uhn-hpc.ca" class="uri">http://xx.uhn-hpc.ca</a> in your web browser where <strong>xx</strong> is your particular number (like 01, 02, etc). If you are able to view a list of files and directories, try clicking the link for <strong>module10_workspace</strong>. This page will be referred to later to view some of our output files. In addition, the link <strong>precompuated-analysis</strong> will contain all the files we will generate during this lab.</p>
+</div>
+</div>
+<div id="exercise" class="section level3 hasAnchor">
+<h3>4. Exercise<a href="module-8-emerging-pathogen-detection-and-identification.html#exercise" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="patient-background" class="section level4 hasAnchor">
+<h4>4.1. Patient Background:<a href="module-8-emerging-pathogen-detection-and-identification.html#patient-background" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A 41-year-old man was admitted to a hospital 6 days after the onset of disease. He reported fever, chest tightness, unproductive cough, pain and weakness. Preliminary investigations excluded the presence of influenza virus, <em>Chlamydia pneumoniae, Mycoplasma pneumoniae</em>, and other common respiratory pathogens. After 3 days of treatment the patient was admitted to the intensive care unit, and 6 days following admission the patient was transferred to another hospital.</p>
+<p>To further investigate the cause of illness, a sample of bronchoalveolar lavage fluid (BALF) was collected from the patient and metatranscriptomic sequencing was performed (that is, the RNA from the sample was sequenced). In this lab, you will examine the metatranscriptomic data using a number of bioinformatics methods and tools to attempt to identify the cause of the illness.</p>
+<div class="callout-blue">
+<span class="callout-icon"><i class="fas fa-circle-info" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Note</p>
+</div>
+<p>The patient information and data was derived from a real study (shown at the end of the lab).</p>
+</div>
+</div>
+</div>
+<div id="overview" class="section level4 hasAnchor">
+<h4>4.2. Overview<a href="module-8-emerging-pathogen-detection-and-identification.html#overview" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We will proceed through the following steps to attempt to diagnose the situation.</p>
+<ul>
+<li>Trim and clean sequence reads using <code>fastp</code></li>
+<li>Filter host (human) reads with <code>kat</code></li>
+<li>Run Kraken2 with a bacterial and viral database to look at the taxonomic makeup of the reads.</li>
+<li>Assemble the metatranscriptome with <code>megahit</code></li>
+<li>Examine assembly quality using <code>quast</code> and possible pathogens with <code>blast</code></li>
+</ul>
+</div>
+<div id="assembly-free-approach" class="section level4 hasAnchor">
+<h4>Assembly-free Approach<a href="module-8-emerging-pathogen-detection-and-identification.html#assembly-free-approach" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The first set of steps follows through an assembly-free approach where we will perform taxonomic classification of the reads without constructing a metagenomics assembly.</p>
+<div id="step-1-examine-the-reads" class="section level5 hasAnchor">
+<h5>Step 1: Examine the Reads<a href="module-8-emerging-pathogen-detection-and-identification.html#step-1-examine-the-reads" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Let’s first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic sequencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the cDNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.</p>
+<p>The reads were generated from paired-end sequencing, which means that a particular fragment (of cDNA) was sequenced twice–once from either end (see the Illumina Paired vs. Single-End Reads for some additional details). These pairs of cDNA sequence reads are stored as separate files (named <code>emerging-pathogen-reads_1.fastq.gz</code> and <code>emerging-pathogen-reads_2.fastq.gz</code>). You can see each file by running <code>ls</code>:</p>
+<p><strong>Commands</strong></p>
+<pre><code>ls ../data</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>emerging-pathogen-reads_1.fastq.gz  emerging-pathogen-reads_2.fastq.gz</code></pre>
+<p>We can look at the contents of one of the files by running <code>less</code> (you can look at the other pair of reads too, but it will look very similar):</p>
+<p><strong>Commands</strong></p>
+<pre><code>less ../data/emerging-pathogen-reads_1.fastq.gz</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>@SRR10971381.5 5 length=151
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@SRR10971381.7 7 length=151
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@SRR10971381.33 33 length=115
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@SRR10971381.56 56 length=151
+CCCGTGTTCGATTGGCATTTCACCCCTATCCACAACTCATCCCAAAGCTTTTCAACGCTCACGAGTTCGGTCCTCCACACAATTTTACCTGTGCTTCAACCTGGCCATGGATAGATCACTACGGTTTCGGGTCTACTATTACTAACTGAAC
++
+FFFFFFFAFFFFFFAFFFFFF6FFFFFFFFF/FFFFFFFFFFFF/FFFFFFFFFFFFFFFFFAFFFFFFFFFFFAFFFFF/FFAF/FAFFFFFFFFFAFFFF/FFFFFFFFFFF/F=FF/FFFFA6FAFFFFF//FFAFFFFFFAFFFFFF</code></pre>
+<p>These reads are in the <a href="https://en.wikipedia.org/wiki/FASTQ_format">FASTQ</a>, which stores a single read as a block of 4 lines: <strong>identifier, sequence, + (separator), quality scores</strong>. In this file, we can see a lot of lines with <code>NNN...</code> for the sequence letters, which means that these portions of the read are not determined. We will remove some of these undetermined (and uninformative) reads in the next step.</p>
+</div>
+<div id="step-2-clean-and-examine-quality-of-the-reads" class="section level5 hasAnchor">
+<h5>Step 2: Clean and Examine Quality of the Reads<a href="module-8-emerging-pathogen-detection-and-identification.html#step-2-clean-and-examine-quality-of-the-reads" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>As we saw from looking at the data, reads that come directly off of a sequencer may be of variable quality which might impact the downstream analysis. We will use the software fastp to both clean and trim reads (removing poor-quality reads or sequencing adapters) as well as examine the quality of the reads. To do this please run the following (the expected time of this command is shown as <code># Time: 30 seconds</code>).</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 30 seconds
+fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz --in2 ../data/emerging-pathogen-reads_2.fastq.gz --out1 cleaned_1.fastq --out2 cleaned_2.fastq</code></pre>
+<p>You should see the following as output:</p>
+<p><strong>Output</strong></p>
+<pre><code>Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+[...]
+Insert size peak (evaluated by paired-end reads): 150
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz --in2 ../data/emerging-pathogen-reads_2.fastq.gz --out1 cleaned_1.fastq --out2 cleaned_2.fastq
+fastp v0.23.4, time used: 22 seconds</code></pre>
+</div>
+<div id="examine-output" class="section level5 hasAnchor">
+<h5>Examine Output<a href="module-8-emerging-pathogen-detection-and-identification.html#examine-output" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>You should now be able to nagivate to &lt; <a href="http://xx.uhn-hpc.ca/module10_workspace/analysis" class="uri">http://xx.uhn-hpc.ca/module10_workspace/analysis</a>&gt; and see some of the output files. In particular, you should be able to find <strong>fastp.html</strong>, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:</p>
+<p><img src="./img/fastp.png" /></p>
+<p>This should show an overview of the quality of the reads before and after filtering with <code>fastp.</code> Using this report, please answer the following questions.</p>
+</div>
+<div id="step-2-questions" class="section level5 hasAnchor">
+<h5>Step 2: Questions<a href="module-8-emerging-pathogen-detection-and-identification.html#step-2-questions" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<ol style="list-style-type: decimal">
+<li>Looking at the <strong>Filtering result</strong> section, how many reads **passed filter*s<strong>? How many were removed due to </strong>low quality<strong>? How many were removed due to </strong>too many N**?</li>
+<li>Looking at the <strong>Adapters</strong> section, were there many adapters that needed to be trimmed in this data?</li>
+<li>Compare the <strong>quality</strong> and <strong>base contents</strong> plots <strong>Before filtering</strong> and <strong>After filtering</strong>? How do they differ?</li>
+</ol>
+</div>
+<div id="step-3-host-read-filtering" class="section level5 hasAnchor">
+<h5>Step 3: Host Read Filtering<a href="module-8-emerging-pathogen-detection-and-identification.html#step-3-host-read-filtering" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>The next step is to remove any host reads (in this case Human reads) from our dataset as we are not focused on examining host reads. There are several different tools that can be used to filter out host reads such as Bowtie2 or KAT. In this demonstration, we have selected to run KAT followed by Kraken2, but you could likely accomplish something similar by using Bowtie2 followed by Kraken2.</p>
+<p>Command documentation is available <a href="http://kat.readthedocs.io/en/latest/using.html#sequence-filtering">here</a>.</p>
+<p>KAT works by breaking down each read into small fragements of length <em>k</em>, k-mers, and compares them to a k-mer database of the human reference genome. Subsequently, the complete read is either assigned into a matched or unmatched (filtered) file if 10% of the k-mers in the read have been found in the human database.</p>
+<p><img src="./img/kat.png" /></p>
+<p>Let’s run KAT now.</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 3 minutes
+kat filter seq -t 4 -i -o filtered --seq cleaned_1.fastq --seq2 cleaned_2.fastq ~/CourseData/IDE_data/module10/db/kat_db/human_kmers.jf</code></pre>
+<p>The arguments for this command are:</p>
+<ul>
+<li><code>filter seq</code>: Specifies that we are running a specific subcommand to <strong>filter sequences</strong>.</li>
+<li><code>-t 4</code>: The number of threads to use (we have 4 CPU cores on these machines so we are using 4 threads).</li>
+<li><code>--seq --seq2</code> arguments to provide corresponding forward and reverse fastq reads (the cleaned reads from fastp)</li>
+<li><code>-i</code>: Inverts the filter, that is we wish to output sequences <strong>not found</strong> in the human kmer database to a file.</li>
+<li><code>-o filtered</code> Provide prefix for all files generated by the command. In our case, we will have two output files <strong>filtered.in.R1.fastq</strong> and <strong>filetered.in.R2.fastq</strong>.</li>
+<li><code>~/CourseData/IDE_data/module10/db/kat_db/human_kmers.jf</code> the human k-mer database</li>
+</ul>
+<p>As the command is running you should see the following output on your screen:</p>
+<p><strong>Output</strong></p>
+<pre><code>Kmer Analysis Toolkit (KAT) V2.4.2
+
+Running KAT in filter sequence mode
+-----------------------------------
+
+Loading hashes into memory... done.  Time taken: 40.7s
+
+Filtering sequences ...
+Processed 100000 pairs
+Processed 200000 pairs
+[...]
+Finished filtering.  Time taken: 130.5s
+
+Found 1127908 / 1306231 to keep
+
+KAT filter seq completed.
+Total runtime: 182.8s</code></pre>
+<p>If the command was successful, your current directory should contain two new files:</p>
+<ul>
+<li>filtered.in.R1.fastq</li>
+<li>filtered.in.R2.fastq</li>
+</ul>
+<p>These are the set of reads minus any reads that matched the human genome. The message <code>Found 1127908 / 1306231 to keep tells</code> us how many read-pairs were kept (the number in the <code>filtered.in.*.fastq</code> files) vs. the total number of read-pairs.</p>
+</div>
+<div id="step-4-classify-reads-using-kraken2-database" class="section level5 hasAnchor">
+<h5>Step 4: Classify Reads Using Kraken2 Database<a href="module-8-emerging-pathogen-detection-and-identification.html#step-4-classify-reads-using-kraken2-database" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Now that we have most, if not all, host reads filtered out, it’s time to classify the remaining reads to identify the likely taxonomic category they belong to.</p>
+<p>Database selection is one of the most crucial parts of running Kraken. One of the many factors that must be considered is the computational resources available. Our current AWS image for the course has only 16G of memory. A major disadvantage of Kraken2 is that it loads the entire database into memory. With the <a href="https://benlangmead.github.io/aws-indexes/k2">standard viral, bacterial, and archael database</a> on the order of 50 GB we would be unable to run the full database on the course machine. To help mitigate this, Kraken2 allows reduced databases to be constructed, which will still give reasonable results. We have constructed our own smaller Kraken2 database using only bacterial, human, and viral data. We will be using this database.</p>
+<p>Lets run the following command in our current directory to classify our reads against the Kraken2 database.</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 1 minute
+kraken2 --db ~/CourseData/IDE_data/module10/db/kraken2_db --threads 4 --paired --output kraken_out.txt --report kraken_report.txt --unclassified-out kraken2_unclassified#.fastq filtered.in.R1.fastq filtered.in.R2.fastq</code></pre>
+<p>This should produce output similar to below:</p>
+<p><strong>Output</strong></p>
+<pre><code>Loading database information... done.
+1127908 sequences (315.54 Mbp) processed in 7.344s (9214.6 Kseq/m, 2577.83 Mbp/m).
+  880599 sequences classified (78.07%)
+  247309 sequences unclassified (21.93%)</code></pre>
+<p>Examine <code>kraken_report.txt</code>
+Let’s examine the text-based report of Kraken2:</p>
+<p><strong>Commands</strong></p>
+<pre><code>less kraken_report.txt</code></pre>
+<p>This should produce output similar to the following:</p>
+<pre><code> 21.93  247309  247309  U       0       unclassified
+ 78.07  880599  30      R       1       root
+ 78.01  879899  124     R1      131567    cellular organisms
+ 76.37  861411  19285   D       2           Bacteria
+ 56.53  637572  2       D1      1783270       FCB group
+ 56.53  637558  1571    D2      68336           Bacteroidetes/Chlorobi group
+ 56.39  635982  1901    P       976               Bacteroidetes
+ 55.10  621496  35      C       200643              Bacteroidia
+ 55.09  621417  19584   O       171549                Bacteroidales
+ 53.18  599872  2464    F       171552                  Prevotellaceae
+ 52.96  597396  397538  G       838                       Prevotella
+  4.74  53473   53473   S       28137                       Prevotella veroralis
+[...]</code></pre>
+<p>This will show the top taxonomic ranks (right-most column) as well as the percent and number of reads that fall into these categories (left-most columns). For example:</p>
+<ul>
+<li>The very first row <code>21.93 247309 247309 U 0 unclassified</code> shows us that <strong>247309 (21.93%)</strong> of the reads processed by Kraken2 are unclassified (remember we only used a database containing bacterial, viral, and human representatives).</li>
+<li>The 4th line <code>76.37 861411 19285 D 2 Bacteria</code> tells us that <strong>861411 (76.37%)</strong> of our reads fall into the <strong>Bacteria</strong> domain (the <code>D</code> in the fourth column is the taxonomic rank, <code>D</code><strong>omain</strong>). The number <code>19285</code> tells us that <code>19285</code> of the reads are assigned directly to the <strong>Bacteria</strong> domain but cannot be assigned to any lower taxonomic rank (they match with too many diverse types of bacteria).</li>
+</ul>
+<p>More details about how to read this report can be found at <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#sample-report-output-format" class="uri">https://github.com/DerrickWood/kraken2/wiki/Manual#sample-report-output-format</a>. In the next step we will represent this data visually as a multi-layered pie chart.</p>
+<p>Examine <code>kraken_out.txt</code>
+Let’s also take a look at <code>kraken_out.txt.</code> This file contains the kraken2 results, but divided up into a classification for every read.</p>
+<p><strong>Commands</strong></p>
+<pre><code>column -s$&#39;\t&#39; -t kraken_out.txt | less -S</code></pre>
+<p><code>column</code> formats a text file (<code>kraken_out.txt</code>) into multiple columns according to a tab delimiter character (flag <code>-s'$\t'</code>) and produces a table (flag <code>-t</code>).</p>
+<p><strong>Output</strong></p>
+<pre><code>C       SRR10971381.56  29465   151|151 0:40 909932:2 0:8 909932:2 0:20 29465:4 0:7 178327&gt;
+C       SRR10971381.97  838     122|122 0:44 2:5 0:23 838:1 0:10 838:2 0:3 |:| 0:3 838:2 0&gt;
+C       SRR10971381.126 9606    109|109 0:2 9606:5 0:7 9606:1 0:12 9606:1 0:47 |:| 0:47 96&gt;
+C       SRR10971381.135 838     151|151 0:95 838:3 0:19 |:| 0:15 838:1 0:12 838:5 0:6 838:&gt;
+C       SRR10971381.219 1177574 151|151 0:11 838:3 0:5 838:2 0:9 838:5 0:11 838:1 976:5 83&gt;
+C       SRR10971381.223 838     151|151 0:117 |:| 0:61 838:4 0:40 838:1 0:11
+[...]</code></pre>
+<p>This shows us a taxonomic classification for every read (one read per line). For example:</p>
+<ul>
+<li>On the first line, <code>C SRR10971381.56 29465</code> tells us that this read with identifier <code>SRR10971381.56</code> is classified <code>C</code> (matches to something in the Kraken2 database) and matches to the taxonomic category <code>29465</code>, which is the NCBI taxonomy identifer. In this case <code>29465</code> corresponds to <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&amp;id=29465&amp;lvl=3&amp;lin=f&amp;keep=1&amp;srchmode=1&amp;unlock">Veillonella</a>.</li>
+</ul>
+<p>More information on interpreting this file can be found at <a href="https://github.com/DerrickWood/kraken2/wiki/Manual#standard-kraken-output-format" class="uri">https://github.com/DerrickWood/kraken2/wiki/Manual#standard-kraken-output-format</a>.</p>
+</div>
+<div id="step-5-generate-an-interactive-html-based-report-using-pavian" class="section level5 hasAnchor">
+<h5>Step 5: Generate an Interactive HTML-based Report Using Pavian<a href="module-8-emerging-pathogen-detection-and-identification.html#step-5-generate-an-interactive-html-based-report-using-pavian" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>Instead of reading text-based files like above, we can visualize this information using <a href="https://fbreitwieser.shinyapps.io/pavian/">Pavian</a>, which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the <code>kraken_report.txt</code> file to the web application. Please do this now using the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Download the <code>kraken_report.txt</code> to your local machine from <a href="http://xx.uhn-hpc.ca/module10_workspace/analysis" class="uri">http://xx.uhn-hpc.ca/module10_workspace/analysis</a> (you can right-click and select <strong>Save as…</strong> on the file)</li>
+<li>Visit the <a href="https://fbreitwieser.shinyapps.io/pavian/">Pavian</a> website and click on <strong>Upload files &gt; Browse…</strong> and select the file <code>kraken_report.txt</code> we just downloaded</li>
+</ol>
+<p><img src="./img/pavian-upload.png" /></p>
+<p>Select <strong>Generate HTML report …</strong> to generate the Pavian report.</p>
+<p><img src="./img/pavian-generate-report.png" /></p>
+</div>
+<div id="open-the-generated-report-html-file-in-your-web-browser." class="section level5 hasAnchor">
+<h5>4. Open the Generated Report HTML File in your Web Browser.<a href="module-8-emerging-pathogen-detection-and-identification.html#open-the-generated-report-html-file-in-your-web-browser." class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>If all the steps are completed successfully then the report you should see should look like the following:</p>
+<p><img src="./img/pavian-report.png" /></p>
+<p>If something did not work, you can alternatively view a pre-computed report at <a href="http://xx.uhn-hpc.ca/module10_workspace/precomputed-analysis/Uploaded_sample_set-report.html" class="uri">http://xx.uhn-hpc.ca/module10_workspace/precomputed-analysis/Uploaded_sample_set-report.html</a>.</p>
+</div>
+<div id="step-5-questions" class="section level5 hasAnchor">
+<h5>Step 5: Questions<a href="module-8-emerging-pathogen-detection-and-identification.html#step-5-questions" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<ol style="list-style-type: decimal">
+<li>What are the percentages of <strong>Unclassified, Microbial, Bacterial, Viral, Fungal</strong>, and <strong>Protozoan</strong> reads in this dataset?</li>
+<li>Scroll down to the <strong>Classification results</strong> section of the report and flip through the <strong>Bacteria, Viruses,</strong> and <strong>Eukaryotes</strong> tabs. What is the top organism in each of these three categories and how many reads?</li>
+<li>This data was derived from RNA (instead of DNA) and some viruses are RNA-based. If we focus in on the Viruses category, is there anything here that could be consistent with the patient’s symptoms?</li>
+<li>Given the results of Pavian, can you form a hypothesis as to the cause of the patient’s symptoms?</li>
+</ol>
+</div>
+</div>
+<div id="assembly-based-approach" class="section level4 hasAnchor">
+<h4>Assembly-based Approach<a href="module-8-emerging-pathogen-detection-and-identification.html#assembly-based-approach" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="step-6-metatranscriptomic-assembly" class="section level5 hasAnchor">
+<h5>Step 6: Metatranscriptomic Assembly<a href="module-8-emerging-pathogen-detection-and-identification.html#step-6-metatranscriptomic-assembly" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>In order to investigate the data further we will assemble the metatranscriptome using the software MEGAHIT. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 6 minutes
+megahit -t 4 -1 filtered.in.R1.fastq -2 filtered.in.R2.fastq -o megahit_out</code></pre>
+<p>If everything is working you should expect to see the following as output:</p>
+<p><strong>Output</strong></p>
+<pre><code>2024-05-08 11:53:35 - MEGAHIT v1.2.9
+2024-05-08 11:53:35 - Using megahit_core with POPCNT and BMI2 support
+2024-05-08 11:53:35 - Convert reads to binary library
+2024-05-08 11:53:36 - b&#39;INFO  sequence/io/sequence_lib.cpp  :   75 - Lib 0 (/media/cbwdata/CourseData/IDE_data/module10/module10_workspace/pca/filtered.in.R1.fastq,/media/cbwdata/CourseData/IDE_data/module10/module10_workspace/pca/filtered.in.R2.fastq): pe, 2255816 reads, 151 max length&#39;
+2024-05-08 11:53:36 - b&#39;INFO  utils/utils.h                 :  152 - Real: 1.9096\tuser: 1.8361\tsys: 0.3320\tmaxrss: 166624&#39;
+2024-05-08 11:53:36 - k-max reset to: 141
+2024-05-08 11:53:36 - Start assembly. Number of CPU threads 4
+
+[...]
+
+2024-05-08 11:58:01 - Assemble contigs from SdBG for k = 141
+2024-05-08 11:58:02 - Merging to output final contigs
+2024-05-08 11:58:02 - 3112 contigs, total 1536607 bp, min 203 bp, max 29867 bp, avg 493 bp, N50 463 bp
+2024-05-08 11:58:02 - ALL DONE. Time elapsed: 267.449160 seconds</code></pre>
+<p>Once everything is completed, you will have a directory <code>megahit_out</code>/ with the output. Let’s take a look at this now:</p>
+<p><strong>Commands</strong></p>
+<pre><code>ls megahit_out/</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>checkpoints.txt  done  final.contigs.fa  intermediate_contigs  log  options.json</code></pre>
+<p>It’s specifically the <strong>final.contigs.fa</strong> file that contains our metatranscriptome assembly. This will contain the largest contiguous sequences MEGAHIT was able to construct from the sequence reads. We can look at the contents with the command <code>head</code> (<code>head</code> prints the first 10 lines of a file):</p>
+<p><strong>Commands</strong></p>
+<pre><code>head megahit_out/final.contigs.fa</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>&gt;k141_0 flag=1 multi=3.0000 len=312
+ATACTGATCTTAGAAAGCTTAGATTTCATCTTTTCAATTGGTGTATCGAATTTAGATACAAATTTAGCTAAGGATTTAGACATTTCAGCTTTATCTACAGTAGAGTATACTTTAATATCTTGAAGTACACCAGTTACTTTAGACTTAATCAAAATTTTACCCAAATCATTAACTAGATCTTTAGAATCAGAATTCTTTTCTACCATTTTAGCGATGATATCTGTTGCATCTTGATCTTCAAATGAAGATCTATATGACATGATAGTTTGACCTTCTTGTAGTTGAGATCCAACTTCTAAACATTCGATGTCT
+&gt;k141_1570 flag=1 multi=2.0000 len=328
+GAGCATCGCGCAGAAGTATCTGTACTCCCTTTACTCCACGCAAGTCTTTCTCATACTCACGCTCGACACCCATCTTACCGATATAATCTCCCGGCTGATAGTACTCGTCTTCCTCAATATCACCCTGACTCACCTCTGCAACATCCCCAAGGACATGTGCAGCGATAGCTCGTTGATACTGACGAACACTACGTTTCTGAATATAAAAGCCTGGAAAACGATAGAGTTTCTCTTGGAAGGCGCTAAAGTCTTTATCACTCAATTGGCTCAAGAATAGTTGCTGCGTAAAGCGAGAGTAACCCGGATTCTTACTCCTATCCTTGATCCC
+[...]</code></pre>
+<p>It can be a bit difficult to get an overall idea of what is in this file, so in the next step we will use the software <a href="http://quast.sourceforge.net/quast">Quast</a> to summarize the assembly information.</p>
+</div>
+<div id="step-7-evaluate-assembly-with-quast" class="section level5 hasAnchor">
+<h5>Step 7: Evaluate Assembly with Quast<a href="module-8-emerging-pathogen-detection-and-identification.html#step-7-evaluate-assembly-with-quast" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><a href="http://quast.sourceforge.net/quast">Quast</a> can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 2 seconds
+quast -t 4 megahit_out/final.contigs.fa</code></pre>
+<p>You should expect to see the following as output:</p>
+<p><strong>Output</strong></p>
+<pre><code>/home/ubuntu/.conda/envs/module10-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
+
+Version: 5.2.0
+
+System information:
+  OS: Linux-6.5.0-1018-aws-x86_64-with-glibc2.35 (linux_64)
+  Python version: 3.9.19
+  CPUs number: 4
+
+Started: 2024-05-08 11:11:19
+
+[...]
+
+Finished: 2024-05-08 11:11:21
+Elapsed time: 0:00:01.589690
+NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
+
+Thank you for using QUAST!</code></pre>
+<p>Quast writes it’s output to a directory <code>quast_results/</code>, which includes HTML and PDF reports. We can view this using a web browser by navigating to <a href="http://xx.uhn-hpc.ca/module10_workspace/analysis/" class="uri">http://xx.uhn-hpc.ca/module10_workspace/analysis/</a> and clicking on <strong>quast_results</strong> then <strong>latest</strong> then <strong>icarus.html</strong>. From here, click on <strong>Contig size viewer</strong>. You should see the following:</p>
+<p><img src="./img/quast-contigs.png" /></p>
+<p>This shows the length of each contig in the <code>megahit_out/final.contigs.fa</code> file, sorted by size.</p>
+</div>
+<div id="step-7-questions" class="section level5 hasAnchor">
+<h5>Step 7: Questions<a href="module-8-emerging-pathogen-detection-and-identification.html#step-7-questions" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<ol style="list-style-type: decimal">
+<li>What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?</li>
+<li>Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What are the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?</li>
+<li>Is there another type of source for this RNA fragment that could explain it’s length? Possibly a <a href="https://en.wikipedia.org/wiki/Coronavirus#Genome">Virus</a>?</li>
+<li>Also try looking at the QUAST report (<a href="http://xx.uhn-hpc.ca/module10_workspace/analysis/quast_results/latest/" class="uri">http://xx.uhn-hpc.ca/module10_workspace/analysis/quast_results/latest/</a> then clicking on <strong>report.html</strong>). How many contigs &gt;= 1000 bp are there compared to the number &lt; 1000 bp?</li>
+</ol>
+</div>
+<div id="step-8-use-blast-to-look-for-existing-organisms" class="section level5 hasAnchor">
+<h5>Step 8: Use BLAST to Look for Existing Organisms<a href="module-8-emerging-pathogen-detection-and-identification.html#step-8-use-blast-to-look-for-existing-organisms" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>In order to get a better handle on what the identity of the largest contigs could be, let’s use <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a> to compare to a database of existing viruses. Please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 1 second
+seqkit sort --by-length --reverse megahit_out/final.contigs.fa | seqkit head -n 50 &gt; contigs-50.fa
+blastn -db ~/CourseData/IDE_data/module10/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -html -out blast_results.html</code></pre>
+<p>As output you should see something like (<code>blastn</code> won’t print any output):</p>
+<p><strong>Output</strong></p>
+<pre><code>[INFO] read sequences ...
+[INFO] 3112 sequences loaded
+[INFO] sorting ...
+[INFO] output ...</code></pre>
+<p>Here, we first use ‘seqkit’(<a href="https://bioinf.shenwei.me/seqkit/" class="uri">https://bioinf.shenwei.me/seqkit/</a>) to sort all contigs by length with the largest ones first (<code>seqkit sort --by-length --reverse ...</code>) and we then extract only the top <strong>50</strong> longest contigs (<code>seqkit head -n 50</code>) and write these to a file <strong>contigs-50.fa</strong> (<code>&gt; contigs-50.fa</code>).</p>
+<div class="callout-blue">
+<span class="callout-icon"><i class="fas fa-circle-info" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Note</p>
+</div>
+<p>That the pipe <code>|</code> character will take the output of one command (<code>seqkit sort --by-length ...</code>, which sorts sequences in the file by length) and forward it into the input of another command (<code>seqkit head -n 50</code>, which takes only the first 50 sequences from the file). The greater-than symbol <code>&gt;</code> takes the output of one command <code>seqkit head ...</code> and writes it to a file (named <code>contigs-50.fa</code>).</p>
+</div>
+</div>
+<p>The next command will run <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">BLAST</a> on these top 50 longest contigs using a pre-computed database of viral genomes (<code>blastn -db ~/CourseData/IDE_data/module10/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa ...</code>). The <code>-html -out blast_results.html</code> tells BLAST to write its results as an HTML file.</p>
+<p>To view these results, please browse to <a href="http://xx.uhn-hpc.ca/module10_workspace/analysis/blast_results.html" class="uri">http://xx.uhn-hpc.ca/module10_workspace/analysis/blast_results.html</a> to view the ouptut <code>blast_results.html</code> file. This should look something like below:</p>
+<p><img src="./img/blast-report.png" /></p>
+</div>
+<div id="step-8-questions" class="section level5 hasAnchor">
+<h5>Step 8: Questions<a href="module-8-emerging-pathogen-detection-and-identification.html#step-8-questions" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<ol style="list-style-type: decimal">
+<li>What is the closest match for the longest contig you find in your data? What is the percent identify for this match (the value Z in <code>Identities = X/Y (Z%)</code>). Recall that if a pathogen is an emerging/novel pathogen then you may not get a perfect match to any existing organisms.</li>
+<li>Using the BLAST report alongside all other information we’ve gathered, what can you say about what pathogen may be causing the patient’s symptoms?</li>
+<li>It can be difficult to examine all the contigs/BLAST matches at once with the standard BLAST report (which shows the full alignment). We can modify the BLAST command to output a tab-separated file, with one BLAST HSP (a high-scoring segment pair) per line. To do this please run the following:</li>
+</ol>
+<p><strong>Commands</strong></p>
+<pre><code>blastn -db ~/CourseData/IDE_data/module10/db/blast_db/ref_viruses_rep_genomes_modified -query contigs-50.fa -outfmt &#39;7 qseqid length slen pident sseqid stitle&#39; -out blast_report.tsv</code></pre>
+<p>This should construct a tabular BLAST report with the columns labeled like <code>query id, alignment length, subject length, % identity, subject id, subject title</code>. Taking a look at the file <code>blast_report.tsv</code>, what are all the different BLAST matches you can find (the different values for <code>subject title</code>)? How do they compare in terms of <code>% identity</code> and <code>alignment length</code> (in general, higher values for both of these should be better matches)?</p>
+</div>
+</div>
+</div>
+<div id="final-words" class="section level3 hasAnchor">
+<h3>5. Final words<a href="module-8-emerging-pathogen-detection-and-identification.html#final-words" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Congratulations, you’ve finished this lab. As a final check on your results, you can use <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi">NCBI’s online tool</a> to perform a BLAST on our top 50 contigs to see what matches to the contigs.</p>
+<p>The source of the data and patient background information can be found at <a href="https://doi.org/10.1038/s41586-020-2008-3" class="uri">https://doi.org/10.1038/s41586-020-2008-3</a> (<strong>clicking this link will reveal what the illness is</strong>). The only modification made to the original metatranscriptomic reads was to reduce them to 10% of the orginal file size.</p>
+<p>While we used <strong>MEGAHIT</strong> to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the <a href="https://cab.spbu.ru/software/spades/">SPAdes</a> suite of tools (such as <a href="https://doi.org/10.1093/bioinformatics/btaa490">metaviralspades</a> or <a href="https://doi.org/10.1093/gigascience/giz100">rnaspades</a>) may be useful to look into for this sort of data analysis.</p>
+<p>If you wish to see how the data (and databases) were generated for this example, please refer to the [CourseData/IDE_data/module10/data-generation.md] file.</p>
+<p>As a final note, NCBI also performs taxonomic analysis using their own software and you can actually view these using Krona directly from NCBI. Please click <a href="https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR10971381">here</a> and go to the <em>Analysis</em> tab for NCBI’s taxonomic analysis of this sequence data (<strong>clicking this link will reveal what the illness is</strong>).</p>
+<div class="callout-green">
+<span class="callout-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Lab Completed!</p>
+</div>
+<p>Congratulations! You have completed Lab 8!</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-7-phylodynamics-and-transmission-dynamics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca/IDE_2023/blob/main/080-module-8.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

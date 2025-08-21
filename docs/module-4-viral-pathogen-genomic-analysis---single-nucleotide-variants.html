@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants | Infectious Disease Genomic Epidemiology 2023</title>
+  <meta name="description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants | Infectious Disease Genomic Epidemiology 2023" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+  <meta property="og:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="github-repo" content="bioinformaticsdotca/IDE_2023" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants | Infectious Disease Genomic Epidemiology 2023" />
+  
+  <meta name="twitter:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="twitter:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+
+<meta name="author" content="Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="module-3-data-curation-and-data-sharing.html"/>
+<link rel="next" href="module-5-bacterial-pathogen-genomic-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://bioinformaticsdotca.github.io/">
+ <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+ </a>
+<li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+<a href="./">
+ <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+ </a>
+<br>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Workshop Info</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#class-photo"><i class="fa fa-check"></i>Class Photo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-work"><i class="fa fa-check"></i>Pre-work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="meet-your-faculty.html"><a href="meet-your-faculty.html"><i class="fa fa-check"></i>Meet Your Faculty</a></li>
+<li class="chapter" data-level="" data-path="data-and-compute-setup.html"><a href="data-and-compute-setup.html"><i class="fa fa-check"></i>Data and Compute Setup</a></li>
+<li class="part"><span><b>II Modules</b></span></li>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html"><i class="fa fa-check"></i>Module 1: Introduction to Genomic Epidemiology</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html#lecture"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html"><i class="fa fa-check"></i>Module 2: Phylogenetic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#lecture-1"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#aws-setup"><i class="fa fa-check"></i>AWS Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html"><i class="fa fa-check"></i>Module 3: Data Curation and Data Sharing</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lecture-2"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lab"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><i class="fa fa-check"></i>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-3"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis"><i class="fa fa-check"></i>Virus Short-Read Genome Assembly and Variant Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html"><i class="fa fa-check"></i>Module 5: Bacterial Pathogen Genomic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-4"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#setup"><i class="fa fa-check"></i>Setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#background"><i class="fa fa-check"></i>Background</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset"><i class="fa fa-check"></i>Analysis Dataset</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc"><i class="fa fa-check"></i>cgMLST QC</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality"><i class="fa fa-check"></i>Locus Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes"><i class="fa fa-check"></i>Defining Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality"><i class="fa fa-check"></i>Genome Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance"><i class="fa fa-check"></i>Hamming Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction"><i class="fa fa-check"></i>Dendrogram Construction</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis"><i class="fa fa-check"></i>A Simple Tree Vis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance"><i class="fa fa-check"></i>Clustering by Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis"><i class="fa fa-check"></i>Cluster Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes"><i class="fa fa-check"></i>Investigating Local Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise"><i class="fa fa-check"></i>Group Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html"><i class="fa fa-check"></i>Module 6: Antimicrobial Resistant Gene (AMR) Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lecture-5"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lab-3"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#card-website-and-antibiotic-resistance-ontology"><i class="fa fa-check"></i>CARD Website and Antibiotic Resistance Ontology</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-genome-analysis"><i class="fa fa-check"></i>RGI for Genome Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-at-the-command-line"><i class="fa fa-check"></i>RGI at the Command Line</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-merged-metagenomic-reads"><i class="fa fa-check"></i>RGI for Merged Metagenomic Reads</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#metagenomic-sequencing-reads-and-the-kma-algorithm"><i class="fa fa-check"></i>Metagenomic Sequencing Reads and the KMA Algorithm</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#pathogen-of-origin-prediction"><i class="fa fa-check"></i>Pathogen of Origin Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html"><i class="fa fa-check"></i>Module 7: Phylodynamics and Transmission Dynamics</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lecture-6"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lab-4"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#introduction-2"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#list-of-software-for-tutorial"><i class="fa fa-check"></i>2. List of Software for Tutorial</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#exercise-setup"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#phylodynamics-analysis"><i class="fa fa-check"></i>4. Phylodynamics Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata"><i class="fa fa-check"></i>5. Visualizing the Phylodynamic Analysis Alongside Epidemiological Metadata</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#selection-analysis"><i class="fa fa-check"></i>6. Selection Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html"><i class="fa fa-check"></i>Module 8: Emerging Pathogen Detection and Identification</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#lecture-7"><i class="fa fa-check"></i>Lecture</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#introduction-3"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#list-fo-software-for-tutorial-and-its-respective-documentation"><i class="fa fa-check"></i>2. List fo Software for Tutorial and its Respective Documentation</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise-setup-1"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise"><i class="fa fa-check"></i>4. Exercise</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#final-words"><i class="fa fa-check"></i>5. Final words</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><i class="fa fa-check"></i>Keynote Lecture | Follow That Virus!: Genomics Leading the Way</a>
+<ul>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html#lecture-8"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><i class="fa fa-check"></i>Module 9: Mobile Genetic Elements and Environmental Microbiome</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lecture-9"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lab-5"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="divider"></li>
+<h1 id="sponsors">Sponsors</h1>
+<center>
+<a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+<a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+<br><br>
+<a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+<a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+<br><br>
+<a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Infectious Disease Genomic Epidemiology 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants" class="section level1 hasAnchor">
+<h1>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-3" class="section level2 hasAnchor">
+<h2>Lecture<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/yvqurApPPaw?si=_ivecHvn_EnHZ_t2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p><br></p>
+<iframe src="https://drive.google.com/file/d/1AFNNPo24CK8Kjx1w3kg7Pt-JfQI_seq8/preview" width="640" height="480" allow="autoplay">
+</iframe>
+</div>
+<div id="lab-1" class="section level2 hasAnchor">
+<h2>Lab<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="virus-short-read-genome-assembly-and-variant-analysis" class="section level3 hasAnchor">
+<h3>Virus Short-Read Genome Assembly and Variant Analysis<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>By Jared Simpson and Jalees Nasir</em></p>
+<div id="introduction" class="section level4 hasAnchor">
+<h4>Introduction<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In this lab we will perform reference-based analysis of Severe Acute Respiratory Syndrome Coronavirus 2 (SARS-CoV-2) short-read sequencing data. You will be guided through the analysis workflow and subsequent exploration of the data and quality control results. At the end of the lab you will know:</p>
+<ol style="list-style-type: decimal">
+<li>How to analyze amplicon sequencing data from the Illumina sequencing instrument</li>
+<li>How to assess the quality of a sequenced sample</li>
+<li>How to assess single nucleotide polymorphisms (SNPs) for SARS-CoV-2 variant calls</li>
+<li>How to view the evolutionary changes of SARS-CoV-2 and interpret differences between lineages belonging to variants of concern (i.e., Alpha vs. Delta variants)</li>
+</ol>
+</div>
+<div id="datasets" class="section level4 hasAnchor">
+<h4>Datasets<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#datasets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In this lab we will use subset of data from the COVID-19 Genomics UK Consortium (COG-UK) to demonstrate analysis of SARS-CoV-2. This data set consists of short-read sequencing reads collected as part of the COVID-19 Pandemic response and will be a mix of different variants of concern (VOCs) up to the end of summer 2021. This would include predominantly Alpha (also known as PANGO lineage B.1.1.7; first designated December 2020) and Delta (also known as PANGO lineage B.1.617.2; first designated in May 2021) variants. We have provided publicly available Illumina short-reads and you will run SARS-CoV-2 Illumina GeNome Assembly Line (<code>SIGNAL</code>) with additional quality control and assessment using <code>ncov-tools</code>. Prior to the workshop the instructors downsampled the sequencing data from ~10,000x coverage to ~200x coverage to reduce the time it takes to run the analysis; however, running the pipelines use the exact same set of commands and the results you will obtain are comparable to assembling using the full dataset.</p>
+<p>In the following instructions the commands you should run are shown in code blocks like so:</p>
+<pre><code>echo &quot;Hello world&quot;</code></pre>
+<p>You can type these commands into your terminal, or copy and paste them.</p>
+</div>
+<div id="data-download-and-preparation" class="section level4 hasAnchor">
+<h4>Data Download and Preparation<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#data-download-and-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>First, lets create and move to a directory that we’ll use to organize our results:</p>
+<pre><code>mkdir -p workspace/module4
+cd workspace/module4</code></pre>
+<p>From within your <code>module4</code> directory, you can create a symlink which is a shortcut to where the raw sequencing data is stored:</p>
+<pre><code>### Current working directory: ~/workspace/module4
+
+ln -s ~/CourseData/IDE_data/module4/cbw_demo_run/</code></pre>
+<p>If you run <code>ls</code> you should see only one directory: <code>cbw_demo_run</code>.</p>
+<p>You can view the contents of the cbw_demo_run directory using <code>ls</code>:</p>
+<pre><code>ls cbw_demo_run</code></pre>
+<p>You should see 36 pairs of files. Each pair of files is the raw sequencing data for a single sample. The first half of the Illumina paired-end reads is stored in files ending in <code>_R1.fastq.gz</code> and the second half in <code>_R2.fastq.gz</code>. The samples are identified with accession numbers like <code>ERR5338522</code>, a unique identifier of a sample that has been deposited in a public database. You can view the contents of one of the data files by decompressing it and piping it to <code>head</code>:</p>
+<pre><code>zcat cbw_demo_run/ERR5338522_R1.fastq.gz | head</code></pre>
+<p>Question: what do the different lines in a FASTQ file mean? If you can’t figure it out ask an instructor or on slack!</p>
+</div>
+<div id="running-signal" class="section level4 hasAnchor">
+<h4>Running SIGNAL<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#running-signal" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The analysis of SARS-CoV-2 sequencing data is complex and uses a number of different tools that are run sequentially in a pipeline. The pipeline we will use to analyze this data is called <code>SIGNAL</code>. First, we need to clone a copy of SIGNAL from github and then enter the directory this command creates:</p>
+<pre><code>git clone --recursive https://github.com/jaleezyy/covid-19-signal
+cd covid-19-signal</code></pre>
+<p>Ensure that your current working directory is within the <code>covid-19-signal</code> directory using <code>pwd</code>. Next, we need to switch to the version of SIGNAL that we will use for this workshop. This version tells SIGNAL that we have installed all of the software we used in a single conda environment:</p>
+<pre><code>git checkout single-conda</code></pre>
+<p>Finally, we need to activate the conda environment containing the software SIGNAL requires, and create a symlink to the reference files SIGNAL needs. You can also review the SIGNAL help screen to see our options:</p>
+<pre><code>conda activate signalcovtools
+ln -s ~/CourseData/IDE_data/module4/data/
+
+### Current working directory: ~/workspace/module4/covid-19-signal
+
+python signalexe.py -h</code></pre>
+<p>The <code>data</code> directory you have linked should be found within <code>~/workspace/module4/covid-19-signal/data</code>.</p>
+<p>In order to run SIGNAL, we first need to prepare two files: a configuration file, where all of our assembly parameters will be assigned, and a sample table, which will list the indivdual samples and the location of corresponding R1 and R2 FASTQs. Remember that our sequencing data is located one directory level up (i.e., <code>../cbw_demo_run/</code>). Generating the required files can all be done using the following command:</p>
+<pre><code>### Current working directory: ~/workspace/module4/covid-19-signal
+
+python signalexe.py --directory ../cbw_demo_run --config-only</code></pre>
+<p>The output should be as follows</p>
+<p>If you run <code>ls</code> you should see <code>cbw_demo_run_config.yaml</code> and <code>cbw_demo_run_sample_table.csv</code> files have been created. You can use <code>more</code> or <code>less</code> to examine the input files.</p>
+</div>
+<div id="reference-based-assembly-using-signal" class="section level4 hasAnchor">
+<h4>Reference-based Assembly Using SIGNAL<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#reference-based-assembly-using-signal" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Using our configuration file as input, we can begin our assembly of SARS-CoV-2 sequencing reads. Run the following:</p>
+<pre><code>python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 all postprocess</code></pre>
+<p>This will take around 30-45 minutes to run, so is a good time for a short break.</p>
+</div>
+<div id="quality-control-and-assessment" class="section level4 hasAnchor">
+<h4>Quality Control and Assessment<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#quality-control-and-assessment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now that SIGNAL is complete, we will run an additional step to generate some quality control results:</p>
+<pre><code>python signalexe.py --configfile cbw_demo_run_config.yaml --quiet --cores 4 ncov_tools</code></pre>
+</div>
+<div id="coverage-analysis" class="section level4 hasAnchor">
+<h4>Coverage Analysis<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#coverage-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We can now start exploring the results. First we will look at the depth of coverage to make sure that each viral genome was covered by enough sequencing reads to call an accurate consensus sequence.</p>
+<p>Open your web browser and navigate to <code>http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/</code> where xx is the instance ID you were assigned. This directory stores the results of SIGNAL and ncov-tools. In the <code>ncov-tools-results/plots/</code> subdirectory you will find a file called <code>cbw_demo_run_results_dir_depth_by_position.pdf</code>. Open this file.</p>
+<p>This file contains plots of the coverage depth for each of the 36 samples we analyzed as shown below.</p>
+<p>Explore the results and try to understand what the coverage patterns mean:</p>
+<ul>
+<li>What might have caused the sharp drop in coverage for sample <code>ERR6035561</code>?</li>
+<li>What about the uneven coverage in sample <code>ERR5508530</code>?</li>
+</ul>
+<p>As explained in the lecture, sequencing coverage is a critical factor for determining the <code>completeness</code> of the genome assembly. In the terminal, let’s view the consensus sequence for sample <code>ERR5508530</code>:</p>
+<pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+cd ~/workspace/module4/covid-19-signal
+=======
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; main
+less cbw_demo_run_results_dir/ERR5508530/freebayes/ERR5508530.consensus.fasta</code></pre>
+<p>What do you see? The consensus sequences for other samples are in directories with similiar names, take a look at them. Can you draw any conclusions about the quality of the results?</p>
+<p>ncov-tools creates a file that summarizes the genome completeness for every sample. Run this command in the terminal:</p>
+<pre><code>cut -f1,10,15 cbw_demo_run_results_dir/ncov-tools-results/qc_reports/cbw_demo_run_results_dir_summary_qc.tsv</code></pre>
+<p>This command uses <code>cut</code> to find the metrics that we are interested in from the full QC results table. What is the completeness of <code>ERR5508530</code>? What about <code>ERR6035561</code>?</p>
+</div>
+<div id="assessing-snp-calls" class="section level4 hasAnchor">
+<h4>Assessing SNP Calls<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#assessing-snp-calls" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now, using your browser open the file located at <code>ncov-tools-results/plots/cbw_demo_run_results_dir_tree_snps.pdf</code>.</p>
+<p>This plot arranges the samples using a phylogenetic tree (shown on the left) so that samples with a similar sequence are grouped together. The panel on the right shows SNPs within each sample with respect to the MN908947.3 reference genome, where each colour represents a different base. Also shown on the plot are the pangolin-assigned lineages; B.1.1.7 is the alpha variant, AY.4 is delta. Notice that there are many SNPs in common between the alpha samples and a different set of SNPs in common between the delta samples. These SNPs are what define the different lineages.</p>
+<p>Now, we’re going to inspect the read-level evidence for some example SNPs. Open up IGV and using the first dropdown menu select the “SARS-CoV-2” genome. Now, click on the File menu and select “Load from URL” and paste in the path <code>http://xx.uhn-hpc.ca/module4/covid-19-signal/cbw_demo_run_results_dir/ERR5389257/core/ERR5389257_viral_reference.mapping.bam</code> again replacing xx with your instance ID. Once the file loads you will see the pattern of read coverage along the genome.</p>
+<p>Paste the coordinates <code>NC_045512.2:2,917-3,156</code> into the navigation bar. This region shows a single C&gt;T SNP where every read supports the alternative allele (the red bars in the middle of the screen). Now, navigate to <code>NC_045512.2:631-870</code>. In this case some reads have evidence for a C&gt;T SNP but other reads have evidence for the reference allele at this position. Since this position is ambiguous the consensus genome will be marked with an ambiguity code. Going back to the mutations plot, look for the row corresponding to sample <code>ERR5389257</code>. Notice that it has a black bar in between two purple SNPs at the beginning of the genome - that is the ambiguous position that we are inspecting at IGV. Since this position is only ambiguous in <code>ERR5389257</code> we can’t draw many conclusions from it - it could be due to low-level contamination, a PCR artificat, or heterogeneity within this sample.</p>
+<p>You can view all of the variants for a sample by using <code>less</code> on their VCF files:</p>
+<pre><code>less cbw_demo_run_results_dir/ERR5389257/freebayes/ERR5389257.variants.norm.vcf</code></pre>
+<p>Take a bit of time to look at other variants for this sample (or other samples!). If you find something interesting or unexpected tell the rest of the class in slack and we can discuss it as a group.</p>
+</div>
+<div id="variant-consequence-prediction" class="section level4 hasAnchor">
+<h4>Variant Consequence Prediction<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#variant-consequence-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Once we have variant calls we can run a <code>mutation consequence predictor</code> to determine the protein-level changes. This is important as the identification of new variants relies on determining whether the mutations increase the fitness of the lineage, which is usually determined at the amino acid level. View this file in your terminal:</p>
+<pre><code>less cbw_demo_run_results_dir/ncov-tools-results/qc_annotation/ERR5389257_aa_table.tsv</code></pre>
+<p>This file is a table of predicted amino acid changes for each protein. How many changes to the spike protein does this sample have? Let’s compare that number to a different sample from another lineage. First, let’s figure out the lineage of sample <code>ERR5389257</code>:</p>
+<pre><code>grep ERR5389257 cbw_demo_run_results_dir/lineage_assignments.tsv</code></pre>
+<p>The file <code>lineage_assignments.tsv</code> is produced by pangolin and by grepping (searching the file) for sample <code>ERR5389257</code> we can see that it is B.1.1.7 (Alpha). Look in the <code>lineage_assignments.tsv</code> file to find the identifier for a delta sample, then use it’s consequence prediction file to count the number of spike mutations. Is it more or less than <code>ERR5389257?</code> We probably wouldn’t want to draw strong conclusions from the number of mutations as many will be neutral (or even deleterious) but this type of analysis - looking at mutation consequence - cross-referenced with other data (for example experimental fitness assays) is what goes into identifying VOCs.</p>
+<div class="callout-green">
+<span class="callout-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Lab Completed!</p>
+</div>
+<p>Congratulations! You have completed Lab 4!</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-3-data-curation-and-data-sharing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-5-bacterial-pathogen-genomic-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca/IDE_2023/blob/main/040-module-4.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

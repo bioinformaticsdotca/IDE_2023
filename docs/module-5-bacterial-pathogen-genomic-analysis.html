@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Module 5: Bacterial Pathogen Genomic Analysis | Infectious Disease Genomic Epidemiology 2023</title>
+  <meta name="description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Module 5: Bacterial Pathogen Genomic Analysis | Infectious Disease Genomic Epidemiology 2023" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+  <meta property="og:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="github-repo" content="bioinformaticsdotca/IDE_2023" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Module 5: Bacterial Pathogen Genomic Analysis | Infectious Disease Genomic Epidemiology 2023" />
+  
+  <meta name="twitter:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="twitter:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+
+<meta name="author" content="Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"/>
+<link rel="next" href="module-6-antimicrobial-resistant-gene-amr-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://bioinformaticsdotca.github.io/">
+ <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+ </a>
+<li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+<a href="./">
+ <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+ </a>
+<br>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Workshop Info</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#class-photo"><i class="fa fa-check"></i>Class Photo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-work"><i class="fa fa-check"></i>Pre-work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="meet-your-faculty.html"><a href="meet-your-faculty.html"><i class="fa fa-check"></i>Meet Your Faculty</a></li>
+<li class="chapter" data-level="" data-path="data-and-compute-setup.html"><a href="data-and-compute-setup.html"><i class="fa fa-check"></i>Data and Compute Setup</a></li>
+<li class="part"><span><b>II Modules</b></span></li>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html"><i class="fa fa-check"></i>Module 1: Introduction to Genomic Epidemiology</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html#lecture"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html"><i class="fa fa-check"></i>Module 2: Phylogenetic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#lecture-1"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#aws-setup"><i class="fa fa-check"></i>AWS Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html"><i class="fa fa-check"></i>Module 3: Data Curation and Data Sharing</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lecture-2"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lab"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><i class="fa fa-check"></i>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-3"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis"><i class="fa fa-check"></i>Virus Short-Read Genome Assembly and Variant Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html"><i class="fa fa-check"></i>Module 5: Bacterial Pathogen Genomic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-4"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#setup"><i class="fa fa-check"></i>Setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#background"><i class="fa fa-check"></i>Background</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset"><i class="fa fa-check"></i>Analysis Dataset</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc"><i class="fa fa-check"></i>cgMLST QC</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality"><i class="fa fa-check"></i>Locus Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes"><i class="fa fa-check"></i>Defining Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality"><i class="fa fa-check"></i>Genome Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance"><i class="fa fa-check"></i>Hamming Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction"><i class="fa fa-check"></i>Dendrogram Construction</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis"><i class="fa fa-check"></i>A Simple Tree Vis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance"><i class="fa fa-check"></i>Clustering by Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis"><i class="fa fa-check"></i>Cluster Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes"><i class="fa fa-check"></i>Investigating Local Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise"><i class="fa fa-check"></i>Group Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html"><i class="fa fa-check"></i>Module 6: Antimicrobial Resistant Gene (AMR) Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lecture-5"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lab-3"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#card-website-and-antibiotic-resistance-ontology"><i class="fa fa-check"></i>CARD Website and Antibiotic Resistance Ontology</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-genome-analysis"><i class="fa fa-check"></i>RGI for Genome Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-at-the-command-line"><i class="fa fa-check"></i>RGI at the Command Line</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-merged-metagenomic-reads"><i class="fa fa-check"></i>RGI for Merged Metagenomic Reads</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#metagenomic-sequencing-reads-and-the-kma-algorithm"><i class="fa fa-check"></i>Metagenomic Sequencing Reads and the KMA Algorithm</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#pathogen-of-origin-prediction"><i class="fa fa-check"></i>Pathogen of Origin Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html"><i class="fa fa-check"></i>Module 7: Phylodynamics and Transmission Dynamics</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lecture-6"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lab-4"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#introduction-2"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#list-of-software-for-tutorial"><i class="fa fa-check"></i>2. List of Software for Tutorial</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#exercise-setup"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#phylodynamics-analysis"><i class="fa fa-check"></i>4. Phylodynamics Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata"><i class="fa fa-check"></i>5. Visualizing the Phylodynamic Analysis Alongside Epidemiological Metadata</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#selection-analysis"><i class="fa fa-check"></i>6. Selection Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html"><i class="fa fa-check"></i>Module 8: Emerging Pathogen Detection and Identification</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#lecture-7"><i class="fa fa-check"></i>Lecture</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#introduction-3"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#list-fo-software-for-tutorial-and-its-respective-documentation"><i class="fa fa-check"></i>2. List fo Software for Tutorial and its Respective Documentation</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise-setup-1"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise"><i class="fa fa-check"></i>4. Exercise</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#final-words"><i class="fa fa-check"></i>5. Final words</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><i class="fa fa-check"></i>Keynote Lecture | Follow That Virus!: Genomics Leading the Way</a>
+<ul>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html#lecture-8"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><i class="fa fa-check"></i>Module 9: Mobile Genetic Elements and Environmental Microbiome</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lecture-9"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lab-5"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="divider"></li>
+<h1 id="sponsors">Sponsors</h1>
+<center>
+<a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+<a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+<br><br>
+<a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+<a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+<br><br>
+<a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Infectious Disease Genomic Epidemiology 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-5-bacterial-pathogen-genomic-analysis" class="section level1 hasAnchor">
+<h1>Module 5: Bacterial Pathogen Genomic Analysis<a href="module-5-bacterial-pathogen-genomic-analysis.html#module-5-bacterial-pathogen-genomic-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-4" class="section level2 hasAnchor">
+<h2>Lecture<a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/cQ29LKc3LPo?si=I8qJSYWcstKoxp2D" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p><br></p>
+<iframe src="https://drive.google.com/file/d/1oa-G7L8GAwX_XSvBPYVffZeQ6mLkZeEt/preview" width="640" height="480" allow="autoplay">
+</iframe>
+</div>
+<div id="lab-2" class="section level2 hasAnchor">
+<h2>Lab<a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The lab assignment is written in Rmarkdown (.Rmd) which means that the lab is intended to be run in RStudio IDE.</p>
+<div id="setup" class="section level3 hasAnchor">
+<h3>Setup<a href="module-5-bacterial-pathogen-genomic-analysis.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before connecting to your RStudio instance, please perform the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Log into your remote instance using ssh</li>
+</ol>
+<pre><code># replace xx with your student number
+ssh -i CBW.pem xx.uhn-hpc.ca</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Copy the lab materials from <code>CourseData</code> to <code>workspace/</code></li>
+</ol>
+<pre><code>cp -r  ~/CourseData/IDE_data/module5/ ~/workspace/</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>You should now find a directory called <code>module5</code> under <code>~/workspace/</code>. Use <code>ls</code> to list the file content in <code>~/workspace/module5</code> to verify that you have successfully copied all of the required files.</li>
+</ol>
+<pre><code>ls ~/workspace/module5</code></pre>
+<p>Expected output:</p>
+<p><img src="img/module_5_img_1.png" />
+#### Launching RStudio</p>
+<ol style="list-style-type: decimal">
+<li><p>Open a browser tab and navigate to <code>http://xx.uhn-hpc.ca:8080</code> (Remember to replace <code>xx</code> with your student number!)</p></li>
+<li><p>Log in using the following credentials:</p></li>
+</ol>
+<ul>
+<li>Username: ubuntu</li>
+<li>Password will be provided in class</li>
+</ul>
+<p>If logged in successfully, you should see the following graphical interface in your browser:</p>
+<p><img src="img/module_5_img_2.png" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Load up <code>Module_5_Lab.Rmd</code> by clicking [File] -&gt; [Open File] -&gt; [Select the .Rmd file in <code>module5</code> directory]</li>
+</ol>
+<p>If you have successfully opened the <code>.Rmd</code> file, you will see the following screen:</p>
+<p><img src="img/module_5_img_3.png" /></p>
+</div>
+<div id="background" class="section level3 hasAnchor">
+<h3>Background<a href="module-5-bacterial-pathogen-genomic-analysis.html#background" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The primary objective of the Module 5 lab will be to provide a practical overview of core genome multilocus sequencing typing (cgMLST), a genome-based typing method widely adopted in bacterial genomic surveillance networks across the globe. The widespread adoption of cgMLST is due in large part to the recent advances in high-throughput sequencing, which have enabled the routine adoption of whole genome sequencing (WGS) in microbial surveillance. With WGS becoming increasingly accessible, part of the cascading effect was the development of efficient computational algorithms that further expedited the establishment of multilocus sequence typing at genome scales as routine practice.</p>
+<p>The implementation of cgMLST by the PulseNet International network for foodborne outbreak surveillance has made it possible for WGS data to be used as evidence in public health investigations. Here, you will work with cgMLST data to conduct a retrospective analysis on a dataset that includes a number of possible Salmonella enterica outbreaks. Salmonella, which is primarily transmitted to humans through the consumption of contaminated foods, is one of the leading enteric pathogens in Canada and across the globe and was the first pathogen for which comprehensive genomic surveillance was implemented in Canada.</p>
+<p>The outbreak dataset consists of WGS data from isolates recovered from samples collected from a diverse range of geographical regions, environments, and timelines that can be dated back to the early 2000s. Curating this outbreak dataset involved querying a global bacterial genomic surveillance database (GenomeTrakr) and PubMed queries to identify peer-reviewed publications that reported retrospective genomic analysis of Salmonella outbreaks. In this exercise, you will use a custom workflow written in the R language for statistical computing that includes modules to perform various steps in genomic epidemiologic analysis using cgMLST data. Your challenge will be to leverage the tools and data at your disposal to establish high quality cgMLST profiles that can be used to infer genetic relatedness and to explore patterns in the data in order to synthesize possible interpretations based on all available genomic and epidemiological data.</p>
+<p>To start, you are provided with pre-computed cgMLST allele calls generated by chewBBACA (<a href="https://pubmed.ncbi.nlm.nih.gov/29543149/">Silva et al. 2018</a>, using a Salmonella core genome scheme based on 3,000 loci downloaded from <a href="https://zenodo.org/record/4724927">here</a>. Minor filtering has been performed to remove loci with zero informative alleles across the entire dataset. The following code template was used to call chewBBACA on a set of Salmonella genomes consolidated in a single directory called <code>/path/to/my_genomes</code>:</p>
+<pre><code>chewBBACA.py AlleleCall -i /path/to/my_genomes/ -g /path/to/cgMLST_scheme/ -o /path/to/results</code></pre>
+</div>
+<div id="learning-objectives" class="section level3 hasAnchor">
+<h3>Learning Objectives<a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Understanding the significance of metrics used for MLST-based quality control</li>
+<li>Explaining the difference between core, accessory and pan-genome loci and their use in MLST analysis</li>
+<li>Building dendrograms from MLST data</li>
+<li>Familiarisation with the ggtree R library for tree visualization</li>
+<li>Exploring the clonality of bacterial populations in the context of bacterial foodborne outbreaks</li>
+<li>Leveraging epidemiological data by linking it to MLST-based dendrograms to explain molecular differences and infer possible outbreak scenarios</li>
+</ul>
+</div>
+<div id="analysis-dataset" class="section level3 hasAnchor">
+<h3>Analysis Dataset<a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The dataset for Module 5 lab has been uploaded to Google Sheets:</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheets/d/12gvH6U5pwj8QK-Ui3lOIYOm_X-69A2IE0cbctaEzY5E/edit?usp=sharing#gid=1448009352">Metadata</a></li>
+<li><a href="https://docs.google.com/spreadsheets/d/12gvH6U5pwj8QK-Ui3lOIYOm_X-69A2IE0cbctaEzY5E/edit?usp=sharing#gid=8240612">cgMLST data</a></li>
+</ul>
+</div>
+<div id="getting-started" class="section level3 hasAnchor">
+<h3>Getting Started<a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s begin by loading all R packages and helper scripts required to run all the code in this lab.</p>
+<p><em><u>Every time you begin a new R session, you must reload all the packages and scripts!</u></em></p>
+<pre><code>suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(treedataverse))
+suppressPackageStartupMessages(library(plotly))
+suppressPackageStartupMessages(library(ggnewscale))
+suppressPackageStartupMessages(library(ComplexHeatmap))
+suppressPackageStartupMessages(library(circlize))
+suppressPackageStartupMessages(library(randomcoloR))
+suppressPackageStartupMessages(library(RColorBrewer))
+suppressPackageStartupMessages(library(phangorn))
+suppressPackageStartupMessages(library(knitr))
+source(&quot;src/mlst_helper.R&quot;)
+source(&quot;src/ggtree_helper.R&quot;)
+source(&quot;src/cluster_helper.R&quot;)</code></pre>
+<p>Next, read the cgMLST data and metadata into memory using <code>fread()</code> from the <code>data.table</code> package.</p>
+<pre><code># data paths
+metadata_path &lt;- &quot;data/senterica_metadata_final.tsv&quot;
+cgmlst_path &lt;- &quot;data/senterica_cgMLST_full.tsv&quot;
+# read file
+meta &lt;- fread(metadata_path, sep = &quot;\t&quot;, colClasses = &quot;character&quot;)
+cgmlst &lt;- fread(cgmlst_path, sep = &quot;\t&quot;)</code></pre>
+</div>
+<div id="cgmlst-qc" class="section level3 hasAnchor">
+<h3>cgMLST QC<a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Before proceeding any further, you will first evaluate cgMLST data quality. A number of quality criteria will be defined to determine whether the properties of the allele profiles meet quality standards. Incomplete genome assembly and reference bias during MLST scheme construction can introduce significant levels of missing information in MLST data in the form of unassigned alleles at various loci. Hence, care must be taken to avoid comparisons that include loci and genomes with excessive numbers of unassigned alleles that could reduce the precision of genetic similarity calculations to be used for generating dendrograms for inferring relationships between the various genomes in the dataset.</p>
+<p>Below, you will conduct a series of steps to compute the frequency of unassigned alleles across each locus (i.e. columns) and genome (i.e. rows), which will inform the identification of poor quality loci/genomes that may need to be flagged for removal from downstream analyses.</p>
+<p><u>Editable parts of the code have been highlighted in the code chunks.</u> You are highly encouraged to adjust them to observe how different parameters affect the outcome.</p>
+</div>
+<div id="locus-quality" class="section level3 hasAnchor">
+<h3>Locus Quality<a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code># use compute_lc helper function to compute 
+# allele assignment rate (completeness) 
+# across all loci
+loci_completeness &lt;- compute_lc(cgmlst)
+# write to file
+write.table(loci_completeness, &quot;cgmlst_loci_quality.stats.tsv&quot;,
+            quote = F, row.names = F, sep = &quot;\t&quot;)
+# print summary statistics for locus completeness
+summary(loci_completeness)</code></pre>
+<pre><code>##     locus           valid_alleles   missing_alleles    completeness    
+##  Length:2952        Min.   :  4.0   Min.   :  0.000   Min.   :  2.198  
+##  Class :character   1st Qu.:181.0   1st Qu.:  0.000   1st Qu.: 99.451  
+##  Mode  :character   Median :182.0   Median :  0.000   Median :100.000  
+##                     Mean   :180.1   Mean   :  1.885   Mean   : 98.964  
+##                     3rd Qu.:182.0   3rd Qu.:  1.000   3rd Qu.:100.000  
+##                     Max.   :182.0   Max.   :178.000   Max.   :100.000</code></pre>
+<pre><code>##### EDITABLE VARIABLE #####
+lqual_threshold &lt;- 2
+#############################
+
+# identify low qual loci
+lqual_loci &lt;- loci_completeness %&gt;% 
+  filter(missing_alleles &gt; lqual_threshold) %&gt;% 
+  pull(locus)
+# remove low qual loci from input cgMLST data
+cgmlst_lc &lt;- cgmlst %&gt;% select(-all_of(lqual_loci))
+# write to file
+write.table(cgmlst_lc, &quot;cgmlst_lqual_loci_rm.tsv&quot;,
+            quote = F, row.names = F, sep = &quot;\t&quot;)
+# print filtering results
+message(paste(&quot;Number of loci before filter:&quot;, ncol(cgmlst)-1))
+message(paste(&quot;Number of loci after filter:&quot;, ncol(cgmlst_lc)-1))
+message(paste(&quot;Number of loci removed:&quot;, ncol(cgmlst)-ncol(cgmlst_lc)))
+message(paste0(&quot;Loci with &quot;, lqual_threshold, &quot; or less missing alleles were retained&quot;))</code></pre>
+</div>
+<div id="defining-core-genes" class="section level3 hasAnchor">
+<h3>Defining Core Genes<a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>##### EDITABLE VARIABLE #####
+core_threshold &lt;- 1
+genome_qual &lt;- 27
+#############################
+
+# compute core loci
+core_loci &lt;- calculate_core(
+  mlst = cgmlst_lc,
+  core_threshold = core_threshold,
+  genome_qual = genome_qual
+)</code></pre>
+</div>
+<div id="genome-quality" class="section level3 hasAnchor">
+<h3>Genome Quality<a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code># compute genome completeness
+# given quality filtered scheme
+genome_completeness &lt;- cgmlst_lc %&gt;% 
+  select(1, all_of(core_loci)) %&gt;% 
+  compute_gc()
+# write to file
+write.table(genome_completeness, &quot;cgmlst_genome_qual.stats.tsv&quot;,
+            quote = F, row.names = F, sep = &quot;\t&quot;)
+# print data summary of genome completeness
+summary(genome_completeness)</code></pre>
+<pre><code>##       ID            valid_alleles  missing_alleles   completeness   
+##  Length:182         Min.   :2581   Min.   : 0.000   Min.   : 96.74  
+##  Class :character   1st Qu.:2667   1st Qu.: 0.000   1st Qu.: 99.96  
+##  Mode  :character   Median :2668   Median : 0.000   Median :100.00  
+##                     Mean   :2664   Mean   : 4.275   Mean   : 99.84  
+##                     3rd Qu.:2668   3rd Qu.: 1.000   3rd Qu.:100.00  
+##                     Max.   :2668   Max.   :87.000   Max.   :100.00</code></pre>
+<pre><code>##### EDITABLE VARIABLE #####
+lqual_g_threshold &lt;- 26
+#############################
+
+# identify low qual genomes
+lqual_genomes &lt;- genome_completeness %&gt;% 
+  filter(missing_alleles &gt; lqual_g_threshold) %&gt;% 
+  pull(ID)
+# remove low qual genomes from quality filtered cgmlst
+cgmlst_final &lt;- cgmlst_lc %&gt;% 
+  filter(!(`#Name` %in% lqual_genomes)) %&gt;% 
+  select(1, all_of(core_loci))
+# remove low qual genomes from metadata
+metadata &lt;- meta %&gt;% filter(!(ID %in% lqual_genomes))
+# write to file
+write.table(cgmlst_final, &quot;cgmlst_final.tsv&quot;,
+            quote = F, row.names = F, sep = &quot;\t&quot;)
+# print filtering results
+message(paste(&quot;Number of genomes before filter:&quot;, nrow(cgmlst_lc)))
+message(paste(&quot;Number of genomes after filter:&quot;, nrow(cgmlst_final)))
+message(paste(&quot;Number of genomes removed:&quot;, nrow(cgmlst_lc)-nrow(cgmlst_final)))
+message(paste0(&quot;Genomes with &quot;, lqual_g_threshold, &quot; or less missing alleles were retained&quot;))</code></pre>
+</div>
+<div id="hamming-distance" class="section level3 hasAnchor">
+<h3>Hamming Distance<a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Distance-based and character-based methods can both be used to construct dendrograms from cgMLST data. However, the scope of this lab will only cover distance-based dendrograms, as character-based methods are covered extensively in other modules. In phylogenetic analysis, distance-based approaches are rather flexible in the sense that they can be constructed from any measure that quantifies genetic similarity, including distances computed by alignment-free (e.g. Mash) or alignment-based (e.g. BLAST) similarity search algorithms. Below, you are introduced to a metric called “Hamming distance”, which is based on computing the number of differences between a pair of character vectors.</p>
+<p>Given two character vectors of equal lengths, hamming distance is the total number of positions in which the two vectors are <u>different:</u></p>
+<p>Profile A: <code>[ 0 , 2 , 0 , 5 , 5 , 0 , 0 , 0 , 0 ]</code></p>
+<p>Profile B: <code>[ 0 , 1 , 0 , 4 , 3 , 0 , 0 , 0 , 0 ]</code></p>
+<p>A != B: <code>[ 0 , 1 , 0 , 1 , 1 , 0 , 0 , 0 , 0 ]</code></p>
+<p>Hamming distance = <code>sum( A != B )</code> = 3</p>
+<pre><code>dist_mat &lt;- cgmlst_final %&gt;% 
+  column_to_rownames(&quot;#Name&quot;) %&gt;% 
+  t() %&gt;% 
+  hamming()
+# print matrix dimension
+# the dimension should be symmetric!
+dim(dist_mat)</code></pre>
+<pre><code>## [1] 172 172</code></pre>
+<p>In the context of two cgMLST profiles, hamming distance can be calculated based on the number of allele differences across all loci. Hamming distances will be computed in an all vs all fashion to generate a pairwise distance matrix that will serve as the input for distance-based tree-building algorithms such as UPGMA and Neighbour-joining. We will visualize the clustering patterns in the distance matrix using the ComplexHeatmap package. We will also overlay serovar information to examine inter- and intra-serovar distances.</p>
+<pre><code># create column annotations for heatmap
+# to display serovar information
+heatmap_annot &lt;- metadata$serovar
+names(heatmap_annot) &lt;- metadata$ID
+heatmap_annot &lt;- heatmap_annot[order(factor(names(heatmap_annot),
+                                            levels = rownames(dist_mat)))]
+# create heatmap
+dist_mat %&gt;% 
+  Heatmap(
+    name = &quot;cgMLST\nDistance&quot;,
+    show_row_names = F, # do not display row labels
+    show_column_names = F, # do not display column labels
+    # use custom color gradient
+    col = colorRamp2(
+      c(min(dist_mat), mean(dist_mat), max(dist_mat)),
+      c(&quot;#7ece97&quot;, &quot;#eebd32&quot;, &quot;#f76c6a&quot;)
+    ),
+    # add column annotation to show serovar info
+    top_annotation = HeatmapAnnotation(
+      Serovar = heatmap_annot,
+      col = list(
+                    &quot;Serovar&quot; = structure(brewer.pal(length(unique(heatmap_annot)), &quot;Set1&quot;),
+                                                                names = unique(heatmap_annot))
+      )
+    )
+  )</code></pre>
+<p><img src="img/distance-matrix.png" /></p>
+</div>
+<div id="dendrogram-construction" class="section level3 hasAnchor">
+<h3>Dendrogram Construction<a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here you will construct a neighbour-joining (NJ) tree using the <code>nj()</code> function from the ape package. Alternatively, a UPGMA tree can be constructed by simply replacing <code>method = 'nj'</code> with <code>method = 'upgma'</code> in the code chunk below.</p>
+<p>To visualize the resulting dendrogram, you will interact with the R package <code>ggtree</code>, which offers an extensive suite of functions to manipulate, visualize, and annotate tree-like data structures. In this section, you will be introduced to the different visual capabilities of the <code>ggtree</code> package, and progressively update the same tree with several layers of visual annotations based on available metadata.</p>
+</div>
+<div id="a-simple-tree-vis" class="section level3 hasAnchor">
+<h3>A Simple Tree Vis<a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To start, run the following code chunk to plot a circular tree of the entire dataset with the tree tips colored by serovar information.</p>
+<p>You can assign a different metadata field to the <code>color_var</code> variable to update the mapping of the color aesthetics in the tree. For example setting <code>color_var = "Country"</code> will color the tree tips by the country of origin</p>
+<pre><code>##### EDITABLE VARIABLE #####
+color_var &lt;- &quot;serovar&quot;
+#############################
+
+# set random seed
+set.seed(123)
+# determine category count
+# in the color aes variable
+n_colors &lt;- length(unique(pull(metadata, !!sym(color_var))))
+# construct a core genome tree 
+# using nj algorithm
+cg_tree &lt;- distance_tree(
+  matrix = dist_mat,
+  method = &quot;nj&quot;
+)
+# plot core genome tree and
+# colouring the tree tips 
+# by color_var
+cg_tree_p &lt;- cg_tree %&gt;% 
+  ggtree(layout = &quot;circular&quot;,
+         size = 0.75) %&lt;+% metadata +
+  geom_tippoint(aes(color = !!sym(color_var)),
+                size = 2) +
+  guides(color = guide_legend(override.aes = list(size = 3) ) ) +
+  scale_color_manual(values = distinctColorPalette(n_colors))
+# print tree plot object
+cg_tree_p</code></pre>
+<p><img src="img/core-genome-tree.png" /></p>
+</div>
+<div id="clustering-by-distance" class="section level3 hasAnchor">
+<h3>Clustering by Distance<a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Identifying clusters of genomes sharing highly similar cgMLST profiles through the application of distance thresholds is a common practice in genomic surveillance and epidemiological investigations. Detecting novel clusters, comprising pathogen isolates from human clinical cases, can signal the emergence of an outbreak requiring a public health response and can provide important epidemiological insights on outbreak progression. Similarly, the co-clustering of outbreak isolates with isolates from food/environmental sources can help link the outbreak to possible sources/reservoirs of the pathogen in order to inform prevention and control measures.</p>
+<p>In this section, you will generate genomic clusters from the dataset by applying several distance cutoffs. You will then place clusters within the dendrogram and analyze cluster memberships to spot possible outbreaks in the dataset.</p>
+<pre><code># define clustering distance cutoffs
+dist_cutoff &lt;- c(0, seq(5, 100, 5), seq(200, 1000, 100))
+# perform complete linkage clustering
+hclust_res &lt;- map(dist_cutoff, function(x) {
+  dist_mat %&gt;% 
+    as.dist() %&gt;% 
+    hclust(method = &quot;complete&quot;) %&gt;% 
+    cutree(h = x) %&gt;% 
+    as.factor()
+})
+names(hclust_res) &lt;- paste0(&quot;clust_&quot;, dist_cutoff)
+# print clustering results table
+(
+  clusters &lt;- data.frame(hclust_res) %&gt;% 
+    rownames_to_column(&quot;ID&quot;)
+  )</code></pre>
+<p>Let’s now superimpose the clustering information on the previous tree to examine whether the above code chunk has generated sensible cluster assignments. Run the code chunk below to insert text labels that span across tree tips assigned to the same clusters at <u>a specified threshold</u>.</p>
+<p>You can update the <code>target_threshold</code> variable to examine how cluster membership changes in response to clustering distance cutoffs.</p>
+<pre><code>### EDITABLE VARIABLE ###
+target_threshold &lt;- 500
+#########################
+
+# variable to subset clusters
+target_variable &lt;- paste0(&quot;clust_&quot;, target_threshold)
+
+# create cluster group list object
+cluster_grp &lt;- clusters %&gt;% 
+  select(ID, target_variable) %&gt;%
+  group_by(!!sym(target_variable)) %&gt;% 
+  {setNames(group_split(.), group_keys(.)[[1]])} %&gt;% 
+  map(~pull(., ID))
+# sequester singleton clusters
+cluster_grp &lt;- cluster_grp[which(map_dbl(cluster_grp, ~length(.)) &gt; 1)]
+
+# create serovar group list object
+serovar_grp &lt;- metadata %&gt;% 
+  select(ID, serovar) %&gt;% 
+  split(f = as.factor(.$serovar)) %&gt;% 
+  map(~pull(., ID))
+
+# add cluster memberships and serovar information
+# to tree object
+cg_tree &lt;- groupOTU(cg_tree, cluster_grp, &#39;Clusters&#39;)
+cg_tree &lt;- groupOTU(cg_tree, serovar_grp, &#39;Serovars&#39;)
+
+# plot core genome tree where
+# colored blocks = clusters 
+# text annotations = serovars
+cg_tree %&gt;% 
+  ggtree(layout=&#39;circular&#39;, # tree shape
+         size = 1 # branch width
+  ) +
+  # add colored blocks to display serovars
+  geom_hilight(
+    mapping = aes(
+      node = node,
+      fill = Serovars,
+      subset = node %in% map_dbl(
+        serovar_grp,
+        ~getMRCA(cg_tree, .)
+        )
+      )
+    ) +
+  # add text annotations to display clusters
+  geom_cladelab(
+    mapping = aes(
+      node = node,
+      label = Clusters,
+      subset = node %in% map_dbl(
+        cluster_grp,
+        ~getMRCA(cg_tree, .)
+      )
+    ),
+    horizontal=T,
+    angle = &#39;auto&#39;,
+    barsize = 0.75,
+    offset = 50,
+    offset.text = 50,
+    align = T
+  ) +
+  # legend parameters
+  guides(fill = guide_legend(
+    nrow = 9,
+    override.aes = list(alpha = 0.8)
+    )
+  ) +
+  labs(fill = &quot;Serovar&quot;) +
+  scale_fill_brewer(palette = &quot;Paired&quot;)</code></pre>
+<p><img src="img/cg-tree-cluster.png" /></p>
+</div>
+<div id="cluster-analysis" class="section level3 hasAnchor">
+<h3>Cluster Analysis<a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In order to analyze the clustering patterns in the core genome tree at greater resolutions, you will work with a number of R functions introduced below. These functions are intended to be used in conjunction to zoom in on specific bacterial populations in the dataset that would empower you to explore the clonality and epidemiology of target strains.</p>
+<div id="serovar_subtree" class="section level4 hasAnchor">
+<h4>serovar_subtree<a href="module-5-bacterial-pathogen-genomic-analysis.html#serovar_subtree" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The purpose of the function <code>serovar_subtree</code> is to analyze subtrees of specific serovars. The target serovar to examine is defined by the <code>serovar_name</code> variable. Specifying a NULL value to the variable will display the entire tree.</p>
+<p>The serovar tree can be annotated with cluster information <u>at a specific threshold</u> in the form of tip-spanning text labels. The cluster membership annotations are defined by the variable, <code>distance_threshold</code>.</p>
+<pre><code># NOTE: there needs to be a comma at the end of each line!
+serovar_subtree(
+  tree = cg_tree,
+  serovar_name = NULL, # which serovar cluster to visualize?
+  distance_threshold = 10, # the dist threshold used for cluster definition?
+  color_by = &quot;serovar&quot;, # which metadata variable to color tree tips by?
+  color.tiplab = F, # whether to color tip labels
+  tip.size = 4, # size of tree tip point
+  label_vars = c(&quot;geo_loc&quot;, &quot;iso_date&quot;, &quot;iso_source&quot;), # metadata vars only
+  label.offset = 80, # distance between labels and tree tips
+  label.size = 5, # tree tip label text size
+  legend.x = 0.23, # legend position on x axis
+  legend.y = 0.9, # legend position on y axis
+  legend.size = 6, # legend text size
+  legend.ncat.per.col = 8, # number of categories to show per column in legend
+  hide.legend = F, # whether to hide colour legend
+  plot.xlim = 2300, # plot area width
+  annot.offset = 3, # distance between heatmap and tree tips
+  annot.textsize = 5, # heatmap x axis text label size
+  annot.barsize = 0.75, # annotation bar width
+  show.title = T # whether to display distance threshold
+)</code></pre>
+<pre><code># export tree to pdf format
+ggsave(&quot;serovar_subtree.pdf&quot;, height = 30, width = 16)</code></pre>
+</div>
+<div id="cluster_subtree" class="section level4 hasAnchor">
+<h4>cluster_subtree<a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster_subtree" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The purpose of the function <code>cluster_subtree</code> is to analyze subtrees of specific clusters defined at a given distance threshold. A cluster is defined by its ID and the distance threshold used for assignment, which are defined by the variables cluster_name and distance_threshold, respectively. Note that you will need to utilize the serovar_subtree to identify the IDs of clusters of interest.</p>
+<pre><code># NOTE: there needs to be a comma at the end of each line!
+cluster_subtree(
+  tree = cg_tree,
+  clusters = clusters,
+  distance_threshold = 25, # the dist threshold used for cluster definition?
+  cluster_name = &quot;1&quot;, # cluster ID to visualize?
+  color_by = &quot;country&quot;, # which metadata variable to color tree tips by?
+  color.tiplab = F, # whether to color tip labels
+  tip.size = 3, # size of tree tip point
+  legend.x = 0.1, # legend position on x axis
+  legend.y = 0.85, # legend position on y axis
+  legend.size = 5, # legend text size
+  legend.ncat.per.col = 8, # number of categories to show per column in legend
+  hide.legend = F, # whether to hide colour legend
+  plot.xlim = 30, # plot area width
+  label_vars = c(&quot;country&quot;, &quot;iso_date&quot;, &quot;iso_source&quot;), # metadata vars only
+  label.offset = 5.5, # distance between labels and tree tips
+  label.size = 4, # tree tip label text size
+  annot.offset = 0.1, # distance between heatmap and tree tips
+  annot.width = 0.4, # heatmap width
+  annot.textsize = 4, # heatmap x axis text label size
+  annot.nthreshold = 6 # number of clustering thresholds to display
+)</code></pre>
+<p><img src="img/cluster-subtree.png" /></p>
+</div>
+<div id="cluster_summary" class="section level4 hasAnchor">
+<h4>cluster_summary<a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster_summary" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The purpose of the function <code>cluster_summary</code> is to compare the distribution of the categorical data in the metadata between clusters defined at a distance threshold. For example, these comparisons can provide a global summary of the putative sources of origin and geographical spread of each genomic cluster.</p>
+<pre><code># NOTE: there needs to be a comma at the end of each line!
+cluster_summary(
+  distance_threshold = 10, # the dist threshold used for cluster definition?
+  serovar_name = NULL, # which serovar to include?
+  vars = c(&quot;geo_loc&quot;,&quot;iso_source&quot;, &quot;iso_date_ym&quot;), # metadata vars only
+  panel.ncol = 1, # number of columns to arrange the panels in
+  rm.low.freq.clust = T, # whether to remove low frequency (N &lt; 4) clusters
+  interactive = T # whether to generate interactive plots
+)</code></pre>
+</div>
+</div>
+<div id="investigating-local-core-genes" class="section level3 hasAnchor">
+<h3>Investigating Local Core Genes<a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code># identify a local core genome scheme
+# for a target cluster and build tree
+local_tree &lt;- local_cg_tree(
+  core_mlst = cgmlst_final,
+  full_mlst = cgmlst_lc,
+  distance_threshold = 100, # the dist threshold used for cluster definition?
+  cluster_name = &quot;10&quot;, # cluster ID to analyze?
+  core_threshold = 1, # minimum number of missing alleles allowed
+  method = &quot;nj&quot; # tree method: nj or upgma
+)
+# perform complete linkage clustering
+hclust_res_local &lt;- map(dist_cutoff, function(x) {
+  cophenetic.phylo(local_tree) %&gt;% 
+    as.dist() %&gt;% 
+    hclust(method = &quot;complete&quot;) %&gt;% 
+    cutree(h = x) %&gt;% 
+    as.factor()
+})
+names(hclust_res_local) &lt;- paste0(&quot;clust_&quot;, dist_cutoff)
+# create clusters data frame
+clusters_local &lt;- data.frame(hclust_res_local) %&gt;% 
+    rownames_to_column(&quot;ID&quot;)</code></pre>
+<pre><code>plot_subtree(
+  tree = local_tree,
+  clusters = clusters_local,
+  color_by = &quot;country&quot;, # which metadata variable to color tree tips by?
+  color.tiplab = F, # whether to color tip labels
+  tip.size = 3, # size of tree tip point
+  legend.x = 0.15, # legend position on x axis
+  legend.y = 0.85, # legend position on y axis
+  legend.size = 5, # legend text size
+  legend.ncat.per.col = 8, # number of categories to show per column in legend
+  hide.legend = F, # whether to hide colour legend
+  plot.xlim = 150, # plot area width
+  label_vars = c(&quot;country&quot;, &quot;iso_date&quot;, &quot;iso_source&quot;), # metadata vars only
+  label.offset = 25, # distance between labels and tree tips
+  label.size = 4, # tree tip label text size
+  annot.offset = 0.1, # distance between heatmap and tree tips
+  annot.width = 0.3, # heatmap width
+  annot.textsize = 4, # heatmap x axis text label size
+  annot.nthreshold = 6 # number of clustering thresholds to display
+)</code></pre>
+<p><img src="img/plot-local-cg-tree.png" /></p>
+</div>
+<div id="group-exercise" class="section level3 hasAnchor">
+<h3>Group Exercise<a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Review the cgMLST profiles before and after the removal of low quality genomes, and identify two samples that exceed &gt;1% unassigned alleles (i.e. with more than 26 unassigned alleles).</p></li>
+<li><p>Review the circular tree and identify which serovar(s) is/are not monophyletic (i.e. serovars that are distributed in multiple areas of the tree).</p></li>
+<li><p>Use one of the following functions or in combination: serovar_subtree(), cluster_subtree(), cluster_summary() to analyse one particular serovar and identify three clusters that likely correspond to different outbreaks.</p></li>
+<li><p>Identify genomic clusters that fit the following criteria and consider possible scenarios for interpretation of genomic data and epidemiological metadata:</p></li>
+</ol>
+<ol style="list-style-type: lower-alpha">
+<li>A genomic cluster comprising human clinical cases with similar geographical and temporal information</li>
+<li>A genomic cluster in which the human clinical cases are dispersed in geography and/or time</li>
+<li>A genomic cluster in which human clinical isolates cluster with non-human isolates from a particular source type</li>
+<li>A genomic cluster in which human clinical isolates cluster with non-human isolates from multiple source types.</li>
+<li>Genomes from different genomic clusters identified within a single putative outbreak that can be linked to a common source</li>
+</ol>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Is it important to analyze clusters at different distance cutoffs? Why?</p></li>
+<li><p>What functional products could be encoded by the accessory loci in the data?</p></li>
+</ol>
+<div class="callout-green">
+<span class="callout-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Lab Completed!</p>
+</div>
+<p>Congratulations! You have completed Lab 5!</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca/IDE_2023/blob/main/050-module-5.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

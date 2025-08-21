@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Module 2 | Infectious Disease Genomic Epidemiology 2023</title>
+  <meta name="description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Module 2 | Infectious Disease Genomic Epidemiology 2023" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+  <meta property="og:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="github-repo" content="bioinformaticsdotca/IDE_2023" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Module 2 | Infectious Disease Genomic Epidemiology 2023" />
+  
+  <meta name="twitter:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="twitter:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+
+<meta name="author" content="Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="module-1-introduction-to-genomic-epidemiology.html"/>
+<link rel="next" href="module-3-data-curation-and-data-sharing.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://bioinformaticsdotca.github.io/">
+ <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+ </a>
+<li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+<a href="./">
+ <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+ </a>
+<br>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Workshop Info</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#class-photo"><i class="fa fa-check"></i>Class Photo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-work"><i class="fa fa-check"></i>Pre-work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="meet-your-faculty.html"><a href="meet-your-faculty.html"><i class="fa fa-check"></i>Meet Your Faculty</a></li>
+<li class="chapter" data-level="" data-path="compute-setup.html"><a href="compute-setup.html"><i class="fa fa-check"></i>Compute Setup</a></li>
+<li class="part"><span><b>II Modules</b></span></li>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html"><i class="fa fa-check"></i>Module 1: Introduction to Genomic Epidemiology</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html#lecture"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-2.html"><a href="module-2.html"><i class="fa fa-check"></i>Module 2</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-2.html"><a href="module-2.html#lecture-phylogenetic-analysis"><i class="fa fa-check"></i>Lecture: Phylogenetic Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html"><i class="fa fa-check"></i>Module 3: Data Curation and Data Sharing</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lecture-1"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lab"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><i class="fa fa-check"></i>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-2"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis"><i class="fa fa-check"></i>Virus Short-Read Genome Assembly and Variant Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html"><i class="fa fa-check"></i>Module 5: Bacterial Pathogen Genomic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-3"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-setup"><i class="fa fa-check"></i>Lab Setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset"><i class="fa fa-check"></i>Analysis Dataset</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc"><i class="fa fa-check"></i>cgMLST QC</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality"><i class="fa fa-check"></i>Locus Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes"><i class="fa fa-check"></i>Defining Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality"><i class="fa fa-check"></i>Genome Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance"><i class="fa fa-check"></i>Hamming Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction"><i class="fa fa-check"></i>Dendrogram Construction</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis"><i class="fa fa-check"></i>A Simple Tree Vis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance"><i class="fa fa-check"></i>Clustering by Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis"><i class="fa fa-check"></i>Cluster Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes"><i class="fa fa-check"></i>Investigating Local Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise"><i class="fa fa-check"></i>Group Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<h1 id="sponsors">Sponsors</h1>
+<center>
+<a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+<a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+<br><br>
+<a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+<a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+<br><br>
+<a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Infectious Disease Genomic Epidemiology 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-2" class="section level1 hasAnchor">
+<h1>Module 2<a href="module-2.html#module-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-phylogenetic-analysis" class="section level2 hasAnchor">
+<h2>Lecture: Phylogenetic Analysis<a href="module-2.html#lecture-phylogenetic-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/t-COeK1ld1s?si=Mdi8pNoLYHWoh6JQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p><br></p>
+<iframe src="https://drive.google.com/file/d/10GXetSm55F0sF-xm2ZvWOndBUEEn4GEb/preview" width="640" height="480" allow="autoplay">
+</iframe>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-1-introduction-to-genomic-epidemiology.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-3-data-curation-and-data-sharing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca/IDE_2023/blob/main/020-module-2.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

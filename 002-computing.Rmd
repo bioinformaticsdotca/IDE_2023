@@ -1,0 +1,44 @@
+# Data and Compute Setup
+
+#### Course Data Downloads
+
+:::: {.callout type="blue" title="Note"}
+
+Some of these files are quite large. If you have issues downloading them, contact us at support@bioinformatics.ca.
+
+::::
+
+* [Unix]()
+* [Module 4]()
+* [Module 5]()
+* [Module 6]()
+* [Module 7]()
+* [Module 8]()
+* [Module 9]()
+
+#### Compute setup
+
+##### AWS Module
+
+Please follow the [instructions](https://bioinformaticsdotca.github.io/AWS_setup) to log into your AWS instance. <br>
+The content for our AWS/Unix review session on April 17th can be found [here](https://bioinformaticsdotca.github.io/AWS_IDE23). <br>
+The schedule for this session can be found [here](https://bioinformaticsdotca.github.io/AWS_IDE23_Schedule).
+
+##### AMI
+
+We have made our AWS AMI (Amazon Machine Image) publicly available. To launch your own instance, follow the instructions provided by Amazon on [how to launch an EC2 instance from a custom Amazon Machine Image](https://repost.aws/knowledge-center/launch-instance-custom-ami). Please note that you will need an AWS account to proceed, and that you will need to upload the CourseData files yourself.
+
+Here are the details of the AMI:
+
+* AWS Region: us-east-1 (N. Virgina)
+* AMI type: public image
+* AMI name: CBW_230416
+* AMI ID: ami-0b905fa1d1d233a17
+
+If you want to create and activate a new AWS account, please follow the [instructions](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/) provided by Amazon.
+
+##### Software
+
+For information on installing the necessary tools, please visit:
+
+[Tool Installation](https://bioinformaticsdotca.github.io/IDE_2023_tools)

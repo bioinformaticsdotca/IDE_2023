@@ -1,0 +1,184 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+
+\usepackage{color}
+\usepackage{framed}
+\setlength{\fboxsep}{.8em}
+
+% These colours were manually entered, they shouldn't matter unless you want pdf output
+
+\newenvironment{redbox}{
+  \definecolor{shadecolor}{RGB}{243, 154, 157}
+  \color{white}
+  \begin{shaded}}
+ {\end{shaded}}
+
+\newenvironment{bluebox}{
+  \definecolor{shadecolor}{RGB}{172, 210, 237}
+  \color{white}
+  \begin{shaded}}
+ {\end{shaded}}
+
+\newenvironment{greenbox}{
+  \definecolor{shadecolor}{RGB}{141, 181, 128}
+  \color{white}
+  \begin{shaded}}
+ {\end{shaded}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={NAME OF WORKSHOP YEAR},
+  pdfauthor={Faculty: INSTRUCTOR AND TA NAMES},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{NAME OF WORKSHOP YEAR}
+\author{Faculty: INSTRUCTOR AND TA NAMES}
+\date{DATES}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\part{Introduction}\label{part-introduction}
+
+\chapter{Workshop Info}\label{workshop-info}
+
+Welcome to the YEAR WORKSHOP Canadian Bioinformatics Workshop webpage!
+
+\section{Schedule}\label{schedule}
+
+\section{Pre-work}\label{pre-work}
+
+\chapter{Meet Your Faculty}\label{meet-your-faculty}
+
+\subsubsection{William Hsiao}\label{william-hsiao}
+
+\begin{quote}
+Associate Professor
+Faculty of Health Sciences, Simon Fraser University
+Vancouver, BC, CA
+
+--- \href{mailto:wwhsiao@sfu.ca}{\nolinkurl{wwhsiao@sfu.ca}}
+www.cidgoh.ca
+\end{quote}
+
+William Hsiao is a public health infectious disease researcher with a background in microbial
+genomics and bioinformatics. He is an associate professor in the Faculty of Health Sciences at
+Simon Fraser University and an affiliated researcher at BCCDC Public Health Laboratory and at
+Canada's Michael Smith Genome Sciences Centre. Will leads an interdisciplinary group of
+researchers interested in solving practical public health and animal health problems through a
+One Health lens at the Centre for Infectious Disease Genomics and One Health.
+
+\chapter{Data and Compute Setup}\label{data-and-compute-setup}
+
+\subsubsection{Course data downloads}\label{course-data-downloads}
+
+Coming soon!
+
+\subsubsection{Compute setup}\label{compute-setup}
+
+Coming soon!
+
+\part{Modules}\label{part-modules}
+
+\chapter{Module 1}\label{module-1}
+
+\section{Lecture}\label{lecture}
+
+\section{Lab}\label{lab}
+
+\chapter{Module 2}\label{module-2}
+
+\section{Lecture}\label{lecture-1}
+
+\section{Lab}\label{lab-1}
+
+\chapter{Module 3}\label{module-3}
+
+\section{Lecture}\label{lecture-2}
+
+\section{Lab}\label{lab-2}
+
+\chapter{Module 4}\label{module-4}
+
+\section{Lecture}\label{lecture-3}
+
+\section{Lab}\label{lab-3}
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}

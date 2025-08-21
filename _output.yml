@@ -1,0 +1,57 @@
+bookdown::gitbook:
+  css: style.css # This is how bookdown knows to look at style.css for formatting
+  pandoc_args:
+    - "--lua-filter=callouts.lua"
+  includes:                             # <<< ADDED/ENSURED THIS SECTION
+    in_header:                           # <<<
+      - fa-header.html                   # <<<
+  config:
+    toc: # Table of Contents
+      collapse: subsection
+      before: |
+        <a href="https://bioinformaticsdotca.github.io/">
+         <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+         </a>
+        <li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+        <a href="./">
+         <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+         </a>
+        <br>
+
+      after: |
+        <h1 id="sponsors">Sponsors</h1>
+        <center>
+        <a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+        <a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+        <br><br>
+        <a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+        <a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+        <br><br>
+        <a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+    # YOU MUST REPLACE THE LINK BELOW - This is a link to your index.Rmd on your GitHub repo, which allows people to make suggestions
+    edit: https://github.com/bioinformaticsdotca/IDE_2023/blob/main/%s # Go to your index.Rmd page on GitHub, copy and paste the link to it, and add
+    # Steps:
+    # 1. Go to your index.Rmd page on GitHub, Copy and paste the link to it.
+    # 2. Copy and paste the link to it, excluding the "index.Rmd" ending.
+    # 3. Add "/%s" to the ending.
+    # 4. Replace the above link.
+
+    download: ["pdf", "epub"]
+  number_sections: false
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
+bookdown::html_document2:
+  css: style.css                         # <<< ADDED/ENSURED css line
+  pandoc_args:
+    - "--lua-filter=callouts.lua"
+  includes:                             # <<< ADDED/ENSURED THIS SECTION
+    in_header:                           # <<<
+      - fa-header.html                   # <<<

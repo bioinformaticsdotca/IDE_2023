@@ -1,0 +1,19 @@
+# Module 3: Data Curation and Data Sharing
+
+## Lecture
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/5Uv4adwR4vs?si=Yi6riZ0uNK0Hr00c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<br>
+
+<iframe src="https://drive.google.com/file/d/1mcQodmVjrKXez8QCojPN_cg-u-vwMnHL/preview" width="640" height="480" allow="autoplay"></iframe>
+
+## Lab
+
+<iframe src="https://drive.google.com/file/d/19ZdLm4XfTBC9MkCwCnmtMQkbuPv_rdQm/preview" width="640" height="480" allow="autoplay"></iframe>
+
+:::: {.callout type="green" title="Lab Completed!"}
+
+Congratulations! You have completed Lab 3!
+
+::::

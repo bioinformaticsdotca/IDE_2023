@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Module 7: Phylodynamics and Transmission Dynamics | Infectious Disease Genomic Epidemiology 2023</title>
+  <meta name="description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Module 7: Phylodynamics and Transmission Dynamics | Infectious Disease Genomic Epidemiology 2023" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+  <meta property="og:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="github-repo" content="bioinformaticsdotca/IDE_2023" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Module 7: Phylodynamics and Transmission Dynamics | Infectious Disease Genomic Epidemiology 2023" />
+  
+  <meta name="twitter:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="twitter:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+
+<meta name="author" content="Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="module-6-antimicrobial-resistant-gene-amr-analysis.html"/>
+<link rel="next" href="module-8-emerging-pathogen-detection-and-identification.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://bioinformaticsdotca.github.io/">
+ <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+ </a>
+<li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+<a href="./">
+ <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+ </a>
+<br>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Workshop Info</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#class-photo"><i class="fa fa-check"></i>Class Photo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-work"><i class="fa fa-check"></i>Pre-work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="meet-your-faculty.html"><a href="meet-your-faculty.html"><i class="fa fa-check"></i>Meet Your Faculty</a></li>
+<li class="chapter" data-level="" data-path="data-and-compute-setup.html"><a href="data-and-compute-setup.html"><i class="fa fa-check"></i>Data and Compute Setup</a></li>
+<li class="part"><span><b>II Modules</b></span></li>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html"><i class="fa fa-check"></i>Module 1: Introduction to Genomic Epidemiology</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html#lecture"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html"><i class="fa fa-check"></i>Module 2: Phylogenetic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#lecture-1"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#aws-setup"><i class="fa fa-check"></i>AWS Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html"><i class="fa fa-check"></i>Module 3: Data Curation and Data Sharing</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lecture-2"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lab"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><i class="fa fa-check"></i>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-3"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis"><i class="fa fa-check"></i>Virus Short-Read Genome Assembly and Variant Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html"><i class="fa fa-check"></i>Module 5: Bacterial Pathogen Genomic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-4"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#setup"><i class="fa fa-check"></i>Setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#background"><i class="fa fa-check"></i>Background</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset"><i class="fa fa-check"></i>Analysis Dataset</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc"><i class="fa fa-check"></i>cgMLST QC</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality"><i class="fa fa-check"></i>Locus Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes"><i class="fa fa-check"></i>Defining Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality"><i class="fa fa-check"></i>Genome Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance"><i class="fa fa-check"></i>Hamming Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction"><i class="fa fa-check"></i>Dendrogram Construction</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis"><i class="fa fa-check"></i>A Simple Tree Vis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance"><i class="fa fa-check"></i>Clustering by Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis"><i class="fa fa-check"></i>Cluster Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes"><i class="fa fa-check"></i>Investigating Local Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise"><i class="fa fa-check"></i>Group Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html"><i class="fa fa-check"></i>Module 6: Antimicrobial Resistant Gene (AMR) Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lecture-5"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lab-3"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#card-website-and-antibiotic-resistance-ontology"><i class="fa fa-check"></i>CARD Website and Antibiotic Resistance Ontology</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-genome-analysis"><i class="fa fa-check"></i>RGI for Genome Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-at-the-command-line"><i class="fa fa-check"></i>RGI at the Command Line</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-merged-metagenomic-reads"><i class="fa fa-check"></i>RGI for Merged Metagenomic Reads</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#metagenomic-sequencing-reads-and-the-kma-algorithm"><i class="fa fa-check"></i>Metagenomic Sequencing Reads and the KMA Algorithm</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#pathogen-of-origin-prediction"><i class="fa fa-check"></i>Pathogen of Origin Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html"><i class="fa fa-check"></i>Module 7: Phylodynamics and Transmission Dynamics</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lecture-6"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lab-4"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#introduction-2"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#list-of-software-for-tutorial"><i class="fa fa-check"></i>2. List of Software for Tutorial</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#exercise-setup"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#phylodynamics-analysis"><i class="fa fa-check"></i>4. Phylodynamics Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata"><i class="fa fa-check"></i>5. Visualizing the Phylodynamic Analysis Alongside Epidemiological Metadata</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#selection-analysis"><i class="fa fa-check"></i>6. Selection Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html"><i class="fa fa-check"></i>Module 8: Emerging Pathogen Detection and Identification</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#lecture-7"><i class="fa fa-check"></i>Lecture</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#introduction-3"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#list-fo-software-for-tutorial-and-its-respective-documentation"><i class="fa fa-check"></i>2. List fo Software for Tutorial and its Respective Documentation</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise-setup-1"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise"><i class="fa fa-check"></i>4. Exercise</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#final-words"><i class="fa fa-check"></i>5. Final words</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><i class="fa fa-check"></i>Keynote Lecture | Follow That Virus!: Genomics Leading the Way</a>
+<ul>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html#lecture-8"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><i class="fa fa-check"></i>Module 9: Mobile Genetic Elements and Environmental Microbiome</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lecture-9"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lab-5"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="divider"></li>
+<h1 id="sponsors">Sponsors</h1>
+<center>
+<a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+<a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+<br><br>
+<a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+<a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+<br><br>
+<a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Infectious Disease Genomic Epidemiology 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-7-phylodynamics-and-transmission-dynamics" class="section level1 hasAnchor">
+<h1>Module 7: Phylodynamics and Transmission Dynamics<a href="module-7-phylodynamics-and-transmission-dynamics.html#module-7-phylodynamics-and-transmission-dynamics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-6" class="section level2 hasAnchor">
+<h2>Lecture<a href="module-7-phylodynamics-and-transmission-dynamics.html#lecture-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/XiIHgw269-A?si=REI7lCf1DRB9jZz3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p><br></p>
+<iframe src="https://drive.google.com/file/d/1WfJR3mojbYPN4Gm157cc99ZkUZrBD5uU/preview" width="640" height="480" allow="autoplay">
+</iframe>
+</div>
+<div id="lab-4" class="section level2 hasAnchor">
+<h2>Lab<a href="module-7-phylodynamics-and-transmission-dynamics.html#lab-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introduction-2" class="section level3 hasAnchor">
+<h3>1. Introduction<a href="module-7-phylodynamics-and-transmission-dynamics.html#introduction-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this tutorial we will be using phylogenetics and metadata to try and better understand the underlying evolutionary, ecological, and epidemiological processes of the SARS-CoV-2 pathogen. This is a field of study and methodology known as phylodynamics.</p>
+<p>We will be focusing on 3 types of analysis using a dataset derived from the following study which found evidence of SARS-CoV-2 spilling over from human infections into wildlife, evolving within wildlife, and then infecting a human:</p>
+<div class="callout-yellow-subtle">
+<span class="callout-icon"><i class="fas fa-bell" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Published Paper</p>
+</div>
+<p>Pickering<em>, B., Lung</em>, O., Maguire*, F., et al. Divergent SARS-CoV-2 variant emerges in white-tailed deer with deer-to-human transmission Nat Microbiol 7, 2011-2024 (2022). <a href="https://doi.org/10.1038/s41564-022-01268-9" class="uri">https://doi.org/10.1038/s41564-022-01268-9</a></p>
+</div>
+</div>
+<p>These analyses are:</p>
+<ul>
+<li>Inferring a molecular clock model to estimate when deer were infected with a specific SARS-CoV-2 lineage</li>
+<li>Ancestral state reconstruction to identify where this took place</li>
+<li>Inference of episodic selection related to this zoonoses</li>
+</ul>
+<p>Now the big caveat here is that a lot of these analyses (including some of the more classic epidemiological parameter estimation phylodynamics) are typically done using a Bayesian framework such as <a href="http://www.beast2.org/">BEAST</a>. However, these can be quite challenging to run from a logistics perspective in the context of a practical. To this end, we are instead going to focus on the more “quick and dirty” maximum likelihood approaches using tools designed more for the scale of SARS-CoV-2 genomics data.</p>
+<p>If you are interested in phylodynamics more deeply, I recommend checking out some of the semi-regularly held “<a href="https://taming-the-beast.org/workshops/Taming-the-BEAST-Online/">Taming the BEAST</a>” workshops and the tutorials shared by the <a href="http://www.beast2.org/tutorials/">BEAST Developers</a>. Paul Lewis’ <a href="http://phyloseminar.org/recorded.html">phyloseminar.org</a> lectures on Bayesian phylogenetics (<a href="https://www.youtube.com/watch?v=4PWlnNsfz90">part 1</a> and <a href="https://www.youtube.com/watch?v=TLtOS--YwkU">part 2</a>) are also an excellent place to start to learn the basic theory of Bayesian methods.</p>
+</div>
+<div id="list-of-software-for-tutorial" class="section level3 hasAnchor">
+<h3>2. List of Software for Tutorial<a href="module-7-phylodynamics-and-transmission-dynamics.html#list-of-software-for-tutorial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><a href="https://docs.nextstrain.org/projects/augur/en/stable/index.html">Augur</a></li>
+<li><a href="https://mafft.cbrc.jp/alignment/software/">mafft</a></li>
+<li><a href="http://www.iqtree.org/">iqtree</a></li>
+<li><a href="https://treetime.readthedocs.io/en/latest/">treetime</a></li>
+<li><a href="https://auspice.us/">Auspice</a></li>
+<li><a href="http://hyphy.org/">HyPhy</a></li>
+<li><a href="http://hyphy.org/methods/selection-methods/">aBSREL</a></li>
+</ul>
+</div>
+<div id="exercise-setup" class="section level3 hasAnchor">
+<h3>3. Exercise Setup<a href="module-7-phylodynamics-and-transmission-dynamics.html#exercise-setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="copy-data-files" class="section level4 hasAnchor">
+<h4>3.1. Copy Data Files<a href="module-7-phylodynamics-and-transmission-dynamics.html#copy-data-files" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>To begin, we will copy over the necesssary files to <code>~/workspace</code>.</p>
+<p><strong>Commands</strong></p>
+<pre><code>cp -r ~/CourseData/IDE_data/module8/ ~/workspace
+cd ~/workspace/module8</code></pre>
+<p>When you are finished with these steps you should be inside the directory <code>/home/ubuntu/workspace/module8</code>. You can verify this by running the command <code>pwd.</code></p>
+<p><strong>Output after running</strong> <code>pwd</code></p>
+<pre><code>/home/ubuntu/workspace/module8</code></pre>
+<p>You should also see a directory <code>data</code>/ in the current directory which contains all the input data. You can verify this by running <code>ls data</code>:</p>
+<p><strong>Output after running</strong> <code>ls data</code></p>
+<pre><code>sequences.fasta     metadata.tsv     reference_MN908947.3.fasta     S.xml</code></pre>
+</div>
+<div id="activate-environment" class="section level4 hasAnchor">
+<h4>3.2. Activate Environment<a href="module-7-phylodynamics-and-transmission-dynamics.html#activate-environment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Next we will activate the <a href="https://docs.conda.io/en/latest/">conda</a> environment, which will have all the tools needed by this tutorial pre-installed. To do this please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code>conda activate signalcovtools</code></pre>
+<p>You should see the command-prompt (where you type commands) switch to include (<code>signalcovtools</code>) at the beginning, showing you are inside this environment. You should also be able to run the <code>augur</code> command like <code>augur --version</code> and see output:</p>
+<p><strong>Output after running</strong> <code>augur --version</code></p>
+<pre><code>augur 24.3.0</code></pre>
+</div>
+<div id="find-your-ip-address" class="section level4 hasAnchor">
+<h4>3.3. Find your IP Address<a href="module-7-phylodynamics-and-transmission-dynamics.html#find-your-ip-address" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Similar to yesterday, we will want to either use the assigned hostname (e.g., xx.uhn-hpc.ca where xx is your instance number) or find the IP address of your machine on AWS so we can access some files from your machine on the web browser. To find your IP address you can run:</p>
+<p><strong>Commands</strong></p>
+<pre><code>curl http://checkip.amazonaws.com</code></pre>
+<p>This should print a number like XX.XX.XX.XX. Once you have your address, try going to <a href="http://xx.uhn-hpc.ca" class="uri">http://xx.uhn-hpc.ca</a> or <a href="http://IP-ADDRESS" class="uri">http://IP-ADDRESS</a> and clicking the link for <strong>module8</strong>. This page will be referred to later to view some of our output files. In addition, the link <strong>precomputed-analysis</strong> will contain all the files we will generate during this lab (phylogenetic trees, etc).</p>
+</div>
+</div>
+<div id="phylodynamics-analysis" class="section level3 hasAnchor">
+<h3>4. Phylodynamics Analysis<a href="module-7-phylodynamics-and-transmission-dynamics.html#phylodynamics-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The overall goal of this lab is to make use of a set of SARS-CoV-2 genomes sequenced and analyzed in the above study and then use associated metadata and phylodynamic methods to gain insight into where and when the zoonoses most likely occurred (and their evolutionary impact). To do this, we will mostly make use of the <a href="https://docs.nextstrain.org/projects/augur/en/stable/index.html">Augur</a> tool suite, which powers the <a href="https://nextstrain.org/">NextStrain</a> website. Within augur, the key tool actually being used for most of our inferences is <a href="https://treetime.readthedocs.io/en/latest/">TreeTime</a> a likelihood based tool for inferring molecular clocks and ancestral traits.</p>
+<p>An overview of the basic usage of Augur (figure from the Augur documentation):</p>
+<p><img src="img/augur_analysis_sketch.png" /></p>
+<p>The steps/functions we use are in this lab are the following:</p>
+<ul>
+<li><strong>align</strong>: This step constructs a multiple sequence alignment from this subset of genomes</li>
+<li><strong>tree</strong>: This step builds a phylogenetic tree, where branch lengths are measured in substitutions/site (a divergence tree)</li>
+<li><strong>refine</strong>: This step constructs a time tree using our existing tree alongside collection dates of SARS-CoV-2 genomic samples (branch lengths are measured in time)</li>
+<li><strong>traits</strong>: This step uses treetime’s mugration model to infer ancestral traits based on the tree. We will use this to infer ancestral host and geography</li>
+<li><strong>export</strong>: This step exports the data to be used by <a href="https://auspice.us/">Auspice</a>, a version of the visualization system used by NextStrain that lets you examine your own phylogenetic tree and metadata</li>
+</ul>
+<p>Once these steps are completed, we will spend some time comparing the phylogenetic tree and epidemiological metadata to the results published in the existing study.</p>
+<div id="step-1-construct-a-multiple-sequence-alignment-of-the-genomes-augur-align" class="section level4 hasAnchor">
+<h4>Step 1: Construct a Multiple Sequence Alignment of the Genomes (<code>augur align</code>)<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-1-construct-a-multiple-sequence-alignment-of-the-genomes-augur-align" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The first step is to construct a multiple sequence alignment of the genomes, which is required before building a phylogenetic tree. We will be using the command <code>augur align</code> to accomplish this task, but underneath this runs <a href="https://mafft.cbrc.jp/alignment/software/">mafft</a> to construct the alignment.</p>
+<p>To construct the alignment, please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 10 seconds
+augur align --nthreads 2 --sequences data/sequences.fasta --reference-sequence data/reference_MN908947.3.fasta --output alignment.fasta</code></pre>
+<p>You should expect to see the following:</p>
+<p><strong>Output</strong></p>
+<pre><code>using mafft to align via:
+        mafft --reorder --anysymbol --nomemsave --adjustdirection --thread 2 alignment.to_align.fasta 1&gt; alignmnt.fasta 2&gt; alignment.fasta.log
+
+        Katoh et al, Nucleic Acid Research, vol 30, issue 14
+        https://doi.org/10.1093%r%2Fgkf436
+
+12bp insertion at ref position 6377
+        TGCGTGCGTCGG: hCoV-19/mink/USA/MI-CDC-3886779-001/2020, hCoV-19/mink/USA/MI-CDC-3886954-001/2020, hCoV-19/mink/USA/MI-CDC-3886891-001/2020, hCoV-19/mink/USA/MI-CDC-3886516-001/2020, hCoV-19/Canada/ON-PHL-21-44225/2021, hCoV-19/deer/Canada/ON-WTD-04581-2582/2021, hCoV-19/deer/Canada/ON-WTD-04658-2372/2021, hCoV-19/deer/Canada/ON-WTD-wcov-04662-2575/2021
+Trimmed gaps in MN908947.3 from the alignment</code></pre>
+<p>The meaning of each parameter:</p>
+<ul>
+<li><code>--nthreads 2</code>: Use 2 threads for the alignment.</li>
+<li><code>--sequences data/sequences.fasta</code>: The input set of sequences in FASTA format.</li>
+<li><code>--output alignment.fasta</code>: The output alignment, in FASTA format.</li>
+<li><code>--reference-sequence data/reference_MN908947.3.fasta</code>: The reference genome (the Wuhan-Hu 1 genome). This will be included in our alignment and <code>augur align</code> will, once the alignment is constructed, remove any insertions with respect to this reference genome (useful when identifying and naming specific mutations later on in the augur pipeline).</li>
+</ul>
+<p>Once the alignment is complete, you should have a file <code>alignment.fasta</code> in your directory. This is a very similar format as the input file <code>sequences.fasta</code>, but the difference is that sequences have been aligned (possibly by inserting gaps <code>-</code>). This also means that all sequences in <code>alignment.fasta</code> should have the same length (whereas sequences in <code>sequences.fasta</code>, which is not aligned, may have different lengths).</p>
+</div>
+<div id="step-2-build-a-maximum-liklihood-phylogenetic-tree-augur-tree" class="section level4 hasAnchor">
+<h4>Step 2: Build a Maximum Liklihood Phylogenetic Tree (<code>augur tree</code>)<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-2-build-a-maximum-liklihood-phylogenetic-tree-augur-tree" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The next step is to take the set of aligned genomes <code>alignment.fasta</code> and build a phylogenetic tree (a divergence tree). We will use <code>augur tree</code> for this, but underneath it (by default) runs <a href="http://www.iqtree.org/">iqtree</a>, which uses the Maximum Likelihood method (discussed in Module 2) to infer a phylogenetic tree. To build a tree, please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 15 seconds
+augur tree --nthreads 4 --alignment alignment.fasta --output tree.subs.nwk</code></pre>
+<p>You should expect to see this (or very similar) output:</p>
+<p><strong>Output</strong></p>
+<pre><code>Building a tree via:
+        iqtree2 -ntmax 4 -s alignment-delim.fasta -m GTR -ninit 2 -n 2 -me 0.05 -nt AUTO -redo &gt; alignment-delim.iqtree.log
+        Nguyen et al: IQ-TREE: A fast and effective stochastic algorithm for estimating maximum likelihood phylogenies.
+        Mol. Biol. Evol., 32:268-274. https://doi.org/10.1093/molbev/msu300
+
+
+Building original tree took 11.159646034240723 seconds</code></pre>
+<p>This produces as output a <code>tree.subs.nwk</code> file, which is the actual phylogenetic tree (in Newick format). You can load this file in a variety of phylogenetic tree viewers (such as <a href="http://phylo.io/" class="uri">http://phylo.io/</a>) but we will further refine this file to work with Auspice.</p>
+<p>Another output file is <code>alignment-delim.iqtree.log</code>, which contains additional information from iqtree. You can take a look at this file to get an idea of what <a href="http://www.iqtree.org/">iqtree</a> was doing by using <code>tail</code> (prints the last few lines of a file).</p>
+<p><strong>Commands</strong></p>
+<pre><code>tail -n 20 alignment-delim.fasta.log</code></pre>
+<p><strong>Output</strong></p>
+<pre><code>Optimal log-likelihood: -42013.225
+Rate parameters:  A-C: 0.16166  A-G: 0.97768  A-T: 0.06332  C-G: 0.00010  C-T: 6.44146  G-T: 1.00000
+Base frequencies:  A: 0.299  C: 0.183  G: 0.197  T: 0.322
+Parameters optimization took 1 rounds (0.006 sec)
+BEST SCORE FOUND : -42013.225
+Total tree length: 0.006
+
+Total number of iterations: 2
+CPU time used for tree search: 0.083 sec (0h:0m:0s)
+Wall-clock time used for tree search: 0.043 sec (0h:0m:0s)
+Total CPU time used: 20.087 sec (0h:0m:20s)
+Total wall-clock time used: 11.073 sec (0h:0m:11s)
+
+Analysis results written to:
+  IQ-TREE report:                alignment-delim.fasta.iqtree
+  Maximum-likelihood tree:       alignment-delim.fasta.treefile
+  Likelihood distances:          alignment-delim.fasta.mldist
+  Screen log file:               alignment-delim.fasta.log</code></pre>
+<p>As iqtree uses a Maximum Likelihood approach, you will see that it will report the likeihood score of the optimal tree (reported as log-likehoods since likelihood values are very very small).</p>
+<div class="callout-blue">
+<span class="callout-icon"><i class="fas fa-circle-info" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Note</p>
+</div>
+<p>For this lab we are not looking at branch support values for a tree, but for real-world analysis you may wish to look into including bootstrap support values or approximate likelihood ratio test values. This will give a measure of how well supported each branch in the tree is by the alignment (often a number from 0 for little support to 100 for maximal support). Please see the IQTree documentation for more details.</p>
+</div>
+</div>
+</div>
+<div id="step-3-inferring-timing-of-host-change-augur-refine" class="section level4 hasAnchor">
+<h4>Step 3: Inferring Timing of Host Change (<code>augur refine</code>)<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-3-inferring-timing-of-host-change-augur-refine" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The tree output by <a href="http://www.iqtree.org/">iqtree</a> shows hypothetical evolutionary relationships between different SARS-CoV-2 genomes with branch lengths representing distances between different genomes (in units of <strong>substitutions/site</strong> i.e., the predicted number of substitutions between genomes divided by the alignment length). However, other methods of measuring distance between genomes are possible. In particular we can incorporate the collection dates of the different SARS-CoV-2 genomes to infer a tree where branches are scaled according to the elapsed time and the dates of internal nodes are inferred. Such trees are called <strong>time trees</strong>.</p>
+<p>We will use <a href="https://treetime.readthedocs.io/en/latest/">TreeTime</a> to infer a <strong>time tree</strong> from our phylogenetic tree using collection dates of the SARS-CoV-2 genomes stored in the <code>metadata.tsv</code> metadata file. We will use the <code>augur refine</code> step to run TreeTime and perform some additional refinemint of the tree. To do this, please run the following:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 5 minutes
+augur refine --alignment alignment.fasta --tree tree.subs.nwk --metadata data/metadata.tsv --timetree --divergence-units
+mutations --output-tree tree.time.nwk --output-node-data refine.node.json --keep-root</code></pre>
+<p>You should expect to see the following as output:</p>
+<p><strong>Output</strong></p>
+<pre><code>augur refine is using TreeTime version 0.9.4
+
+21.73   WARNING: Previous versions of TreeTime (&lt;0.7.0) RECONSTRUCTED sequences of
+        tips at positions with AMBIGUOUS bases. This resulted in unexpected
+        behavior is some cases and is no longer done by default. If you want to
+        replace those ambiguous sites with their most likely state, rerun with
+        `reconstruct_tip_states=True` or `--reconstruct-tip-states`.
+[...]
+
+Inferred a time resolved phylogeny using TreeTime:
+        Sagulenko et al. TreeTime: Maximum-likelihood phylodynamic analysis
+        Virus Evolution, vol 4, https://academic.oup.com/ve/article/4/1/vex042/4794731
+
+updated tree written to tree.time.nwk
+node attributes written to refine.node.json</code></pre>
+<p>The parameters we used are:</p>
+<ul>
+<li><code>--alignment alignment.fasta</code>: The alignment used to build the tree. Used to re-scale the divergence units.</li>
+<li>–tree tree.subs.nwk: The input tree build using iqtree.</li>
+<li>–metadata data/metadata.tsv: The metadata which contains the SARS-CoV-2 genome names (in a column called strain) and the sample collection dates (in a column named date).</li>
+<li>–timetree: Build a time tree.</li>
+<li>–divergence-units mutations: Convert the branch lengths of substitutions/site (mutations/site) to mutations (not needed to build a time tree, this is just used for visualizing the tree later on).</li>
+<li>–output-tree tree.time.nwk: The output Newick file containing the time tree.</li>
+<li>–output-node-data refine.node.json: Augur will store additional information here which will let us convert between time trees and substitution trees.</li>
+<li>–keep-root: Keep the reference genome as the root</li>
+</ul>
+<p>As output, the file <code>tree.time.nwk</code> will contain the time tree while the file <code>refine.node.json</code> contains additional information about the tree. The tree <code>tree.time.nwk</code> will also be rooted based on analysis performed by <a href="https://treetime.readthedocs.io/en/latest/">TreeTime</a>.</p>
+</div>
+<div id="step-4-infer-ancestral-states-for-host-and-location" class="section level4 hasAnchor">
+<h4>Step 4: Infer Ancestral States for Host and Location<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-4-infer-ancestral-states-for-host-and-location" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We will now be using treetime’s <code>mugration</code> model to reconstruct ancestral trait states. In other words, we are trying to use the tree and genome metadata to reconstruct the most likely host and location (the state/province stored as <code>division</code> in data/metadata.tsv) at each of the internal nodes in the tree. As with the other analyses, augur makes this process very convenient:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 1 minute
+augur traits --tree tree.time.nwk --metadata data/metadata.tsv --columns host division --output-node-data trait.node.json</code></pre>
+<p>You should expect to see the following as output:</p>
+<p><strong>Output</strong></p>
+<pre><code>augur traits is using TreeTime version 0.9.4
+Assigned discrete traits to 31 out of 35 taxa.
+
+NOTE: previous versions (&lt;0.7.0) of this command made a &#39;short-branch
+length assumption. TreeTime now optimizes the overall rate numerically
+and thus allows for long branches along which multiple changes
+accumulated. This is expected to affect estimates of the overall rate
+while leaving the relative rates mostly unchanged.
+Assigned discrete traits to 31 out of 35 taxa.
+
+[...]
+
+Inferred ancestral states of discrete character using TreeTime:
+        Sagulenko et al. TreeTime: Maximum-likelihood phylodynamic analysis
+        Virus Evolution, vol 4, https://academic.oup.com/ve/article/4/1/vex042/4794731
+
+results written to trait.node.json</code></pre>
+<p>The parameters we used are:</p>
+<ul>
+<li><code>--tree tree.time.nwk</code>: The time-calibrated tree we inferred in step 4</li>
+<li><code>--metadata data/metadata.tsv</code>: The metadata file with information about the genomes in the tree</li>
+<li><code>--columns host division</code>: The columns in the metadata file we want to infer ancestral states for, in this case host (what species the genome came from) and division (the province/state the genome came from).</li>
+<li><code>--output-node-data trait.node.json</code>: Augur stores the additional information related to the ancestral trait inference for later visualisation.</li>
+</ul>
+</div>
+<div id="step-5-package-up-data-for-auspice-visualisation-augur-export" class="section level4 hasAnchor">
+<h4>Step 5: Package up data for Auspice Visualisation (<code>augur export</code>)<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-5-package-up-data-for-auspice-visualisation-augur-export" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We will be using <a href="https://auspice.us/">Auspice</a> to visualize the tree alongside our metadata. To do this, we need to package up all of the data we have so far into a special file which can be used by Auspice. To do this, please run the following command:</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 1 second
+augur export v2 --tree tree.time.nwk --node-data refine.node.json trait.node.json --maintainers &quot;CBW-IDE-2024&quot; --title &quot;Module 8 Practical&quot; --output analysis-package.json --geo-resolutions division</code></pre>
+<p>You should expect to see the following as output:</p>
+<p><strong>Output</strong></p>
+<pre><code>Trait &#39;host&#39; was guessed as being type &#39;categorical&#39;. Use a &#39;config&#39; file if you&#39;d like to set this yourself.
+Trait &#39;division&#39; was guessed as being type &#39;categorical&#39;. Use a &#39;config&#39; file if you&#39;d like to set this yourself.
+Validating produced JSON
+Validating schema of &#39;analysis-package.json&#39;...
+Validating that the JSON is internally consistent...
+Validation of &#39;analysis-package.json&#39; succeeded.</code></pre>
+<p>The file <code>analysis-package.json</code> contains the tree with different branch length units (time and sustitutions), our inferred ancestral traits, as well as additional data.</p>
+<p>The parameters we used are:</p>
+<ul>
+<li><code>--tree tree.time.nwk</code>: The time-calibrated tree we inferred in step 4</li>
+<li><code>--node-data refine.node.json trait.node.json</code>: The 2 jsons created during the temporal and ancestral trait inference</li>
+<li><code>--title "Module 8 Practical"</code>: A title for the auspice page, you can make this anything you want.</li>
+<li>-<code>-maintainers "CBW-IDE-2024"</code>: A name for who is responsible for this analysis, useful for later, can make this anything you want.</li>
+<li><code>--geo-resolutions division</code>: Spatial resolution on which to plot the data. In this case we want province/state i.e., division</li>
+<li><code>--output analysis-package.json</code>: The key output file we want to generate</li>
+</ul>
+</div>
+</div>
+<div id="visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata" class="section level3 hasAnchor">
+<h3>5. Visualizing the Phylodynamic Analysis Alongside Epidemiological Metadata<a href="module-7-phylodynamics-and-transmission-dynamics.html#visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now that we’ve constructed and packaged up a tree (<code>analysis-package.json</code>), we can visualize this data alongside the data augur has we’ve extracted from our metadata using augur (<code>data/metadata.tsv</code>) using <a href="https://auspice.us/">Auspice</a>.</p>
+<div class="callout-blue">
+<span class="callout-icon"><i class="fas fa-circle-info" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Note</p>
+</div>
+<p>I’ve had issues recently getting this to work in firefox so recommend using a chromium-based browser if you have issues.</p>
+</div>
+</div>
+<div id="step-1-load-data-into-auspice" class="section level4 hasAnchor">
+<h4>Step 1: Load Data into Auspice<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-1-load-data-into-auspice" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>To do this, please navigate to <a href="http://IP-ADDRESS/module8/" class="uri">http://IP-ADDRESS/module8/</a> and download the files <code>analysis-package.json</code> and <code>data/metadata.tsv</code> to your computer (if the link does not download you can <strong>Right-click</strong> and select <strong>Save link as…</strong>).</p>
+<p>Next, navigate to <a href="https://auspice.us/" class="uri">https://auspice.us/</a> and drag the file <code>analysis-package.json</code> onto the page.</p>
+<p><img src="img/auspice.png" /></p>
+<p>This should result in a phylogenetic tree being loaded that looks like:</p>
+<p><img src="img/tree.png" /></p>
+<p>Next, we will load the metadata <code>data/metadata.tsv</code> file onto this view. To do this, please find and drag-and-drop the <code>data/metadata.tsv</code> file onto the phylogenetic tree shown in Auspice:</p>
+<p><img src="img/metadata.png" /></p>
+<p>You may get some warning messages showing up, but you should still see a green <strong>Added metadata from metadata.tsv</strong> message.</p>
+<p><img src="img/metadata2.png" /></p>
+</div>
+<div id="step-2-explore-data" class="section level4 hasAnchor">
+<h4>Step 2: Explore Data<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-2-explore-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now you can spend some time to explore the data and get used to the Auspice interface. Try switching between different <strong>Tree Layouts</strong>, or different <strong>Branch Lengths</strong>, or colouring the tree by different criteria in the metadata table. This is always worth doing a bit before diving into analyses!</p>
+</div>
+<div id="step-3-examine-the-molecular-clock-analysis" class="section level4 hasAnchor">
+<h4>Step 3: Examine the Molecular Clock Analysis<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-3-examine-the-molecular-clock-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now we are going to look more at the Branch length “TIME” and “DIVERGENCE” options as well as the “CLOCK” layout/figure found in the options bar on the left of your screen.</p>
+<p><img src="img/auspice-panel.png" /></p>
+<p>First, let’s look at the divergence tree and use the x-axis to work out how many mutations there are on certain branches. We can use the x-axis in the “RECTANGULAR” layout of the “DIVERGENCE” tree to work this out or we can directly move our cursor over the node/branch of interest to have a pop-up with the details.</p>
+<p><img src="img/divergence.png" /></p>
+<p>Now, we can do the same thing if we switch to “TIME” and look at the approximate inferred dates of the internal nodes of the tree. We can also mouse over to get the exact pop-up dates.</p>
+<p><img src="img/date.png" /></p>
+<p>Finally, we can look at the tip-to-root regression from the divergence tree (i.e., how long each genome’s total branch length in mutations is all the way to root vs the collection date). This can be done by selecting “DIVERGENCE” under the “Branch Length” header.</p>
+<p><img src="img/tip_reg.png" /></p>
+</div>
+<div id="step-3-questions" class="section level4 hasAnchor">
+<h4>Step 3: Questions<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-3-questions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li>When was the last common ancestor of the ON Deer clade?</li>
+<li>What about the last common ancestor of this clade and the nearest other sequences?</li>
+<li>Does the trend line for the molecular clock (tip-to-root regression) look a good fit? Do you think there may be more than 1 mutation rate in these samples?</li>
+<li>Given the amount of data and your answer to 1, how accurate do you think the inferred node date is?</li>
+<li>How might you represent the degree of certainty or uncertainty in these estimates?</li>
+</ol>
+</div>
+<div id="step-4-examine-the-ancestral-trait-inference" class="section level4 hasAnchor">
+<h4>Step 4: Examine the Ancestral Trait Inference<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-4-examine-the-ancestral-trait-inference" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We can colour the tree and rename the tree tip labels using the metadata to infer ancestral traits. The internal nodes/branches will be coloured based on the inferred ancestral state.</p>
+<p>For example, you can look at the inferred ancestral host information using these options:</p>
+<p><img src="img/host.png" /></p>
+<p>Similarly, you can look at the inferred ancestral location information using these options:</p>
+<p><img src="img/loc.png" /></p>
+</div>
+<div id="step-4-questions" class="section level4 hasAnchor">
+<h4>Step 4: Questions<a href="module-7-phylodynamics-and-transmission-dynamics.html#step-4-questions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li>Based on this analysis was the common ancestor of the ON Deer+Human clade inferred to have been in a human or in a deer?</li>
+<li>What about the common ancestor of the wider ON Deer+Human, MI Mink+Human clades?</li>
+<li>Why might this analysis be misleading?</li>
+<li>Where is the ON Deer+Human clade inferred to have originated: Ontario or Michigan?</li>
+</ol>
+</div>
+</div>
+<div id="selection-analysis" class="section level3 hasAnchor">
+<h3>6. Selection Analysis<a href="module-7-phylodynamics-and-transmission-dynamics.html#selection-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we are going to try and do a selection analysis. In particular, we are going to use some of the models in hyphy to determine whether the dN/dS (also known as ω) ratio (ratio of non-synonymous mutations per non-synonymous site to synonymous mutation per synonymous site) is significantly different in the ON Deer+Human clade than the rest of our dataset.</p>
+<p>To do this we first need an alignment that captures information about dN/dS i.e., a codon alignment. To be honest, these are fairly irritating to generate. The classic tool <a href="http://www.bork.embl.de/pal2nal/#RunP2N">PAL2NAL</a> or <a href="https://github.com/veg/hyphy-analyses/blob/master/codon-msa/README.md">hyphy’s own method</a> needs us to have an alignment of a given gene (dN and dS only make sense for coding sequences) in both protein and nucleotide form. This can often require custom sequence manipulation and is sensitive to sequences with errors or unresolved regions.</p>
+<p>For this exercise, we are going to generate a codon alignment for the S using a tool called virulign</p>
+<p><strong>Commands</strong></p>
+<pre><code># Time: 5 minutes
+./code/virulign data/S.xml data/sequences.fasta --exportAlphabet Nucleotides --exportKind GlobalAlignment --exportReferenceSequence yes --progress yes &gt; S_codon_alignment.fasta</code></pre>
+<p>Then as you did previously, you want to download <code>S_codon_alignment.fasta</code> by navigating to <a href="http://IP-ADDRESS/module8/" class="uri">http://IP-ADDRESS/module8/</a> (or using scp if you are familiar with it). Once you’ve got the codon alignment, we are going to go the <a href="https://www.datamonkey.org/">datamonkey.org</a> website. This is very useful webserver that is provided by the authors of hyphy to make it easier to use their methods. As you can see on the home page there is even a nice wizard that will guide you towards the correct model for the analysis you want to perform.</p>
+<p>In this case we are interested in <em>selection</em> across <em>branches</em> of the <em>episodic</em> kind which will guide us towards a method called <a href="https://www.datamonkey.org/absrel">aBSREL (adaptive Branch-Site RandomEffects Likelihood)</a>.</p>
+<p><img src="img/absrel.png" /></p>
+<p>We are going to follow the instructions on the page and select our <code>S_codon_alignment.fasta</code> as input, enter our email address (just in case), then hit <code>run analysis</code>.</p>
+<p><img src="img/absrel2.png" /></p>
+<p>This will take us to a new page where we can select the branches we want to test for increased episodic selection relative to the rest of the tree. In this case we are interested in the ON Deer+Human clade so we will select those branches. Then we will hit <code>Save Branch Selection</code> and begin running our analysis.</p>
+<p><img src="img/select_all.png" /></p>
+<p>If all goes well this will run for a minute or two (depending on server load) before directing us to an nice results page with lots of details.</p>
+<p><img src="img/results.png" /></p>
+<div id="questions" class="section level4 hasAnchor">
+<h4>Questions<a href="module-7-phylodynamics-and-transmission-dynamics.html#questions" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ol style="list-style-type: decimal">
+<li>At the top of the page there is a summary of the result, is there any sign of increased episodic selection in this clade?</li>
+<li>Look at the fitted tree output below, based on the colorbar in the legend for values of ω (dN/dS), is the inferred ω &gt; 1 or &lt; 1 in the branches leading up to the ON Deer+Human clade?</li>
+<li>What might this represent in terms of the differences between deer and human immune responses?</li>
+<li>Can you think of any limitations of this analysis?</li>
+</ol>
+<div class="callout-green">
+<span class="callout-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Lab Completed!</p>
+</div>
+<p>Congratulations! You have completed Lab 7!</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-8-emerging-pathogen-detection-and-identification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca/IDE_2023/blob/main/070-module-7.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

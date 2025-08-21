@@ -1,0 +1,10 @@
+# Keynote Lecture | Follow That Virus!: Genomics Leading the Way
+
+## Lecture
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed/3TY1oMEEM9I?si=iFJzxiTSZsvdOwnn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<br>
+
+<iframe src="https://drive.google.com/file/d/14o8Px1nz2g3a27vYO8BYPGqkI6VttW05/preview" width="640" height="480" allow="autoplay"></iframe>
+

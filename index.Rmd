@@ -1,0 +1,47 @@
+--- 
+title: "Infectious Disease Genomic Epidemiology 2023"
+author: "Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu"
+date: "April 18, 2023 - April 21, 2023"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+url: https://bioinformaticsdotca.github.io/IDE_2023/ # CHANGE THIS LINK TO YOUR LANDING PAGE LINK
+cover-image: img/bioinformatics_logo.png
+description: |
+  Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop
+link-citations: yes
+github-repo: bioinformaticsdotca/IDE_2023 # CHANGE THIS TO YOUR OWN REPO
+favicon: img/favicon.ico
+---
+
+# (PART) Introduction {-}
+
+# Workshop Info
+
+Welcome to the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop webpage!  
+
+## Class Photo
+
+<iframe src="https://drive.google.com/file/d/1gbYTbiefGT59YA2xHbD4A1qQh6jM1hVu/preview" width="640" height="480" allow="autoplay"></iframe>
+
+## Schedule
+
+|                |                               **April 18**                               |                |                                 **April 19**                                |                |                          **April 20**                         |                |                                 **April 21**                                |
+|:--------------:|:---------------------------------------------------------------------------------:|:--------------:|:--------------------------------------------------------------------------------------:|:--------------:|:-----------------------------------------------------------------------:|:--------------:|:-----------------------------------------------------------------------------------:|
+| Time (EDT) |                                       Module                                      | Time (EDT) |                                         Module                                         | Time (EDT) |                                  Module                                 | Time (EDT) |                                        Module                                       |
+|      09:45     |                                  Virtual Arrivals                                 |      09:45     |                            Virtual Arrivals, Day 1 Check-in                            |      09:45     |                     Virtual Arrivals, Day 2 Check-in                    |      09:45     |                           Virtual Arrivals, Day 3 Check-in                          |
+|      10:00     |                            Virtual Welcome (Nia Hughes)                           |      10:00     | Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants (Jared Simpson) |      10:00     | Module 6: Antimicrobial Resistant Gene (AMR) Analysis (Andrew McArthur) |      10:00     |       Module 8: Emerging Pathogen Detection and Identification (Aaron Petkau)       |
+|      10:30     |           Module 1: Introduction to Genomic Epidemiology (William Hsiao)          |      11:00     |                                     Break (30 mins)                                     |      11:00     |                              Break (30 mins)                             |      11:00     |                                    Break (30 mins)                                   |
+|      11:30     |                                   Break (30 mins)                                  |      11:30     |                              Module 4 Lab (Jared Simpson)                              |      11:30     |                      Module 6 Lab (Andrew McArthur)                     |      11:30     |                             Module 8 Lab (Aaron Petkau)                             |
+|      12:00     |                  Module 2: Phylogenetic Analysis (Fiona Brinkman)                 |      13:30     |                                     Break (1 hr)                                     |      13:30     |                              Break (1 hr)                             |      13:30     |                                    Break (1 hr)                                   |
+|      13:00     |                               AWS setup (Zhibin Lu)                               |      14:30     |               Module 5: Bacterial Pathogen Genomic Analysis (Ed Taboada)               |      14:30     |    Module 7: Phylodynamics and Transmission Dynamics (Finlay Maguire)   |      14:30     |                          Keynote Lecture (Samira Mubareka)                          |
+|      13:30     |                                   Break (1 hr)                                  |      15:30     |                                     Break (30 mins)                                     |      15:30     |                              Break (30 mins)                             |      15:30     |                                    Break (30 mins)                                   |
+|      14:30     |             Module 3: Data Curation and Data Sharing (Emma Griffiths)             |      16:00     |                                Module 5 Lab (Ed Taboada)                               |      16:00     |                      Module 7 Lab (Finlay Maguire)                      |      16:00     | Module 9: Mobile Genetic Elements and Environmental Microbiome (Gary Van Domselaar) |
+|      15:30     |                                   Break (30 mins)                                  |      18:00     |                                      End of Day 2                                      |      18:00     |                               Class Photo                               |      17:00     |                          Module 9 Lab (Gary Van Domselaar)                          |
+|      16:00     |                           Module 3 Lab (Emma Griffiths)                           |      18:00     |           (Optional) Networking Virtual Social via Spatial Chat (until 19:00)          |      18:15     |                               End of Day 3                              |      18:00     |                               Survey & Closing Remarks                              |
+|      18:00     |                                    End of Day 1                                   |                |                                                                                        |                |                                                                         |      18:30     |                                   End of Workshop                                   |
+|      18:00     | (Optional) Virtual Q&A on how to sustain skills beyond the workshop (until 18:30) |                |                                                                                        |                |                                                                         |                |                                                                                     |
+
+## Pre-work
+
+[You can find your pre-work here.](https://docs.google.com/forms/d/e/1FAIpQLSdPFL6pblmNLTYBnahXSiPIvlU8rXd21Hf07yu320Jgd6jjNg/viewform)

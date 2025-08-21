@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Module 6: Antimicrobial Resistant Gene (AMR) Analysis | Infectious Disease Genomic Epidemiology 2023</title>
+  <meta name="description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Module 6: Antimicrobial Resistant Gene (AMR) Analysis | Infectious Disease Genomic Epidemiology 2023" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+  <meta property="og:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="github-repo" content="bioinformaticsdotca/IDE_2023" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Module 6: Antimicrobial Resistant Gene (AMR) Analysis | Infectious Disease Genomic Epidemiology 2023" />
+  
+  <meta name="twitter:description" content="Workshop website for the 2023 Infectious Disease Genomic Epidemiology Canadian Bioinformatics Workshop" />
+  <meta name="twitter:image" content="https://bioinformaticsdotca.github.io/IDE_2023/img/bioinformatics_logo.png" />
+
+<meta name="author" content="Faculty: William Hsiao, Aaron Petkau, Jared Simpson, Fiona Brinkman, Finlay Maguire, Guillaume Bourque, Gary Van Domselaar, Ed Taboada, Emma Griffiths, Andrew McArthur, Michelle Brazas, Rhiannon Cameron, Karyn Mukiri, Miguel Prieto, Jimmy Liu, Jalees Nasir, Madeline McCarthy, Charlie Barclay, Nia Hughes, and Zhibin Lu" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+<link rel="prev" href="module-5-bacterial-pathogen-genomic-analysis.html"/>
+<link rel="next" href="module-7-phylodynamics-and-transmission-dynamics.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<a href="https://bioinformaticsdotca.github.io/">
+ <img src="img/bioinformatics_logo.png" width="90%" alt="bioinformatics.ca logo" style="display:block; margin-left:auto; margin-right:auto; margin-top:15px;">
+ </a>
+<li><center><strong><a href="./"><br>Infectious Disease Genomic Epidemiology<br><br></a></strong></center></li>
+<a href="./">
+ <img src="img/CBW_epidemiology_icon.png" width="70%" alt="Infectious Disease Genomic Epidemiology logo" style="display:block; margin-left:auto; margin-right:auto; ">
+ </a>
+<br>
+
+<li class="divider"></li>
+<li class="part"><span><b>I Introduction</b></span></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Workshop Info</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#class-photo"><i class="fa fa-check"></i>Class Photo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#schedule"><i class="fa fa-check"></i>Schedule</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pre-work"><i class="fa fa-check"></i>Pre-work</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="meet-your-faculty.html"><a href="meet-your-faculty.html"><i class="fa fa-check"></i>Meet Your Faculty</a></li>
+<li class="chapter" data-level="" data-path="data-and-compute-setup.html"><a href="data-and-compute-setup.html"><i class="fa fa-check"></i>Data and Compute Setup</a></li>
+<li class="part"><span><b>II Modules</b></span></li>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html"><i class="fa fa-check"></i>Module 1: Introduction to Genomic Epidemiology</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-1-introduction-to-genomic-epidemiology.html"><a href="module-1-introduction-to-genomic-epidemiology.html#lecture"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html"><i class="fa fa-check"></i>Module 2: Phylogenetic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#lecture-1"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-2-phylogenetic-analysis.html"><a href="module-2-phylogenetic-analysis.html#aws-setup"><i class="fa fa-check"></i>AWS Setup</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html"><i class="fa fa-check"></i>Module 3: Data Curation and Data Sharing</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lecture-2"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-3-data-curation-and-data-sharing.html"><a href="module-3-data-curation-and-data-sharing.html#lab"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><i class="fa fa-check"></i>Module 4: Viral Pathogen Genomic Analysis - Single Nucleotide Variants</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lecture-3"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#lab-1"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html"><a href="module-4-viral-pathogen-genomic-analysis---single-nucleotide-variants.html#virus-short-read-genome-assembly-and-variant-analysis"><i class="fa fa-check"></i>Virus Short-Read Genome Assembly and Variant Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html"><i class="fa fa-check"></i>Module 5: Bacterial Pathogen Genomic Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lecture-4"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#lab-2"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#setup"><i class="fa fa-check"></i>Setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#background"><i class="fa fa-check"></i>Background</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#learning-objectives"><i class="fa fa-check"></i>Learning Objectives</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#analysis-dataset"><i class="fa fa-check"></i>Analysis Dataset</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#getting-started"><i class="fa fa-check"></i>Getting Started</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cgmlst-qc"><i class="fa fa-check"></i>cgMLST QC</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#locus-quality"><i class="fa fa-check"></i>Locus Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#defining-core-genes"><i class="fa fa-check"></i>Defining Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#genome-quality"><i class="fa fa-check"></i>Genome Quality</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#hamming-distance"><i class="fa fa-check"></i>Hamming Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#dendrogram-construction"><i class="fa fa-check"></i>Dendrogram Construction</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#a-simple-tree-vis"><i class="fa fa-check"></i>A Simple Tree Vis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#clustering-by-distance"><i class="fa fa-check"></i>Clustering by Distance</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#cluster-analysis"><i class="fa fa-check"></i>Cluster Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#investigating-local-core-genes"><i class="fa fa-check"></i>Investigating Local Core Genes</a></li>
+<li class="chapter" data-level="" data-path="module-5-bacterial-pathogen-genomic-analysis.html"><a href="module-5-bacterial-pathogen-genomic-analysis.html#group-exercise"><i class="fa fa-check"></i>Group Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html"><i class="fa fa-check"></i>Module 6: Antimicrobial Resistant Gene (AMR) Analysis</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lecture-5"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lab-3"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#introduction-1"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#card-website-and-antibiotic-resistance-ontology"><i class="fa fa-check"></i>CARD Website and Antibiotic Resistance Ontology</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-genome-analysis"><i class="fa fa-check"></i>RGI for Genome Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-at-the-command-line"><i class="fa fa-check"></i>RGI at the Command Line</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-merged-metagenomic-reads"><i class="fa fa-check"></i>RGI for Merged Metagenomic Reads</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#metagenomic-sequencing-reads-and-the-kma-algorithm"><i class="fa fa-check"></i>Metagenomic Sequencing Reads and the KMA Algorithm</a></li>
+<li class="chapter" data-level="" data-path="module-6-antimicrobial-resistant-gene-amr-analysis.html"><a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#pathogen-of-origin-prediction"><i class="fa fa-check"></i>Pathogen of Origin Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html"><i class="fa fa-check"></i>Module 7: Phylodynamics and Transmission Dynamics</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lecture-6"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#lab-4"><i class="fa fa-check"></i>Lab</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#introduction-2"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#list-of-software-for-tutorial"><i class="fa fa-check"></i>2. List of Software for Tutorial</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#exercise-setup"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#phylodynamics-analysis"><i class="fa fa-check"></i>4. Phylodynamics Analysis</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#visualizing-the-phylodynamic-analysis-alongside-epidemiological-metadata"><i class="fa fa-check"></i>5. Visualizing the Phylodynamic Analysis Alongside Epidemiological Metadata</a></li>
+<li class="chapter" data-level="" data-path="module-7-phylodynamics-and-transmission-dynamics.html"><a href="module-7-phylodynamics-and-transmission-dynamics.html#selection-analysis"><i class="fa fa-check"></i>6. Selection Analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html"><i class="fa fa-check"></i>Module 8: Emerging Pathogen Detection and Identification</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#lecture-7"><i class="fa fa-check"></i>Lecture</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#introduction-3"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#list-fo-software-for-tutorial-and-its-respective-documentation"><i class="fa fa-check"></i>2. List fo Software for Tutorial and its Respective Documentation</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise-setup-1"><i class="fa fa-check"></i>3. Exercise Setup</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#exercise"><i class="fa fa-check"></i>4. Exercise</a></li>
+<li class="chapter" data-level="" data-path="module-8-emerging-pathogen-detection-and-identification.html"><a href="module-8-emerging-pathogen-detection-and-identification.html#final-words"><i class="fa fa-check"></i>5. Final words</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><i class="fa fa-check"></i>Keynote Lecture | Follow That Virus!: Genomics Leading the Way</a>
+<ul>
+<li class="chapter" data-level="" data-path="keynote-lecture-follow-that-virus-genomics-leading-the-way.html"><a href="keynote-lecture-follow-that-virus-genomics-leading-the-way.html#lecture-8"><i class="fa fa-check"></i>Lecture</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><i class="fa fa-check"></i>Module 9: Mobile Genetic Elements and Environmental Microbiome</a>
+<ul>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lecture-9"><i class="fa fa-check"></i>Lecture</a></li>
+<li class="chapter" data-level="" data-path="module-9-mobile-genetic-elements-and-environmental-microbiome.html"><a href="module-9-mobile-genetic-elements-and-environmental-microbiome.html#lab-5"><i class="fa fa-check"></i>Lab</a></li>
+</ul></li>
+<li class="divider"></li>
+<h1 id="sponsors">Sponsors</h1>
+<center>
+<a href="https://genomecanada.ca/"><img src="img/sponsors/genomecanada.png" height="70" style="display:inline-block;"  style="padding-bottom: 20px" alt="Genome Canada logo.">
+<a href="https://www.ontariogenomics.ca/"><img src="img/sponsors/ontariogenomics.png" height="70" style="display:inline-block;" style="padding-bottom: 20px;" alt="Ontario Genomics logo.">
+<br><br>
+<a href="https://oicr.on.ca/"><img src="img/sponsors/oicr.png" width=25% style="display:inline-block;" style="padding-bottom: 20px" alt="Ontario Institute for Cancer Research logo.">
+<a href="https://www.hpcforhealth.ca/"><img src="img/sponsors/hpc4health.png" width=60% style="display:inline-block;" style="padding-bottom: 20px "alt="HPC4Health logo.">
+<br><br>
+<a href="https://www.cihr-irsc.gc.ca"><img src="img/sponsors/cihr.png" style="display:inline-block;" width=35% style="padding-bottom: 20px" alt="Canadian Institutes of Health Research logo."></a>
+
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li></center>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Infectious Disease Genomic Epidemiology 2023</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="module-6-antimicrobial-resistant-gene-amr-analysis" class="section level1 hasAnchor">
+<h1>Module 6: Antimicrobial Resistant Gene (AMR) Analysis<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#module-6-antimicrobial-resistant-gene-amr-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lecture-5" class="section level2 hasAnchor">
+<h2>Lecture<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lecture-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/FvOCDlcYaTo?si=4wwXM3Z4OYZaabwj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+</iframe>
+<p><br></p>
+<iframe src="https://drive.google.com/file/d/1Dl6_gIgszWQt5cnzEYeGQ2S5_3ieseWb/preview" width="640" height="480" allow="autoplay">
+</iframe>
+</div>
+<div id="lab-3" class="section level2 hasAnchor">
+<h2>Lab<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#lab-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introduction-1" class="section level3 hasAnchor">
+<h3>Introduction<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This module gives an introduction to prediction of antimicrobial resistome and phenotype based on comparison of genomic or metagenomic DNA sequencing data to reference sequence information. While there is a large diversity of reference databases and software, this tutorial is focused on the Comprehensive Antibiotic Resistance Database (<a href="http://card.mcmaster.ca/">CARD</a>) for genomic AMR prediction.</p>
+<p>There are several databases (see <a href="https://www.nature.com/articles/s41576-019-0108-4/tables/2">here</a> for a list) which try and organise information about AMR as well as helping with interpretation of resistome results. Many of these are either specialised on a specific type of resistance gene (e.g., <a href="http://bldb.eu/">beta-lactamases</a>), organism (e.g., <a href="https://github.com/jodyphelan/tbdb"><em>Mycobacterium tuberculosis</em></a>), or are an automated amalgamation of other databases (e.g., <a href="https://megares.meglab.org/">MEGARes</a>). There are also many tools for detecting AMR genes each with their own strengths and weaknesses (see this <a href="https://www.frontiersin.org/articles/10.3389/fpubh.2019.00242/full">paper</a> for a non-comprehensive list of tools!).</p>
+<p>The “Big 3” databases that are comprehensive (involving many organisms, genes, and types of resistance), regularly updated, have their own gene identification tool(s), and are carefully maintained and curated are:</p>
+<ol style="list-style-type: decimal">
+<li>Comprehensive Antibiotic Resistance Database (<a href="http://card.mcmaster.ca/">CARD</a>) with the Resistance Gene Identifier (<a href="https://github.com/arpcard/rgi">RGI</a>)</li>
+<li>National Center for Biotechnology Information’s National Database of Antibiotic Resistant Organisms (<a href="https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/">NDARO</a>) with <a href="https://www.ncbi.nlm.nih.gov/pathogens/antimicrobial-resistance/AMRFinder/">AMRFinderPlus</a></li>
+<li><a href="https://cge.cbs.dtu.dk/services/ResFinder/">ResFinder</a> database with its associated <a href="https://cge.cbs.dtu.dk/services/ResFinder/">ResFinder</a> tool</li>
+</ol>
+<p>In this practical we are going to focus on CARD and the associated RGI tool because:</p>
+<p>The <a href="https://card.mcmaster.ca/ontology/36006">Antibiotic Resistance Ontology</a> it is built upon is a great way to organize information about AMR.
+CARD is the most heavily used database internationally, with over 5000 citations.
+We are biased. CARD is Canadian and pretty much all the CBW faculty collaborate or are part of the group that develops CARD! See <a href="https://pubmed.ncbi.nlm.nih.gov/36263822/">Alcock et al. 2023. CARD 2023: expanded curation, support for machine learning, and resistome prediction at the Comprehensive Antibiotic Resistance Database. Nucleic Acids Research, 51, D690-D699</a>.</p>
+</div>
+<div id="card-website-and-antibiotic-resistance-ontology" class="section level3 hasAnchor">
+<h3>CARD Website and Antibiotic Resistance Ontology<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#card-website-and-antibiotic-resistance-ontology" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The relationship between AMR genotype and AMR phenotype is complicated and no tools for complete prediction of phenotype from genotype exist. Instead, analyses focus on prediction or catalog of the AMR resistome - the collection of AMR genes and mutants in the sequenced sample. While BLAST and other sequence similarity tools can be used to catalog the resistance determinants in a sample via comparison to a reference sequence database, interpretation and phenotypic prediction are often the largest challenge. To start the tutorial, we will use the Comprehensive Antibiotic Resistance Database (<a href="http://card.mcmaster.ca/">CARD</a>) website to examine the diversity of resistance mechanisms, how they influence bioinformatics analysis approaches, and how CARD’s <a href="https://card.mcmaster.ca/ontology/36006">Antibiotic Resistance Ontology</a> (ARO) can provide an organizing principle for interpretation of bioinformatics results.</p>
+<p>CARD’s website provides the ability to:</p>
+<ul>
+<li>Browse the <a href="https://card.mcmaster.ca/ontology/36006">Antibiotic Resistance Ontology</a> (ARO) and associated knowledgebase.</li>
+<li>Browse the underlying AMR detection models, reference sequences, and SNP matrices.</li>
+<li>Download the ARO, reference sequence data, and indices in a number of formats for custom analyses.</li>
+<li>Perform integrated genome analysis using the Resistance Gene Identifier (RGI).</li>
+</ul>
+<p>In this part of the tutorial, your instructor will walk you through the following use of the CARD website to familiarize yourself with its resources:</p>
+<ol style="list-style-type: decimal">
+<li>What are the mechanisms of resistance described in the Antibiotic Resistance Ontology?</li>
+<li>Examine the NDM-1 beta-lactamase protein, it’s mechanism of action, conferred antibiotic resistance, it’s prevalence, and it’s detection model.</li>
+<li>Examine the AAC(6’)-Iaa aminoglycoside acetyltransferase, it’s mechanism of action, conferred antibiotic resistance, it’s prevalence, and it’s detection model.</li>
+<li>Examine the fluoroquinolone resistant gyrB for M. tuberculosis, it’s mechanism of action, conferred antibiotic resistance, and it’s detection model.</li>
+<li>Examine the MexAB-OprM efflux complex with MexR mutations, it’s mechanism of action, conferred antibiotic resistance, it’s prevalence, and it’s detection model(s).</li>
+</ol>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Answer</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<ol style="list-style-type: decimal">
+<li><ul>
+<li>antibiotic target alteration + antibiotic target replacement + antibiotic target protection + antibiotic inactivation + antibiotic efflux + reduced permeability to antibiotic + resistance by absence + modification to cell morphology + resistance by host-dependent nutrient acquisition 2. NDM-1: antibiotic inactivation; beta-lactams (penam, cephamycin, carbapenem, cephalosporin); over 40 pathogens (lots of ESKAPE pathogens) - note strong association with plasmids; protein homolog model 3. AAC(6’)-Iaa: antibiotic inactivation; aminogylcosides; <em>Salmonella enterica</em>; protein homolog model 4. gyrB: antibiotic target alteration; fluoroquinolones; <em>Mycobacterium</em>; protein variant model 5. MexAB-OprM with MexR mutations: antibiotic efflux; broad range of drug classes; looking at MexA sub-unit: <em>Pseudomonas</em>; efflux meta-model</li>
+</ul></li>
+</ol>
+</div>
+</details>
+</div>
+<div id="rgi-for-genome-analysis" class="section level3 hasAnchor">
+<h3>RGI for Genome Analysis<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-genome-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As illustrated by the exercise above, the diversity of antimicrobial resistance mechanisms requires a diversity of detection algorithms and a diversity of detection limits. CARD’s Resistance Gene Identifier (RGI) currently integrates four CARD detection models: <a href="https://github.com/arpcard/rgi#analyzing-genomes-genome-assemblies-metagenomic-contigs-or-proteomes-a-k-a-rgi-main">Protein Homolog Model, Protein Variant Model, rRNA Variant Model, and Protein Overexpression Model</a>. Unlike naïve analyses, CARD detection models use curated cut-offs, currently based on BLAST/DIAMOND bitscore cut-offs. Many other available tools are based on BLASTN or BLASTP without defined cut-offs and avoid resistance by mutation entirely.</p>
+<p>In this part of the tutorial, your instructor will walk you through the following use of CARD’s <a href="https://card.mcmaster.ca/analyze/rgi">Resistome Gene Identifier</a> with default settings “Perfect and Strict hits only”, “Exclude nudge”, and “High quality/coverage”:</p>
+<ul>
+<li>Resistome prediction for the multidrug resistant Acinetobacter baumannii MDR-TJ, complete genome (NC_017847).</li>
+<li>Resistome prediction for the plasmid isolated from Escherichia coli strain MRSN388634 plasmid (KX276657).</li>
+<li>Explain the difference in fluoroquinolone resistance MIC between two clinical strains of <em>Pseudomonas aeruginosa</em> that appear clonal based on identical MLST (<code>Pseudomonas1.fasta</code>, <code>Pseudomonas2.fasta</code> - these files can be found in this GitHub repo). Hint, look at SNPs.</li>
+</ul>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Answer</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>The first two examples list the predicted resistome of the analyzed genome and plasmid, while the third example illustrates that <code>Pseudomonas2.fasta</code> contains an extra T83I mutation in gyrA conferring resistance to fluoroquinolones, above that provided by background efflux.</p>
+</div>
+</details>
+</div>
+<div id="rgi-at-the-command-line" class="section level3 hasAnchor">
+<h3>RGI at the Command Line<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-at-the-command-line" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>RGI is a command line tool as well, so we’ll do a demo analysis of 112 clinical multi-drug resistant <em>E. coli</em> from Hamilton area hospitals, sequenced on MiSeq and assembled using SPAdes (an older genome assembler). We’ll additionally try RGI’s heat map tool to compare genomes.</p>
+<p>Login into your course account’s working directory and make a module6 directory:</p>
+<pre><code>cd ~/workspace
+mkdir module6
+cd module6</code></pre>
+<p>Take a peak at the list of E. coli samples:</p>
+<pre><code>ls /home/ubuntu/CourseData/IDE_data/module6/ecoli</code></pre>
+<p>RGI has already been installed using Conda, list all the available software in Conda, activate RGI, and then review the RGI help screen:</p>
+<pre><code>conda env list
+conda activate rgi
+rgi -h</code></pre>
+<p>First we need to acquire the latest AMR reference data from the CARD website:</p>
+<pre><code>rgi load -h
+wget https://card.mcmaster.ca/latest/data
+tar -xvf data ./card.json
+less card.json
+rgi load --card_json ./card.json --local
+ls</code></pre>
+<p>We don’t have time to analyze all 112 samples, so let’s analyze 1 as an example (the course GitHub repo contains an EXCEL version of the resulting <code>C0001.txt</code> file). When analyzing FASTA files we use the <strong>main</strong> sub-command, here with default settings “Perfect and Strict hits only”, “Exclude nudge”, and “High quality/coverage”:</p>
+<pre><code>rgi main -h
+rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001 -t contig -a DIAMOND -n 4 --local --clean
+ls
+less C0001.json
+less C0001.txt
+column -t -s $&#39;\t&#39; C0001.txt  | less -S</code></pre>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Discussion Points</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>Default RGI <strong>main</strong> analysis of C0001 lists 17 Perfect annotations and 52 Strict annotations. Yet, 44 annotations are efflux components common in <em>E. coli</em> that may or may not lead to clinical levels of AMR. Nonetheless, outside of efflux there are some antibiotic inactivation, target replacement, or target alteration genes known to be high risk (e.g., sul1, TEM-1, CTX-M-15, APH(6)-Id, and gyrA mutations). This is a MDR isolate of <em>E. coli</em>.</p>
+</div>
+</details>
+<p>What if these results did not explain our observed phenotype? We might want to explore the RGI Loose hits (the course GitHub repo contains an EXCEL version of the resulting <a href="https://github.com/bioinformaticsdotca/IDE_2023/blob/main/module6/rgi_main_results/C0001_IncludeLoose.xlsx">C0001_IncludeLoose.txt</a> file), shown here with settings “Perfect, Strict, and Loose hits”, “Include nudge”, and “High quality/coverage”:</p>
+<pre><code>rgi main -h
+rgi main -i /home/ubuntu/CourseData/IDE_data/module6/ecoli/C0001_E_coli.contigs.fasta -o C0001_IncludeLoose -t contig -a DIAMOND -n 4 --local --clean --include_nudge --include_loose
+ls
+column -t -s $&#39;\t&#39; C0001_IncludeLoose.txt  | less -S</code></pre>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Discussion Points</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>An additional 3 nudged Strict annotations (<em>Escherichia coli</em> PtsI with mutation conferring resistance to fosfomycin, EC-5 beta-lactamase, <em>Escherichia coli</em> EF-Tu mutants conferring resistance to pulvomycin) and 390 Loose annotations have been added to investigate for leads that could explain the observed phenotype. Note this scenario is unlikely for clinical isolates given CARD’s reference data, but is possible for environmental isolates.</p>
+</div>
+</details>
+<p>We have pre-compiled results for all 112 samples under “Perfect and Strict hits only”, “Exclude nudge”, and “High quality/coverage”, so let’s try RGI’s heat map tool (<a href="https://github.com/bioinformaticsdotca/IDE_2023/tree/main/module6/rgi_main_results">pre-compiled images</a> can be downloaded from the course GitHub repo) (please ignore the FutureWarning):</p>
+<pre><code>ls /home/ubuntu/CourseData/IDE_data/module6/ecoli_json
+rgi heatmap -h
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o genefamily_samples --category gene_family --cluster samples
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o drugclass_samples --category drug_class --cluster samples
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o cluster_both --cluster both
+rgi heatmap -i /home/ubuntu/CourseData/IDE_data/module6/ecoli_json -o cluster_both_frequency --frequency --cluster both
+ls</code></pre>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Discussion Points</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>The last analysis is the most informative, showing that many of these isolates share the same complement of efflux variants, yet most isolates are unique in their resistome, with a subset sharing TEM-1, sul1, and other higher risk genes.</p>
+</div>
+</details>
+</div>
+<div id="rgi-for-merged-metagenomic-reads" class="section level3 hasAnchor">
+<h3>RGI for Merged Metagenomic Reads<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#rgi-for-merged-metagenomic-reads" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The standard RGI tool can be used to analyze metagenomics read data, but only for assembled or merged reads with Prodigal calling of partial open reading frames (ORFs). Here we will demonstrate analysis of merged reads. This is a computationally expensive approach, since each merged read set may contain a partial ORF, requiring RGI to perform massive amounts of BLAST/DIAMOND analyses. While computationally intensive (and thus generally not recommended), this does allow analysis of metagenomic sequences in protein space, including key substitutions, overcoming issues of high-stringency read mapping relative to nucleotide reference databases.</p>
+<p>Lanza et al. (<a href="https://www.ncbi.nlm.nih.gov/pubmed/29335005">Microbiome 2018, 15:11</a>) used AMR gene bait capture to sample human gut microbiomes for AMR genes. Using the <a href="https://card.mcmaster.ca/analyze/rgi">online RGI</a> under “Perfect, Strict and Loose hits”, “Include nudge”, and “Low quality/coverage” settings, analyze the first 500 merged metagenomic reads from their analysis (file <code>ResCap_first_500.fasta</code>). Take a close look at the predicted “sul2” and “sul4” hits in the results table. How good is the evidence for these AMR genes in this enriched metagenomics sample?</p>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Discussion Points</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>There are three merged reads with 100% identity to ~25% of the sul2 gene each, while the 9 merged reads annotated as the sul4 gene encode less than 50% identity to the reference sul2 protein, suggesting they are spurious annotations.</p>
+</div>
+</details>
+</div>
+<div id="metagenomic-sequencing-reads-and-the-kma-algorithm" class="section level3 hasAnchor">
+<h3>Metagenomic Sequencing Reads and the KMA Algorithm<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#metagenomic-sequencing-reads-and-the-kma-algorithm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The most common tools for metagenomic data annotation are based on high-stringency read mapping, such as the <a href="https://bitbucket.org/genomicepidemiology/kma/src/master">KMA read aligner</a> due to its [documented better performance for redundant databases such as CARD](<a href="https://github.com/arpcard/rgi#analyzing-metagenomic-reads-a-k-a-rgi-bwt" class="uri">https://github.com/arpcard/rgi#analyzing-metagenomic-reads-a-k-a-rgi-bwt</a>. Available methods almost exclusively focus on acquired resistance genes (e.g., sequences referenced in CARD’s protein homolog models), not those involving resistance via mutation. However, CARD and other AMR reference databases utilize reference sequences from the published literature with clear experimental evidence of elevated minimum inhibitory concentration (MIC). This has implications for molecular surveillance as sequences in agricultural or environmental samples may differ in sequence from characterized &amp; curated reference sequences, which are predominantly from clinical isolates, creating false negative results for metagenomic reads for these environments. As such, CARD’s tools for read mapping can use either canonical CARD (reference sequences from the literature) or predicted AMR resistance alleles and sequence variants from bulk resistome analyses, i.e. <a href="https://card.mcmaster.ca/resistomes">CARD Resistomes &amp; Variants data set</a>.</p>
+<p>To demonstrate read mapping using RGI <strong>bwt</strong>, we will analyze a ~160k paired read subset of the raw sequencing reads from Lanza et al.’s (<a href="https://www.ncbi.nlm.nih.gov/pubmed/29335005">Microbiome 2018, 15:11</a>) use of AMR gene bait capture to sample human gut microbiomes.</p>
+<p>First we need to acquire the additional AMR reference data from the previous CARD website download:</p>
+<pre><code>rgi card_annotation -i ./card.json &gt; card_annotation.log 2&gt;&amp;1
+rgi load --card_json ./card.json --card_annotation card_database_v3.2.6.fasta --local
+ls</code></pre>
+<p>Let’s take a look at the raw gut metagenomics data to remind ourselves of the FASTQ format:</p>
+<pre><code>ls /home/ubuntu/CourseData/IDE_data/module6/gut_sample
+less /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R1.fastq</code></pre>
+<p>We can now map the metagenomic reads to the sequences in CARD’s protein homolog models using the KMA algorithm:</p>
+<pre><code>rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample.kma --local
+ls</code></pre>
+<p>RGI <strong>bwt</strong> produces a LOT of output files, see the details at the <a href="https://github.com/arpcard/rgi#rgi-bwt-tab-delimited-output-details">RGI GitHub repo</a>. First, let’s look at the summary statistics:</p>
+<pre><code>cat gut_sample.kma.overall_mapping_stats.txt
+ls</code></pre>
+<p>However, the file we are most interested in for now is gut_sample.kma.gene_mapping_data.txt and the course GitHub repo contains an EXCEL version for easy viewing, but let’s look at it on the command line:</p>
+<pre><code>column -t -s $&#39;\t&#39; gut_sample.kma.gene_mapping_data.txt  | less -S
+cut -f 1 gut_sample.kma.gene_mapping_data.txt | sort -u | wc -l
+ls</code></pre>
+<ul>
+<li>Ignoring efflux, which AMR gene had the most mapped reads?</li>
+<li>Ignoring efflux, which AMR gene had the highest % coverage?</li>
+<li>How many AMR genes were found in total?</li>
+<li>From these results and what you know about assembly, what do you think are the advantages/disadvantages of read-based methods?</li>
+</ul>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Answers</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>Top 5 (non-efflux) for number of mapped reads: * tet(Q) with 40345 reads * tet(X) with 7205 reads * ErmF with 6510 reads * CblA-1 with 4160 reads * tet(O) with 1608 reads Top 5 (non-efflux) for % length coverage (all had 100%): * tet(Q) * tet(X) * ErmF * CblA-1 * tet(O) 90 AMR genes had sequencing reads mapped. Read-based analyses advantages and disadvantages: * Higher sensitivity (we find as many AMR genes as possible) * Lower specificity (we are more likely to make mistakes when identifying AMR genes) * Incomplete data (we are likely to find fragments of genes instead of whole genes, this can lead to confusion between similar genes) * No genomic context (we don’t know where a gene we detect comes from in the genome, is it associated with a plasmid?)</p>
+</div>
+</details>
+<p>We can repeat the read mapping analysis, but include more sequence variants in the reference set by including the <a href="https://card.mcmaster.ca/resistomes">CARD Resistomes &amp; Variants data set</a>. First we need to acquire the Resistomes &amp; Variant data from the CARD website:</p>
+<div class="callout-red-important">
+<span class="callout-icon"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Important</p>
+</div>
+<p>THE FOLLOWING STEPS TAKE TOO LONG, DO NOT PERFORM DURING DEMO SESSION, INSTEAD PLEASE VIEW PRE-COMPILED RESULTS. FEEL FREE TO TRY THESE STEPS OUTSIDE OF CLASS.</p>
+</div>
+</div>
+<pre><code>wget -O wildcard_data.tar.bz2 https://card.mcmaster.ca/latest/variants
+mkdir -p wildcard
+tar -xjf wildcard_data.tar.bz2 -C wildcard
+gunzip wildcard/*.gz
+rgi wildcard_annotation -i wildcard --card_json ./card.json -v 4.0.0 &gt; wildcard_annotation.log 2&gt;&amp;1
+rgi load --card_json ./card.json --wildcard_annotation wildcard_database_v4.0.0.fasta --wildcard_index ./wildcard/index-for-model-sequences.txt --card_annotation card_database_v3.2.6.fasta --local</code></pre>
+<p>Map reads to canonical CARD (reference sequences from the literature) <strong>plus</strong> predicted AMR resistance alleles and sequence variants from bulk resistome analyses, i.e. <a href="https://card.mcmaster.ca/resistomes">CARD Resistomes &amp; Variants data set</a>:</p>
+<div class="callout-red-important">
+<span class="callout-icon"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Important</p>
+</div>
+<p>THE FOLLOWING STEPS TAKE TOO LONG, DO NOT PERFORM DURING DEMO SESSION, INSTEAD PLEASE VIEW PRE-COMPILED RESULTS. FEEL FREE TO TRY THESE STEPS OUTSIDE OF CLASS.</p>
+</div>
+</div>
+<pre><code>rgi bwt -1 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R1.fastq -2 /home/ubuntu/CourseData/IDE_data/module6/gut_sample/gut_R2.fastq -a kma -n 4 -o gut_sample_wildcard.kma --local --include_wildcard
+ls</code></pre>
+<p>The pre-compiled results can be viewed in the EXCEL version of <code>gut_sample_wildcard.kma.gene_mapping_data.txt</code> in the GitLab repo, but let’s first compare statistics, where you’ll see we aligned some additional reads:</p>
+<p>YOU CAN EXECUTE THESE COMMANDS AS WE HAVE PROVIDED PRE-COMPUTED RESULTS.</p>
+<pre><code>clear
+cat /home/ubuntu/CourseData/IDE_data/module6/kmaresults/gut_sample.kma.overall_mapping_stats.txt
+cat /home/ubuntu/CourseData/IDE_data/module6/kmaresults/gut_sample_wildcard.kma.overall_mapping_stats.txt
+cut -f 1 /home/ubuntu/CourseData/IDE_data/module6/kmaresults/gut_sample_wildcard.kma.gene_mapping_data.txt | sort -u | wc -l
+ls</code></pre>
+<p>Looking at the pre-compiled EXCEL spreadsheet, note that we have more information based on <a href="https://card.mcmaster.ca/resistomes">CARD Resistomes &amp; Variants data set</a>, such as mappings to multiple alleles, flags for association with plasmids, and taxonomic distribution of the mapped alleles.</p>
+<ul>
+<li>Ignoring efflux, which AMR gene had the most mapped reads?</li>
+<li>How many AMR genes were found in total?</li>
+<li>Which genes associated with plasmids have the most mapped reads?</li>
+</ul>
+<details class="callout-dropdown callout-subtle callout-gray-subtle">
+<summary class="callout-dropdown-summary"><span
+class="callout-icon"><i class="fas fa-comment-dots" aria-hidden="true"></i></span><span
+class="callout-dropdown-title">Answers</span><span
+class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary>
+<div class="callout-dropdown-content">
+<p>Top 5 (non-efflux) for number of mapped reads gives the same list but with more data: * tet(Q) with 42684 mapped reads (up from 40345 reads) * tet(X) with 7393 mapped reads (up from 7205 reads) * ErmF with 6987 mapped reads (up from 6510 reads) * CblA-1 with 4160 mapped reads (no change) * tet(O) with 1870 mapped reads (up from 1608 reads) 114 AMR genes had sequencing reads mapped (up from 90). Top 5 (plasmid associated) for number of mapped reads: * tet(X) with 7393 reads * acrD with 1881 Reads * APH(6)-Id with 1418 reads * sul2 with 961 reads * aad(6) with 99 reads</p>
+</div>
+</details>
+</div>
+<div id="pathogen-of-origin-prediction" class="section level3 hasAnchor">
+<h3>Pathogen of Origin Prediction<a href="module-6-antimicrobial-resistant-gene-amr-analysis.html#pathogen-of-origin-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If there is time in the tutorial, we will demonstrate how to predict pathogen-of-origin for the AMR gene reads in the gut metagenomics data using k-mers. Please note this algorithm is not yet published and is currently undergoing validation. It is also slow and has a high memory burden as algorithm optimization has yet to be performed.</p>
+<p>First, the reference data needs to be formatted for k-mer analysis (see the details at the <a href="https://github.com/arpcard/rgi#using-rgi-kmer-query-k-mer-taxonomic-classification">RGI GitHub repo</a>):</p>
+<div class="callout-red-important">
+<span class="callout-icon"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Important</p>
+</div>
+<p>DO NOT ATTEMPT THESE COMMANDS ON THE CLASS SERVERS, THEY REQUIRE MORE MEMORY</p>
+</div>
+</div>
+<pre><code>rgi clean --local       
+wget https://card.mcmaster.ca/latest/data
+tar -xvf data ./card.json
+rgi load --card_json ./card.json --local
+rgi card_annotation -i ./card.json &gt; card_annotation.log 2&gt;&amp;1       
+rgi load -i ./card.json --card_annotation card_database_v3.2.6.fasta --local
+wget -O wildcard_data.tar.bz2 https://card.mcmaster.ca/latest/variants
+mkdir -p wildcard
+tar -xjf wildcard_data.tar.bz2 -C wildcard
+gunzip wildcard/*.gz
+rgi load --card_json ./card.json --kmer_database ./wildcard/61_kmer_db.json --amr_kmers ./wildcard/all_amr_61mers.txt --kmer_size 61 --local --debug &gt; kmer_load.61.log 2&gt;&amp;1</code></pre>
+<p>Now we can predict pathogen-of-origin for our metagenomics analysis that included canonical CARD (reference sequences from the literature) <strong>plus</strong> predicted AMR resistance alleles and sequence variants from bulk resistome analyses, i.e. <a href="https://card.mcmaster.ca/resistomes">CARD Resistomes &amp; Variants data set</a>:</p>
+<p>DO NOT ATTEMPT THESE COMMANDS ON THE CLASS SERVERS, THEY REQUIRE MORE MEMORY</p>
+<pre><code>rgi kmer_query --bwt --kmer_size 61 --threads 4 --minimum 10 --input ./gut_sample_wildcard.kma.sorted.length_100.bam --output gut_sample_wildcard.pathogen --local</code></pre>
+<p>The pre-compiled results can be viewed in the EXCEL version of <code>gut_sample_wildcard.pathogen_61mer_analysis.gene.txt</code> in the GitLab repo, but let’s look at some extracted results for the genes outlined above:</p>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="10%" />
+<col width="84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>ARO term</strong></th>
+<th><strong>Mapped reads with kmer DB hits</strong></th>
+<th><strong>CARDkmer Prediction</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tet(X)</td>
+<td>6951</td>
+<td>Escherichia coli (chromosome or plasmid): 1; Elizabethkingia anophelis (chromosome or plasmid): 1;</td>
+</tr>
+<tr class="even">
+<td>acrD</td>
+<td>1860</td>
+<td>Escherichia coli (chromosome): 102; Escherichia coli (chromosome or plasmid): 664;</td>
+</tr>
+<tr class="odd">
+<td>APH(6)-Id</td>
+<td>1388</td>
+<td>Escherichia coli (chromosome or plasmid): 12; Salmonella enterica (chromosome or plasmid): 2; Vibrio parahaemolyticus (chromosome or plasmid): 1; Enterobacter hormaechei (chromosome or plasmid): 1; Acinetobacter baumannii (chromosome or plasmid): 1; Escherichia coli (plasmid): 3;</td>
+</tr>
+<tr class="even">
+<td>sul2</td>
+<td>898</td>
+<td>Escherichia coli (chromosome or plasmid): 3; Bacillus anthracis (chromosome or plasmid): 2; Klebsiella pneumoniae (chromosome or plasmid): 1; Pseudomonas aeruginosa (chromosome or plasmid): 1; Salmonella enterica (chromosome or plasmid): 1;</td>
+</tr>
+<tr class="odd">
+<td>EC-8</td>
+<td>517</td>
+<td>Escherichia coli (chromosome): 127; Shigella boydii (chromosome): 1; Escherichia coli (chromosome or plasmid): 26;</td>
+</tr>
+<tr class="even">
+<td>APH(3’’)-Ib</td>
+<td>387</td>
+<td>Escherichia coli (chromosome or plasmid): 3; Enterobacter hormaechei (chromosome or plasmid): 1;</td>
+</tr>
+<tr class="odd">
+<td>aad(6)</td>
+<td>97</td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>CblA-1</td>
+<td>0</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<div class="callout-blue">
+<span class="callout-icon"><i class="fas fa-circle-info" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Note</p>
+</div>
+<p>The AMR genes associated with plasmids according to the CARD Resistomes &amp; Variants data set cannot easily be assigned to a specific pathogen, while those like acrD and EC-8 that are predominantly known from chromosomes have a reliable pathogen-of-origin prediction.</p>
+</div>
+</div>
+<div class="callout-green">
+<span class="callout-icon"><i class="fas fa-circle-check" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static" style="margin-bottom: 0.5em;">
+<p>Lab Completed!</p>
+</div>
+<p>Congratulations! You have completed Lab 6!</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="module-5-bacterial-pathogen-genomic-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="module-7-phylodynamics-and-transmission-dynamics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca/IDE_2023/blob/main/060-module-6.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
