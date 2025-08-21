@@ -5,6 +5,7 @@ bookdown::gitbook:
   includes:                             # <<< ADDED/ENSURED THIS SECTION
     in_header:                           # <<<
       - fa-header.html                   # <<<
+      - _bioschemas.html
   config:
     toc: # Table of Contents
       collapse: subsection
